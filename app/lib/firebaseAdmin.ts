@@ -1,59 +1,75 @@
 // app/lib/firebaseAdmin.ts  (server-only)
 import 'server-only';
-import { initializeApp, getApps, cert, applicationDefault, type App } from 'firebase-admin/app';
+import { initializeApp, getApps, cert, type App } from 'firebase-admin/app';
 import { getAuth, type Auth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue, Timestamp, type Firestore } from 'firebase-admin/firestore';
 
-// ---- ENV normalizadas (acepta ambas variantes de clave) ----
+// --- ENV y normalización de la private key ---
 const PROJECT_ID   = process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT || undefined;
 const CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL || undefined;
 
-// Soporta FIREBASE_ADMIN_PRIVATE_KEY (tu nombre original) y FIREBASE_PRIVATE_KEY (otra convención)
-const RAW_PRIVATE_KEY =
-  process.env.FIREBASE_ADMIN_PRIVATE_KEY ??
-  process.env.FIREBASE_PRIVATE_KEY ??
-  undefined;
+function normalizeKey(raw?: string) {
+  if (!raw) return undefined;
+  let s = raw.trim();
+  // Quita comillas si alguien la pegó en Vercel como "-----BEGIN..."
+  if (s.startsWith('"') && s.endsWith('"')) s = s.slice(1, -1);
+  // Normaliza saltos de línea
+  s = s.replace(/\r\n/g, '\n');
+  // Soporta una sola línea con \n escapados
+  return s.includes('\\n') ? s.replace(/\\n/g, '\n') : s;
+}
 
-// Normaliza: soporta multilínea real o '\n' escapados
-const PRIVATE_KEY =
-  typeof RAW_PRIVATE_KEY === 'string'
-    ? (RAW_PRIVATE_KEY.includes('\\n') ? RAW_PRIVATE_KEY.replace(/\\n/g, '\n') : RAW_PRIVATE_KEY)
-    : undefined;
+const PRIVATE_KEY = normalizeKey(
+  process.env.FIREBASE_ADMIN_PRIVATE_KEY ?? process.env.FIREBASE_PRIVATE_KEY
+);
 
-// Solo usamos cert() si tenemos **ambos**: email + private_key
-const hasExplicitCreds = Boolean(CLIENT_EMAIL && PRIVATE_KEY);
+// Flag público para que tu código pueda decidir si usa Admin o Web SDK
+export const HAS_ADMIN_CREDS = Boolean(PROJECT_ID && CLIENT_EMAIL && PRIVATE_KEY);
 
-let app: App;
-if (getApps().length) {
-  app = getApps()[0]!;
-} else {
-  app = initializeApp({
-    credential: hasExplicitCreds
-      ? cert({
-          projectId: PROJECT_ID,
-          clientEmail: CLIENT_EMAIL!,
-          privateKey: PRIVATE_KEY!, // garantizado por hasExplicitCreds
-        })
-      : applicationDefault(),       // si no hay SA completa, cae a ADC (no falla en import)
-    projectId: PROJECT_ID,
+// --- Inicialización LAZY de Admin: solo si hay SA completa ---
+let app: App | null = null;
+let _auth: Auth | null = null;
+let _db: Firestore | null = null;
+
+if (HAS_ADMIN_CREDS) {
+  app = getApps()[0] ?? initializeApp({
+    credential: cert({
+      projectId: PROJECT_ID!,
+      clientEmail: CLIENT_EMAIL!,
+      privateKey: PRIVATE_KEY!, // ya normalizada
+    }),
+    projectId: PROJECT_ID!,
   });
+  _auth = getAuth(app);
+  _db   = getFirestore(app);
 }
 
-const adminAuth: Auth = getAuth(app);
-const adminDb: Firestore = getFirestore(app);
-
-/* ===== Exports principales (sin cambios) ===== */
-export function getAdminAuth() {
-  return adminAuth;
+// Si alguien intenta usar Admin sin SA, fallamos en el MOMENTO de uso, no al importar el módulo
+function assertAdmin() {
+  if (!HAS_ADMIN_CREDS || !_auth || !_db) {
+    throw new Error(
+      'Firebase Admin credentials are missing. ' +
+      'Set FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY in Vercel.'
+    );
+  }
 }
-export function getAdminDb() {
-  return adminDb;
+
+/* ===== Exports principales (compatibles) ===== */
+export function getAdminAuth(): Auth {
+  assertAdmin();
+  return _auth!;
+}
+export function getAdminDb(): Firestore {
+  assertAdmin();
+  return _db!;
 }
 export { FieldValue, Timestamp };
 
-/* ===== Aliases de compatibilidad (sin cambios) =====
-   Para código existente que hace:
+/* ===== Aliases de compatibilidad =====
+   Si algún código viejo hace:
      import { db, FieldValue } from '@/app/lib/firebaseAdmin';
+   devolvemos proxies que lanzan error SOLO si se usan sin SA.
 */
-export const auth = adminAuth;
-export const db = adminDb;
+const throwingProxy = new Proxy({}, { get() { assertAdmin(); } }) as any;
+export const auth = (_auth ?? throwingProxy) as Auth;
+export const db   = (_db   ?? throwingProxy) as Firestore;
