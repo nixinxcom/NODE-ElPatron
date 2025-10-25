@@ -346,3 +346,55 @@ function pushDL(event: string, data: Record<string, any>) {
   (window as any).dataLayer = (window as any).dataLayer || [];
   (window as any).dataLayer.push({ event, ...data });
 }
+// Nota: el dataLayer lo defines en el layout general del kiosk (app/[locale]/(kiosk)/layout.tsx)
+
+/* ─────────────────────────────────────────────────────────
+DOC: Page de encuesta (app/\[locale]/(kiosk)/encuesta/page.tsx)
+QUÉ HACE:
+Página principal de la encuesta en el segmento (kiosk). Renderiza el contenido
+de la encuesta y queda envuelta por su layout local (encuesta/layout) y el
+layout superior de (kiosk). Por defecto es Server Component salvo que el archivo
+comience con "use client".
+
+RUTA RESULTANTE:
+/es/encuesta  /en/encuesta  /fr/encuesta   (anidada bajo (kiosk))
+
+API / PROPS QUE NEXT INYECTA:
+type Props = {
+params?: { locale?: 'es' | 'en' | 'fr' }        // opcional | locale activo
+searchParams?: Record\<string, string | string\[] | undefined> // opcional
+}
+export default function Page(props: Props): JSX.Element
+
+USO (conceptual):
+
+* Se navega a esta página con Link o router.push:
+  import Link from 'next/link'
+
+    <Link href="/es/encuesta">Abrir encuesta</Link>
+* Si necesitas estado/efectos del navegador, añade al inicio del archivo: use client
+  y mueve lógica de kiosko a un componente cliente (p. ej., <KioskClient /> en el layout).
+
+INTERACCIÓN CON EL LAYOUT:
+
+* Este page queda envuelto por app/\[locale]/(kiosk)/encuesta/layout.tsx
+* Para aplicar modo kiosko en todo el segmento, monta KioskClient en app/\[locale]/(kiosk)/layout.tsx
+  En cambio, si solo aplica a “encuesta”, puedes montarlo dentro de este page o en su layout local.
+
+SEARCH PARAMS (si se usan):
+
+* Puedes leerlos desde props.searchParams. Ejemplos de uso común:
+  step=string            // opcional | por ejemplo "intro" | "form" | "thanks"
+  debug=1                // opcional | string "1" para habilitar trazas
+  Estos son solo ejemplos; ajusta a los parámetros reales del archivo.
+
+NOTAS:
+
+* Evita usar directamente APIs del navegador si el componente es de servidor.
+* Para datos asíncronos, puedes usar fetch en el servidor y renderizar de forma SSR.
+* Revalidación opcional: export const revalidate = 0 para desactivar cache, o un número en segundos.
+
+DEPENDENCIAS:
+
+* Next.js App Router (params, searchParams, layouts anidados).
+  ────────────────────────────────────────────────────────── */

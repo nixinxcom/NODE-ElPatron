@@ -1,6 +1,5 @@
 // app/api/acl/role/route.ts
 export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic'; // evita que Next intente prerender esta API en build
 
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyBearerIdToken } from '@/app/lib/verifyFirebaseToken';
@@ -11,11 +10,13 @@ export async function GET(req: NextRequest) {
     const authHeader = req.headers.get('authorization') || '';
     const decoded: DecodedIdToken | null = await verifyBearerIdToken(authHeader);
 
+    // Computa el rol dando prioridad a hardcode/claims con tu helper existente
     const role = roleFromDecoded(decoded); // 'anon' | 'user' | 'admin' | 'superadmin'
+
+    // Nota: devolvemos 200 siempre para que el cliente no entre en bucles/404
     return NextResponse.json({ role }, { status: 200 });
-  } catch (err) {
-    console.error('ACL error:', err);
-    // Nunca rompas el build/SSG: responde valor seguro
+  } catch {
+    // En caso de fallo, rol seguro
     return NextResponse.json({ role: 'anon' }, { status: 200 });
   }
 }
