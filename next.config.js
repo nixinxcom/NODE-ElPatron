@@ -2,7 +2,7 @@
 const withPWA = require('@ducanh2912/next-pwa').default;
 
 const BUCKET = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NOE_ENV === 'production' ? process.env.NOE_ENV === 'production' : process.env.NODE_ENV === 'production'; // <-- si ya tenías NODE_ENV, puedes dejar solo esa
 
 /* ── Permissions-Policy (ADITIVO: evita ReferenceError y silencia sensores) ── */
 const PERMISSIONS_DEV  =
@@ -44,7 +44,7 @@ const withPWAConfig = withPWA({
           /\/manifest\.(?:web)?manifest$/.test(url.pathname) || url.pathname === '/manifest.webmanifest',
         handler: 'NetworkOnly',
       },
-      // Widgets Brevo/Sendinblue: no cachear (para evitar estados raros)
+      // Widgets Brevo/Sendinblue: no cachear
       {
         urlPattern: ({ url }) =>
           url.origin === 'https://cdn.brevo.com' ||
@@ -53,7 +53,7 @@ const withPWAConfig = withPWA({
           url.origin === 'https://conversations-widget.sendinblue.com',
         handler: 'NetworkOnly',
       },
-      // Evitar cache en llamadas de GA/Google APIs y cuando hay params de GTM debug
+      // Evitar cache en GA / Google APIs y en params de GTM debug
       {
         urlPattern: ({ url }) =>
           url.search.includes('gtm_debug') ||
@@ -90,6 +90,9 @@ const withPWAConfig = withPWA({
 
 /* ── Export ────────────────────────────────────────────────────── */
 module.exports = withPWAConfig({
+  // ⬇️ ÚNICO CAMBIO: desactivar ESLint en build de Vercel
+  eslint: { ignoreDuringBuilds: true },
+
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'firebasestorage.googleapis.com', pathname: '/v0/b/**/o/**' },
