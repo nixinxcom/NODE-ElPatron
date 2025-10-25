@@ -1,0 +1,127 @@
+import React, { useState, ReactNode } from 'react';
+import FirestoreCRUD from './FirestoreCRUDLast';
+import styles from './FirestoreComp.module.css';
+
+interface iFirestoreComp {
+  collection: string;
+  Width?: string;
+  Height?: string;
+  BackgroundColor?: string;
+  Color?: string;
+  children?: ReactNode;
+}
+
+export default function FirestoreComp({ collection, Width, Height, BackgroundColor, Color }: iFirestoreComp) {
+  const [documentData, setDocumentData] = useState<Record<string, any>>({});
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const Create = async () => {
+    try {
+      await FirestoreCRUD({
+        crud: {
+          action: 'create',
+          docs: [documentData],
+        },
+        collection,
+        StateToUpdate: setDocuments,
+      });
+      console.log('Document created successfully');
+    } catch (error) {
+      console.error('Error creating document:', error);
+      setError('Failed to create document');
+    }
+  };
+
+  const Retrieve = async () => {
+    try {
+      const retrievedDocs = await FirestoreCRUD({
+        crud: {
+          action: 'retrieve',
+        },
+        collection,
+        StateToUpdate: setDocuments,
+      });
+      console.log('Documents retrieved:', retrievedDocs);
+    } catch (error) {
+      console.error('Error retrieving documents:', error);
+      setError('Failed to retrieve documents');
+    }
+  };
+
+  const Update = async (id: string) => {
+    try {
+      await FirestoreCRUD({
+        crud: {
+          action: 'update',
+          docs: [{ id, data: documentData }],
+        },
+        collection,
+        StateToUpdate: setDocuments,
+      });
+      console.log('Document updated successfully');
+    } catch (error) {
+      console.error('Error updating document:', error);
+      setError('Failed to update document');
+    }
+  };
+
+  const Delete = async (id: string) => {
+    try {
+      await FirestoreCRUD({
+        crud: {
+          action: 'delete',
+          docIds: [id],
+        },
+        collection,
+        StateToUpdate: setDocuments,
+      });
+      console.log('Document deleted successfully');
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      setError('Failed to delete document');
+    }
+  };
+
+  const InputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    try {
+      const parsedData = JSON.parse(value);
+      setDocumentData(parsedData);
+      setError(null);
+    } catch (error) {
+      setError('Invalid JSON format');
+    }
+  };
+
+  return (
+    <div className={styles.container} style={{ width: Width, height: Height, backgroundColor: BackgroundColor, color: Color }} >
+      {error && <div className={styles.error}>{error}</div>}
+
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Document Data (JSON):</label>
+        <textarea
+          className={styles.input}
+          value={inputValue}
+          onChange={InputChange}
+          placeholder='Enter JSON data here'
+        />
+      </div>
+
+      <button className={styles.button} onClick={Create}>Add Document</button>
+      <button className={styles.button} onClick={Retrieve}>Retrieve Documents</button>
+
+      <div className={styles.output}>
+        {documents.map((doc) => (
+          <div key={doc.id} className={styles.item}>
+            <pre>{JSON.stringify(doc, null, 2)}</pre>
+            <button className={styles.button} onClick={() => Update(doc.id)}>Update</button>
+            <button className={styles.button} onClick={() => Delete(doc.id)}>Delete</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

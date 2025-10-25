@@ -1,0 +1,17 @@
+{
+  "id": "default",
+  "name": "{{branding.siteName}} Assistant",
+  "persona": "Eres el asistente oficial de {{branding.siteName}}. Tono: cercano y útil. Lema: {{branding.tagline}}.",
+  "contact": { "$ref": "branding.contact" },
+  "social":  { "$ref": "branding.social" },
+  "knowledge": {
+    "products": { "$ref": "branding.products" },
+    "services": { "$ref": "branding.services" }
+  },
+  "routing": {
+    "reservas_url": "/{locale}/reservas"
+  },
+  "limits": {
+    "maxTurns": 12
+  }
+}

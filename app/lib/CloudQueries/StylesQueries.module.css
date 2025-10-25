@@ -1,0 +1,196 @@
+/* ==========================================================
+   CloudQueries — StylesQueries.module.css  (REEMPLAZO COMPLETO)
+   Mobile-first, layout horizontal, alto contraste, sin :root
+   ========================================================== */
+
+/* ---------- contenedor general ---------- */
+.Contenedor{
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1100px;
+  margin: 16px auto;
+  padding: 0 12px;
+  display: grid;
+  gap: 16px;
+  overflow-x: auto; /* tablas anchas */
+}
+
+/* ---------- botón genérico ---------- */
+.Consultar{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: rgba(var(--basecolor, 0,123,255), 1);
+  color: rgba(var(--fontcolor, 255,255,255), 1);
+  font-weight: 700;
+  letter-spacing: .2px;
+  cursor: pointer;
+  transition: transform .05s ease, filter .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.Consultar:hover{
+  filter: brightness(.96);
+  box-shadow: 0 6px 16px rgba(var(--basecolor, 0,123,255), .25);
+}
+.Consultar:active{ transform: translateY(1px); }
+.Consultar:disabled{ opacity: .55; cursor: not-allowed; box-shadow: none; }
+
+/* ---------- panel del formulario ---------- */
+.cqForm{
+  /* variables locales del panel */
+  --cq-surface: rgba(255,255,255,.78);
+  --cq-border:  rgba(0,0,0,.14);
+  --cq-shadow:  0 10px 30px rgba(0,0,0,.08);
+  --cq-radius:  14px;
+
+  background: var(--cq-surface);
+  backdrop-filter: saturate(115%) blur(2px);
+  border: 1px solid var(--cq-border);
+  border-radius: var(--cq-radius);
+  box-shadow: var(--cq-shadow);
+
+  padding: 14px;
+  display: grid;
+  gap: 12px;           /* móvil: columna compacta */
+}
+
+/* dark mode amistoso */
+@media (prefers-color-scheme: dark){
+  .cqForm{
+    --cq-surface: rgba(20,20,22,.72);
+    --cq-border:  rgba(255,255,255,.16);
+    --cq-shadow:  0 10px 30px rgba(0,0,0,.35);
+  }
+}
+
+/* grupos */
+.cqGroup{ display: grid; gap: 6px; }
+
+/* fila de grupos (móvil = columna) */
+.cqGroupRow{
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+
+/* labels + controles */
+.Label{
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: #111; /* buen contraste en claro */
+}
+@media (prefers-color-scheme: dark){ .Label{ color: #f3f4f6; } }
+
+/* inputs/selects */
+.Label input[type="text"],
+.Label input[type="number"],
+.Label select{
+  appearance: none;
+  width: 100%;
+  height: 42px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--cq-border);
+  background: #fff;
+  color: #0f0f14;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.04);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.Label input::placeholder{ color: rgba(17,17,17,.55); }
+
+@media (prefers-color-scheme: dark){
+  .Label input[type="text"],
+  .Label input[type="number"],
+  .Label select{
+    background: rgba(255,255,255,.07);
+    color: #fff;
+    border-color: rgba(255,255,255,.18);
+    box-shadow: none;
+  }
+  .Label input::placeholder{ color: rgba(255,255,255,.65); }
+}
+
+/* focus ring (usa color de marca si existe) */
+.Label input[type="text"]:focus,
+.Label input[type="number"]:focus,
+.Label select:focus{
+  border-color: rgba(var(--basecolor, 0,123,255), .7);
+  box-shadow: 0 0 0 3px rgba(var(--basecolor, 0,123,255), .18);
+}
+
+/* select con chevron */
+.Label select{
+  padding-right: 42px;
+  background-image:
+    linear-gradient(to bottom, transparent, transparent),
+    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='%230f0f14'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center, 0 0;
+}
+@media (prefers-color-scheme: dark){
+  .Label select{
+    background-image:
+      linear-gradient(to bottom, transparent, transparent),
+      url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='%23ffffff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  }
+}
+
+/* checkbox de rango */
+.Label input[type="checkbox"]{
+  accent-color: rgb(var(--basecolor, 0,123,255));
+  transform: translateY(1px);
+}
+
+/* acciones (botones) */
+.cqActions{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 10px;
+  border-top: 1px dashed var(--cq-border);
+}
+
+/* mensajes de estado */
+.cqInfo{ text-align: center; color:#586174; }
+.cqError{ text-align: center; color:#ff6b6b; font-weight: 700; }
+
+/* ---------- layout horizontal a partir de sm ---------- */
+@media (min-width: 640px){
+  .cqForm{
+    padding: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    align-items: end;
+  }
+  /* aplanamos contenedores intermedios para que los campos entren en el grid */
+  .cqGroup, .cqGroupRow{ display: contents; }
+  /* acciones ocupan la fila completa y se alinean a la derecha */
+  .cqActions{
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    padding-top: 8px;
+  }
+}
+
+/* ---------- afinado en md/lg ---------- */
+@media (min-width: 768px){
+  .cqForm{ padding: 18px; }
+}
+@media (min-width: 1024px){
+  .cqForm{ padding: 20px; }
+}
+
+/* ---------- utilidades opcionales ---------- */
+/* para ensanchar manualmente algún campo (p.ej. Colección) si lo necesitas */
+.wide{ grid-column: span 2; }
+@media (min-width: 1024px){ .wide{ grid-column: span 3; } }

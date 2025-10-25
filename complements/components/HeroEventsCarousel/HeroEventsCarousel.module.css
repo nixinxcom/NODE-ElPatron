@@ -1,0 +1,112 @@
+/* === Caja principal === */
+.hero{ position:relative; width:100%; color:#fff; background:transparent; top: var(--nav-h);}
+
+/* Marco (puedes sobrescribir con heightClass) */
+.frame{
+  position:relative; width:min(96vw,1280px); margin-inline:auto;
+  border-radius:16px; overflow:hidden; background:transparent;
+  min-height:360px; aspect-ratio:16/9;
+}
+@media (min-width:768px){ .frame{ min-height:480px; aspect-ratio:21/9 } }
+@media (min-width:1024px){ .frame{ min-height:560px } }
+
+/* Capas para animación entre eventos */
+.layer{ position:absolute; inset:0; }
+.isAnimating{ pointer-events:none; }  /* evita clics durante la transición */
+
+/* Media ajustado */
+.media{ position:absolute; inset:0; width:100%; height:100%; object-position:center; background:transparent; z-index:5; }
+.contain{ object-fit:contain; }
+
+/* Animaciones */
+@keyframes slideInRightSoft{ from{ transform:translateX(12%); opacity:.15 } to{ transform:translateX(0); opacity:1 } }
+.media{ animation:slideInRightSoft .45s cubic-bezier(.22,.61,.36,1) both; }
+
+@keyframes eventExitLeft { from{ transform:translateX(0) } to{ transform:translateX(-100%) } }
+@keyframes eventEnterRight{ from{ transform:translateX(100%) } to{ transform:translateX(0) } }
+.exitLeft{ animation:eventExitLeft .5s cubic-bezier(.22,.61,.36,1) both; z-index:6; }
+.enterRight{ animation:eventEnterRight .5s cubic-bezier(.22,.61,.36,1) both; z-index:7; }
+
+@media (prefers-reduced-motion:reduce){ .media,.exitLeft,.enterRight{ animation:none } }
+
+/* Gradiente */
+.gradient{
+  pointer-events:none; position:absolute; left:0; right:0; bottom:0;
+  height:40%; background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,0));
+  z-index:10;
+}
+
+/* Dots del SLIDE */
+.dotsWrap{ position:absolute; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:10px; z-index:70; pointer-events:auto; }
+.dotsTop{ top:12px }
+.dotsBottom{ bottom:64px } /* separados de la info inferior */
+.dot{ width:12px; height:12px; border-radius:9999px; background:rgba(255,255,255,.45); transition:background .2s ease, transform .12s ease; cursor:pointer; }
+.dot:hover{ background:rgba(255,255,255,.75) } .dot:active{ transform:scale(.95) } .dotActive{ background:#fff }
+
+/* Flechas del slide (md+) */
+.arrowWrap{ position:absolute; inset-block:0; display:none; align-items:center; z-index:25; padding:8px; }
+@media (min-width:768px){ .arrowWrap{ display:flex } }
+.left{ left:0 } .right{ right:0 }
+.arrow{ border-radius:9999px; background:rgba(0,0,0,.4); padding:8px; line-height:1; }
+.arrow:hover{ background:rgba(0,0,0,.6) }
+
+/* CTAs */
+.cta{ position:absolute; z-index:50; display:flex; gap:8px; flex-direction:column; pointer-events:none; }
+.cta > *{ pointer-events:auto }
+.br{ right:12px; bottom:12px } .bl{ left:12px; bottom:12px }
+.tr{ right:12px; top:12px }   .tl{ left:12px; top:12px }
+.ctaBtn{ display:inline-flex; align-items:center; justify-content:center; padding:10px 16px; border-radius:10px; font-weight:700; font-size:14px; background:#fff; color:#000; border:2px solid #000; box-shadow:0 6px 20px rgba(0,0,0,.25); transition:transform .1s ease; }
+.ctaBtn:hover{ transform:scale(.99) } .ctaBtn:active{ transform:scale(.95) }
+.ctaLink{ color:#fff; text-decoration:underline; text-underline-offset:3px; font-size:14px; font-weight:600 }
+
+/* Info + toggle (no bloquea clics) */
+.infoWrap{ position:absolute; left:0; right:0; bottom:0; z-index:40; padding:12px 12px 12px; pointer-events:none; }
+@media (min-width:768px){ .infoWrap{ padding:0 24px 24px } }
+.infoInner{ max-width:1280px; margin-inline:auto; position:relative }
+.infoTop{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px }
+.titleBox{ min-width:0; pointer-events:auto }
+.title{ font-size:clamp(1.35rem,3.2vw,2.15rem); font-weight:800; line-height:1.15; letter-spacing:-.01em; text-shadow:0 2px 12px rgba(0,0,0,.45); }
+.meta{ margin-top:4px; font-size:clamp(.86rem,1.9vw,1rem); opacity:.98; pointer-events:auto; }
+.eventNav{ display:none; gap:8px; pointer-events:auto } @media (min-width:640px){ .eventNav{ display:flex; position:absolute; top:0px; right:0rem; z-index:5; }}
+.evBtn{ background:rgba(255,255,255,.12); padding:6px 10px; border-radius:8px; font-weight:600 } .evBtn:hover{ background:rgba(255,255,255,.22) }
+
+/* Toggle debajo del título */
+.descBlock{ margin-top:8px; pointer-events:auto }
+.descToggle{ display: block; font-size:clamp(.9rem,2vw,1rem); color:rgba(255,255,255,.98); text-decoration:underline; text-underline-offset:4px; font-weight:700; }
+
+/* Panel de descripción (desde abajo) */
+.descPanel{ border: 2px solid white; position:absolute; display: block; left:50%; bottom:0px; transform:translate(-50%, 110%); width:min(92vw, 960px); opacity:0; background:rgba(var(--fontcolor),.7); backdrop-filter:blur(12px); padding:0px 7px; max-height:min(55vh, 420px); overflow: auto; transition:transform .32s cubic-bezier(.22,.61,.36,1), opacity .32s ease; border-radius:7px; pointer-events:none; }
+
+.open{ transform:translate(-50%, -700%); opacity:1; pointer-events:auto; }
+.descText{ margin:7px; font-size:clamp(1rem,2.1vw,1.4rem); line-height:1.4;color:rgba(var(--basecolor),.98); word-wrap: break-word;overflow-y: auto; }
+
+/* Chips por EVENTO (Firestore) — arriba-centro */
+.eventChips{ position:absolute; left:50%; transform:translateX(-50%); top:12px; display:none; gap:8px; z-index:80; pointer-events:auto; }
+@media (min-width:768px){ .eventChips{ display:flex } }
+.evDot{ width:24px; height:10px; border-radius:9999px; background:rgba(255,255,255,.45); transition:background .2s ease, transform .12s ease; cursor:pointer; }
+.evDot:hover{ background:rgba(255,255,255,.75) } .evDot:active{ transform:scale(.95) } .evDotActive{ background:#fff }
+
+/* Placeholders */
+.skeleton, .empty{ width:100%; height:100%; display:grid; place-items:center }
+.muted{ opacity:.85; font-size:14px }
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.hero{ color: var(--hero-fg, #fff); }
+.frame{ border-radius: var(--hero-radius, 16px); }
+.title{ color: var(--hero-title-fg, #fff); }
+.subtitle{ color: var(--hero-subtitle-fg, rgba(255,255,255,.9)); }
+.actions .Btn{
+  background: var(--hero-btn-bg, rgba(255,255,255,.95));
+  color: var(--hero-btn-fg, #000);
+  border-color: var(--hero-btn-border, #000);
+}
+.descPanel{
+  border-color: var(--hero-desc-border, #fff);
+  background: var(--hero-desc-bg, rgba(0,0,0,.65));
+  color: var(--hero-desc-fg, #fff);
+  border-radius: var(--hero-desc-radius, 7px);
+}
+.evDot{ background: var(--hero-dot-bg, rgba(255,255,255,.45)); }
+.evDotActive{ background: var(--hero-dot-active, #fff); }

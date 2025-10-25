@@ -1,0 +1,121 @@
+.stack {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* Ya existían, pero ajustamos posiciones */
+.CentralImg {
+  position: relative; /* sobre la rotación */
+  z-index: 1;
+}
+
+.RotationImg {
+  position: absolute;     /* antes estaba fixed */
+  inset: 0;               /* ocupa todo el .stack */
+  animation: loadingneg var(--vslow) linear infinite;
+  object-fit: contain;
+}
+.modalOverlay,
+.modalOverlaySuccess,
+.modalOverlayFail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(7px); /* Aplica el desenfoque */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+.modalOverlay {
+    animation: ShowingUp var(--slow) linear forwards;
+}
+.modalOverlaySuccess{
+    animation: ShowingSuccess var(--vslow) linear forwards;
+}
+.modalOverlayFail{
+    animation: ShowingFail var(--vslow) linear forwards;
+}
+.centeredContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.CentralImg{
+    animation: ShowingUp var(--vslow) linear forwards;
+}
+.RotationImg{
+    position: fixed;
+    animation: loadingneg var(--vslow) linear infinite;
+}
+@keyframes ShowingUp {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+@keyframes loadingneg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+@keyframes ShowingSuccess {
+    0% {
+        width: 100%;
+        height: 100%;
+        top: 0%;
+        left: 0%;
+        border-radius: 0;
+        border: 1px solid white;
+        backdrop-filter: blur(14px);
+        color: white;
+    }
+    75% {
+        background-color: rgba(var(--bluemateX), 0.7);
+    }
+    100% {
+        width: 0%;
+        height: 0%;
+        top: 50%;
+        left: 50%;
+        border-radius: 700px;
+        backdrop-filter: blur(0px);
+        color: transparent;
+        font-size: 4rem;
+        font-weight: 700;
+        display: none;
+    }
+}
+@keyframes ShowingFail {
+    0% {
+        width: 0%;
+        height: 0%;
+        top: 50%;
+        left: 50%;
+        border-radius: 700px;
+        color: white;
+        font-weight: 700;
+        font-size: 4rem;
+        backdrop-filter: blur(0px);
+        border: 1px solid white;
+    }
+    70% {
+        background-color: rgba(var(--redX), 1);
+    }
+    100% {
+        border-radius: 0;
+        width: 100%;
+        height: 100%;
+        top: 0%;
+        left: 0%;
+        backdrop-filter: blur(7px);
+        color: transparent;
+        display: none;
+    }
+}
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.StackNote{
+  color: var(--hold-note-fg, rgba(var(--fontcolor), .9));
+}

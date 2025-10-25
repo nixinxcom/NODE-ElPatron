@@ -1,0 +1,78 @@
+/* ADITIVO — Parametrización por variables (quita este archivo para volver al look actual) */
+
+/* Marco del carrusel: "relative overflow-hidden rounded-2xl" */
+.frame{
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--carousel-radius, 1rem); /* rounded-2xl ≈ 1rem */
+}
+
+/* Barra de controles: "pointer-events-none absolute inset-0 flex items-center justify-between p-2" */
+.controlsBar{
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--carousel-ctrl-pad, .5rem); /* p-2 */
+}
+
+/* Botones flecha:
+   "pointer-events-auto rounded-full bg-black/40 p-2 text-white shadow hover:bg-black/60 focus:outline-none" */
+.arrowBtn{
+  pointer-events: auto;
+  border-radius: 9999px;
+  background: var(--carousel-arrow-bg, rgba(0,0,0,.40));
+  color: var(--carousel-arrow-fg, #fff);
+  padding: var(--carousel-arrow-pad, .5rem);       /* p-2 */
+  box-shadow: var(--carousel-arrow-shadow, 0 1px 3px rgba(0,0,0,.4));
+  transition: background var(--trans-fast, 180ms ease-out),
+              transform  var(--trans-fast, 180ms ease-out);
+}
+.arrowBtn:hover{ background: var(--carousel-arrow-hover-bg, rgba(0,0,0,.60)); transform: scale(1.02); }
+
+/* Dots row:
+   "absolute bottom-3 left-0 right-0 z-30 flex items-center justify-center gap-2" */
+.dotsRow{
+  position: absolute;
+  left: 0; right: 0;
+  bottom: var(--carousel-dots-bottom, .75rem); /* bottom-3 */
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--carousel-dots-gap, .5rem);        /* gap-2 */
+}
+
+
+/* Estado activo: "... scale-110 bg-white shadow" */
+.dotActive{
+  transform: scale(1.1);
+  background: var(--carousel-dot-active-bg, #ffffff);
+  box-shadow: var(--carousel-dot-active-shadow, 0 1px 4px rgba(0,0,0,.4));
+}
+
+/* ADITIVO — Parametrización por variables (preserva look actual)
+   ⛔ Sin :global(:root); tema con scope local si hiciera falta.
+*/
+
+/* Capa de cada slide (fade + z) */
+.fadeLayer{
+  position: absolute; inset: 0;
+  transition: opacity var(--amc-fade-duration, 500ms ease-out);
+}
+
+/* Capa clicable (captura click/Enter/Espacio) */
+.clickLayer{
+  position: absolute; inset: 0; z-index: 20;
+  outline: none;
+}
+
+/* Punto (dot) del carrusel */
+.dot{
+  height: var(--amc-dot-size, 10px);
+  width: var(--amc-dot-size, 10px);
+  border-radius: var(--amc-dot-radius, 999px);
+  transition: all var(--amc-dot-trans, 180ms ease-out);
+}

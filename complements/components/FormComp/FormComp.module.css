@@ -1,0 +1,142 @@
+/* FormComp.module.css */
+
+.form {
+    display: flex;
+    padding: 1rem;
+    background-color: rgb(var(--basecolor));
+    color: rgb(var(--fontcolor));
+  }
+  
+  .form input,
+  .form select,
+  .form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 3px 14px 7px 7px;
+    color: rgb(var(--basecolor));
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+  }
+  
+  .form input[type="checkbox"] {
+    width: auto;
+    margin-right: 7px;
+  }
+  
+  .form input[type="file"] {
+    opacity: 1; /* Oculta el input de archivo */
+    position: relative;
+    width: 100%; /* Ajusta según el ancho deseado */
+    height: 100%;  /* Ajusta según la altura deseada */
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  /* ::before para mostrar un "botón" de archivo */
+  .form input[type="file"]::before {
+    content: "Upload Files";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(var(--basecolor));
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .form input[type="file"]:hover::before {
+    background-color: rgb(var(--fontcolor));
+    color: rgb(var(--basecolor));
+  }
+
+
+  .form button {
+    background-color: rgba(var(--bluemateX),0.7);
+    color: white;
+    border: 1px solid white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  
+  .form button:hover {
+    background-color: rgba(var(--bluemateX),1);
+    box-shadow: 0px 0px 14px white;
+  }
+  
+  .form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .form .input-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* FormComp.module.css */
+
+.form input[type="color"] {
+  border: none;
+  width: 100%;
+  height: 50px; /* Ajusta la altura según tu preferencia */
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.form input[type="color"]::-webkit-color-swatch {
+  border-radius: 4px;
+}
+
+.form input[type="color"]::-moz-color-swatch {
+  border-radius: 4px;
+}
+
+.form input[type="color"]::-ms-color-swatch {
+  border-radius: 4px;
+}
+
+.form input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.form input,
+.form select,
+.form textarea{
+  border-color: var(--form-field-border, #ccc) !important;
+}
+.form input[type="file"]::before{
+  background: var(--form-file-bg, rgb(var(--basecolor))) !important;
+  border-color: var(--form-file-border, #ccc) !important;
+  color: var(--form-file-fg, #fff) !important;
+}
+.form button{
+  background-color: var(--form-btn-bg, rgba(var(--bluemateX), .7)) !important;
+  color: var(--form-btn-fg, #fff) !important;
+  border-color: var(--form-btn-border, #fff) !important;
+}
+.form button:hover{
+  background-color: var(--form-btn-hover-bg, rgba(var(--bluemateX), 1)) !important;
+  box-shadow: var(--form-btn-hover-shadow, 0 0 14px #fff) !important;
+}

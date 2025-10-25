@@ -1,0 +1,39 @@
+/* .adsense-container {
+  margin: 20px 0;
+  text-align: center;
+} */
+
+/* .adsbygoogle {
+  top: 7rem;
+  display: block;
+  width: 100%;
+  max-width: 728px;
+  margin: 0 auto;
+  min-height: 90px;
+} */
+  
+@media (max-width: 600px) {
+  /* .adsbygoogle {
+    max-width: 100%;
+    min-height: 50px;
+  } */
+}  
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.adsense-container{
+  margin: var(--adsense-margin, 20px 0);
+  text-align: var(--adsense-align, center);
+}
+.adsbygoogle{
+  width: 100%;
+  max-width: var(--adsense-maxw, 728px);
+  min-height: var(--adsense-minh, 90px);
+  margin: var(--adsense-auto-margin, 0 auto);
+}
+@media (max-width: 600px){
+  .adsbygoogle{
+    max-width: var(--adsense-maxw-sm, 320px);
+    min-height: var(--adsense-minh-sm, 100px);
+  }
+}

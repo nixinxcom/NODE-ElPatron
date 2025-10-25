@@ -1,0 +1,296 @@
+'use client';
+
+import styles from './FooterComp.module.css';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged, signInAnonymously, signOut } from 'firebase/auth';
+import { FbAuth } from '@/app/lib/services/firebase';
+import { useI18nHref } from '@/app/lib/useI18nHref';
+import { FormattedMessage, useIntl } from 'react-intl';
+import FM from '@/complements/i18n/FM';
+import { useAppContext } from '@/context/AppContext';
+import { Button, Link, NextImage, Image, Div, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+
+type LinkItem = { name?: string; title?: string; url?: string; href?: string; enabled?: boolean; icon?: string };
+
+/** Normaliza cadena para matching por alias */
+const norm = (s?: string) =>
+  (s ?? '').toLowerCase().trim().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+
+/** Devuelve url string si el valor es string u objeto con url/href */
+const toUrl = (v: any): string | undefined =>
+  typeof v === 'string' ? v : (v?.url ?? v?.href ?? undefined);
+
+/** Busca un link por alias en un ARREGLO de links */
+const pickFromArray = (arr: LinkItem[] | undefined, aliases: string[]) => {
+  if (!Array.isArray(arr)) return null;
+  const keys = aliases.map(norm);
+  return arr.find((it) => keys.includes(norm(it.name) || norm(it.title)));
+};
+
+/** Lee un link del OBJETO legado (platforms/socials como objeto) */
+const pickFromObject = (obj: any, keys: string[]) => {
+  if (!obj || Array.isArray(obj) || typeof obj !== 'object') return null;
+  for (const k of keys) {
+    if (obj[k] != null) return obj[k];
+  }
+  return null;
+};
+
+/** Unifica acceso (array u objeto) y devuelve {enabled,url,item} */
+const resolveLink = (
+  source: any,
+  aliases: string[]
+): { enabled: boolean; url?: string; item?: any } => {
+  // 1) Objeto legado
+  const legacy = pickFromObject(source, aliases);
+  if (legacy) {
+    const url = toUrl(legacy);
+    const enabled =
+      typeof legacy?.enabled === 'boolean' ? legacy.enabled : Boolean(url);
+    return { enabled, url, item: legacy };
+  }
+  // 2) Array recomendado
+  const arrItem = pickFromArray(source as LinkItem[], aliases);
+  if (arrItem) {
+    const url = toUrl(arrItem);
+    const enabled =
+      typeof arrItem?.enabled === 'boolean' ? arrItem.enabled : Boolean(url);
+    return { enabled, url, item: arrItem };
+  }
+  // 3) Nada
+  return { enabled: false };
+};
+
+export default function FooterComp() {
+  const { Branding } = useAppContext();
+  const i18nHref = useI18nHref ? useI18nHref() : (p: string) => p;
+  const [authUser, setAuthUser] = useState<any>(null);
+  const intl = useIntl();
+
+  // --- Platforms (array u objeto) ---
+  const platformsSrc = (Branding as any)?.platforms;
+  const onlineOrder = resolveLink(platformsSrc, ['onlineorder', 'online order', 'order online']);
+  const uberEats = resolveLink(platformsSrc, ['ubereats', 'uber eats', 'uber']);
+  const skipTheDishes = resolveLink(platformsSrc, ['skipthedishes', 'skip the dishes', 'skip']);
+  const doordash = resolveLink(platformsSrc, ['doordash', 'door dash']);
+
+  // --- Socials (array u objeto) ---
+  const socialsSrc = (Branding as any)?.socials;
+  const instagram = resolveLink(socialsSrc, ['instagram', 'ig']);
+  const facebook = resolveLink(socialsSrc, ['facebook', 'fb']);
+  const tiktok = resolveLink(socialsSrc, ['tiktok', 'tik tok']);
+  const youtube = resolveLink(socialsSrc, ['youtube', 'yt']);
+
+  // --- Contacto ---
+  const googleMapsUrl =
+    toUrl((Branding as any)?.contact?.googleMaps) ||
+    toUrl((Branding as any)?.contact?.maps);
+
+  const branches = Array.isArray(Branding?.company?.branches)
+    ? Branding!.company!.branches
+    : [];
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(FbAuth, (u) => setAuthUser(u));
+    return () => unsub();
+  }, []);
+
+  const handleGuest = async () => {
+    if (!FbAuth.currentUser) await signInAnonymously(FbAuth);
+  };
+  const handleLogout = async () => {
+    try {
+      await signOut(FbAuth);
+    } catch {}
+  };
+
+  // arriba del return, junto con los demás derives:
+  type Address = { street?: string; city?: string; state?: string; zip?: string; country?: string };
+  const address: Address = (Branding.contact?.address ?? {}) as Address;
+
+  const fullAddress = [address.street, address.city, address.state, address.zip, address.country]
+    .filter(Boolean)
+    .join(', ');
+
+
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.footerRestaurants}>
+          <H3 className={styles.footerTitle}>
+            <FM defaultMessage="Nuestras Recomendaciones" id="Home.Recomendaciones" />
+          </H3>
+
+          {branches.length > 0 && (
+            <ul className={styles.footerRestaurantsList}>
+              {branches.map((b, i) => (
+                <li key={i}>
+                  <A
+                    href={b.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.footerLink}
+                  >
+                    {b.icon ? (
+                      <NextImage src={b.icon!} width={16} height={16} alt="Branch Icon" />
+                    ) : null}{' '}
+                    <span>{b.name}</span>
+                  </A>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <H2 className={styles.title}>
+          <FM id="footer.title" defaultMessage="Gracias por visitarnos" />
+        </H2>
+
+        <P className={styles.text}>
+          <FM
+            id="footer.platforms"
+            defaultMessage="Síguenos en nuestras redes sociales para mantenerte al día con nuestros eventos y promociones."
+          />
+        </P>
+
+        <div className={styles.socials}>
+          {onlineOrder.enabled && onlineOrder.url && (
+            <Link
+              href={onlineOrder.url}
+              className={styles.icon}
+              target="_blank"
+              rel="noopener"
+            >
+              <NextImage
+                src="/Icons/onlineOrder.png"
+                width={40}
+                height={40}
+                alt={intl.formatMessage({
+                  id: 'footer.alt.onlineorder',
+                  defaultMessage: 'Online Order',
+                })}
+              />
+            </Link>
+          )}
+
+          {doordash.enabled && doordash.url && (
+            <Link href={doordash.url} className={styles.icon} target="_blank" rel="noopener">
+              <NextImage
+                src="/Icons/Doordash.png"
+                width={40}
+                height={40}
+                alt={intl.formatMessage({ id: 'footer.alt.doordash', defaultMessage: 'Doordash' })}
+              />
+            </Link>
+          )}
+
+          {uberEats.enabled && uberEats.url && (
+            <Link href={uberEats.url} className={styles.icon} target="_blank" rel="noopener">
+              <NextImage
+                src="/Icons/Uber Eats.png"
+                width={40}
+                height={40}
+                alt={intl.formatMessage({ id: 'footer.alt.ubereats', defaultMessage: 'Uber Eats' })}
+              />
+            </Link>
+          )}
+
+          {skipTheDishes.enabled && skipTheDishes.url && (
+            <Link href={skipTheDishes.url} className={styles.icon} target="_blank" rel="noopener">
+              <NextImage
+                src="/Icons/SkipTheDishes.jpg"
+                width={40}
+                height={40}
+                alt={intl.formatMessage({
+                  id: 'footer.alt.skipthedishes',
+                  defaultMessage: 'Skip The Dishes',
+                })}
+              />
+            </Link>
+          )}
+        </div>
+
+        <p className={styles.text}>
+          <FM
+            id="footer.description"
+            defaultMessage="Síguenos en nuestras redes sociales para mantenerte al día con nuestros eventos y promociones."
+          />
+        </p>
+
+        <div className={styles.socials}>
+          {facebook.enabled && facebook.url && (
+            <Link href={facebook.url} className={styles.icon} target="_blank" rel="noopener">
+              <NextImage src="/Icons/FacebookIcon.png" width={40} height={40} alt="Facebook" />
+            </Link>
+          )}
+
+          {instagram.enabled && instagram.url && (
+            <Link href={instagram.url} className={styles.icon} target="_blank" rel="noopener">
+              <NextImage src="/Icons/InstaIcon.png" width={40} height={40} alt="Instagram" />
+            </Link>
+          )}
+
+          {tiktok.enabled && tiktok.url && (
+            <Link href={tiktok.url} className={styles.icon} target="_blank" rel="noopener">
+              <NextImage src="/Icons/TikTok.webp" width={40} height={40} alt="TikTok" />
+            </Link>
+          )}
+        </div>
+
+        <div
+          className={`container mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between ${styles.containerPad} ${styles.rowGapY} ${styles.address}`}
+        >
+          <div>
+            <strong>{Branding.company?.brandName}</strong><br />
+            <address className="not-italic">{fullAddress}</address>
+
+            {Branding.contact?.phone && (
+              <A href={`tel:+${Branding.contact.phone}`} className="underline">
+                <FM id="footer.phone" defaultMessage="Company Phone" />
+              </A>
+            )}
+          </div>
+        </div>
+
+        {/* Accesos utilitarios */}
+        <div className={styles.socials} style={{ marginTop: '0.75rem' }}>
+          {/* Google Maps */}
+          {googleMapsUrl && (
+            <Link href={googleMapsUrl} className={styles.icon} target="_blank" rel="noopener">
+              <FM id="footer.gmaps" defaultMessage="Google Maps" />
+            </Link>
+          )}
+
+          {/* WhatsApp (mismo número del teléfono de contacto) */}
+          {Branding.contact?.phone ? (
+            <Link
+              href={`https://wa.me/${Branding.contact.phone}?text=Hola%20El%20Patr%C3%B3n%2C%20quiero%20informaci%C3%B3n.`}
+              className={styles.icon}
+              target="_blank"
+              rel="noopener"
+            >
+              WhatsApp
+            </Link>
+          ) : null}
+
+          {/* Email */}
+          {Branding.contact?.email ? (
+            <A
+              href={`mailto:${Branding.contact.email}?subject=Consulta%20desde%20el%20sitio`}
+              className={styles.icon}
+            >
+              {Branding.contact.email}
+            </A>
+          ) : null}
+
+          {/* YouTube */}
+          {youtube.enabled && youtube.url && (
+            <Link href={youtube.url} className={styles.icon} target="_blank" rel="noopener">
+              <FM id="footer.youtube" defaultMessage="YouTube" />
+            </Link>
+          )}
+        </div>
+      </div>
+    </footer>
+  );
+}

@@ -1,0 +1,63 @@
+/* components/GalleryGrid.module.css */
+.masonry {
+  column-count: 1;
+  column-gap: 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .masonry {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 768px) {
+  .masonry {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry {
+    column-count: 4;
+  }
+}
+
+.item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.02);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.masonry{
+  column-gap: var(--gallery-gap, 1rem);
+  padding: var(--gallery-pad, 1rem);
+}
+.card{
+  background: var(--gallery-card-bg, #1a1a1a);
+  border: 1px solid var(--gallery-card-border, rgba(255,255,255,.12));
+  border-radius: var(--gallery-card-radius, 12px);
+}
+.title{ color: var(--gallery-title-fg, #fff); }
+.subtitle{ color: var(--gallery-subtitle-fg, rgba(255,255,255,.8)); }
+.item{
+  background-color: var(--gallery-item-bg, white);
+}

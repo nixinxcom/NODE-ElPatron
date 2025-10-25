@@ -1,0 +1,14 @@
+.GeoComp {
+  width: max-content;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  margin: 4px;
+}
+
+.GeolocationComp {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin: 4px;
+}

@@ -1,0 +1,192 @@
+.footer {
+  background-color: var(--tw-bg-opacity, #ffffff);
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--tw-text-opacity, theme('colors.text'));
+  font-family: theme('fontFamily.brand');
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  color: theme('colors.primary.DEFAULT'); /* ahora sí es una string concreta */
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footerRestaurants {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.footerTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: black; /* amarillo suave, puedes cambiarlo */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footerRestaurantsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.footerLink {
+  font-size: 1rem;
+  font-weight: 500;
+  color: red;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid black;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+}
+
+.footerLink:hover,
+.footerLink:focus {
+  background: #facc15;
+  color: #000;
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+/* ==== Auth en footer ==== */
+.footerAuth {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.address{
+  width: max-content;
+}
+
+.footerAuthLink,
+.footerAuthBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  padding: 0 0.625rem;
+  font-size: 0.85rem;
+  line-height: 1;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 120ms ease, background-color 120ms ease, color 120ms ease;
+}
+
+.footerAuthLink:hover,
+.footerAuthBtn:hover {
+  transform: translateY(-1px);
+  background: #000;
+  color: #fff;
+}
+
+.footerAuthBtn:active {
+  transform: translateY(0);
+}
+
+.footerAuthName {
+  font-size: 0.8rem;
+  color: #222;
+  white-space: nowrap;
+  max-width: 10rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .footerAuth { gap: 0.6rem; }
+  .footerAuthLink, .footerAuthBtn {
+    height: 2.1rem;
+    padding: 0 0.7rem;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Tablets */
+@media (min-width: 640px) {
+  .title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Laptops */
+@media (min-width: 1024px) {
+  .footer {
+    padding: 3rem 2rem;
+  }
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.footer{
+  background: var(--footer-bg, var(--tw-bg-opacity, #ffffff));
+  color: var(--footer-fg, var(--tw-text-opacity, #ffffff));
+  font-family: var(--footer-ff, var(--ff, system-ui, sans-serif));
+  padding: var(--footer-pad, 2rem 1rem);
+}
+.title{ color: var(--footer-title-fg, inherit); }
+.text{  color: var(--footer-text-fg, inherit); }
+
+/* ──────────────────────────────────────────────────────────────
+   ADITIVO — extra tokens de espacio/legibilidad (parametrizables)
+   (quita este bloque para volver al look actual)
+   ────────────────────────────────────────────────────────────── */
+
+/* Extrae el padding lateral "px-4" del contenedor inferior */
+.containerPad{
+  padding-left:  var(--footer-container-px, 1rem);  /* px-4 */
+  padding-right: var(--footer-container-px, 1rem);
+}
+
+/* Extrae el gap vertical "gap-y-2" cuando está en columna */
+.rowGapY{
+  row-gap: var(--footer-row-gap, .5rem);            /* gap-y-2 */
+}
+
+/* Texto de copy y notas pequeñas (si lo usas) */
+.copy{
+  opacity: var(--footer-copy-opacity, .8);
+  font-size: var(--footer-copy-size, .875rem);      /* ≈ text-sm */
+  line-height: 1.25rem;
+}

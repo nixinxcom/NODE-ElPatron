@@ -1,0 +1,112 @@
+  import { FbFirestore } from '@/functionalities/Services/firebase';
+  import { collection, doc, setDoc, addDoc, getDoc, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
+  import React from 'react';
+  
+  interface iCreate {
+    action: 'create';
+    docs: Array<Record<string, any>>;
+  }
+  
+  interface iRetrieve {
+    action: 'retrieve';
+    docIds?: Array<string>;
+  }
+  
+  interface iUpdate {
+    action: 'update';
+    docs: Array<{ id: string; data: Record<string, any> }>;
+  }
+  
+  interface iDelete {
+    action: 'delete';
+    docIds: Array<string>;
+  }
+  
+  interface iFirestoreCRUD {
+    crud: iCreate | iRetrieve | iUpdate | iDelete;
+    collection: string;
+    StateToUpdate?: (React.SetStateAction<any> | null);
+  }
+  
+  export default async function FirestoreCRUD(Firestore: iFirestoreCRUD) {
+    switch (Firestore.crud.action) {
+      case 'create':
+        try {
+          const promises = Firestore.crud.docs.map(async (docto) => {
+            if (!docto || typeof docto !== 'object') {
+              throw new Error('Invalid document data');
+            }
+            const docRef = await addDoc(collection(FbFirestore, Firestore.collection), docto);
+            return docRef.id;
+          });
+          const results = await Promise.all(promises);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(results);
+        } catch (error) {
+          console.error('Error creating documents:', error);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(null);
+        }
+        break;
+        
+      case 'retrieve':
+        try {
+          const collectionRef = collection(FbFirestore, Firestore.collection);
+          const querySnapshot = await getDocs(collectionRef);
+          if (querySnapshot.empty) {
+            console.warn(`No documents found in collection: ${Firestore.collection}`);
+            Firestore.StateToUpdate && Firestore.StateToUpdate([]);
+            return [];
+          }
+          const documents = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          Firestore.StateToUpdate && Firestore.StateToUpdate(documents);
+          return documents;
+        } catch (error) {
+          console.error(`Error retrieving documents from collection: ${Firestore.collection}`, error);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(null);
+          return [];
+        }
+        break;
+  
+      case 'update':
+        try {
+          const promises = Firestore.crud.docs.map(async ({ id, data }) => {
+            const docRef = doc(FbFirestore, Firestore.collection, id);
+            const docSnapshot = await getDoc(docRef);
+            if (!docSnapshot.exists()) {
+              console.warn(`Document with id ${id} does not exist in collection ${Firestore.collection}`);
+              return null;
+            }
+            await updateDoc(docRef, data);
+            return id;
+          });
+          const result = (await Promise.all(promises)).filter((id) => id !== null);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(result);
+        } catch (error) {
+          console.error(`Error updating documents in collection: ${Firestore.collection}`, error);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(null);
+        }
+        break;
+  
+      case 'delete':
+        try {
+          const promises = Firestore.crud.docIds.map(async (docId) => {
+            const docRef = doc(FbFirestore, Firestore.collection, docId);
+            const docSnapshot = await getDoc(docRef);
+            if (!docSnapshot.exists()) {
+              console.warn(`Document with id ${docId} does not exist in collection ${Firestore.collection}`);
+              return null;
+            }
+            await deleteDoc(docRef);
+            return docId;
+          });
+          const result = (await Promise.all(promises)).filter((docId) => docId !== null);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(result);
+        } catch (error) {
+          console.error(`Error deleting documents in collection: ${Firestore.collection}`, error);
+          Firestore.StateToUpdate && Firestore.StateToUpdate(null);
+        }
+        break;
+  
+      default:
+        throw new Error(`Invalid CRUD action`);
+    }
+  }

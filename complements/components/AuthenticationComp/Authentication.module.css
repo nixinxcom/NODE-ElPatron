@@ -1,0 +1,203 @@
+#ACloseAuth{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    overflow: auto;
+    backdrop-filter: blur(7px); /* Aplica el desenfoque */
+}
+#ModalSignUp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    user-select: none;
+
+}
+#SignUpLabels{
+    border: 1px solid whitesmoke;
+    padding: 0.35rem;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: auto;
+    z-index: 14;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(11,max-content);
+    grid-template-areas: 
+    'Logo'
+    'Google'
+    'Facebook'
+    'User'
+    'Pssw'
+    'Pssw2'
+    'resetPssw'
+    'StrongPsswCriteria'
+    'Sign'
+    'Email'
+    'TermsPrivacy'
+    ;
+}
+.Sign{
+    grid-area: Sign;
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+.AuthLogo{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 14px 0;
+    box-shadow: 1px 1px 2px rgba(255,255,255,0.35);
+    grid-area: Logo;
+}
+
+#Google{
+    grid-area: Google;
+    background-color: rgba(var(--youtubeX),0.7);
+    margin: 7px auto;
+}
+#Facebook{
+    grid-area: Facebook;
+    background-color: rgba(var(--facebookX),0.7);
+    margin: 7px auto;
+}
+#Google:hover{
+    background-color: rgba(var(--youtubeX),1);
+}
+#Facebook:hover{
+    background-color: rgba(var(--facebookX),1);
+}
+.Inputs{
+    border-radius: 7px;
+    color: black;
+}
+#Email{grid-area: Email;}
+#User{grid-area: User;padding: 7px;}
+#Pssw{grid-area: Pssw;padding: 7px;}
+#Pssw2{grid-area: Pssw2;padding: 7px;}
+#resetPssw{
+    grid-area: resetPssw;
+    padding: 0 7px;
+    text-decoration: underline;
+    font-size: 0.7rem;
+    float:left;
+    text-align: right;
+    color: rgb(var(--white),1);
+    cursor: pointer;    
+}
+.AuthBtn{
+    width: 96%;
+    border-radius: 7px;
+    text-align: center;
+    color: white;
+    display: block;
+    margin: auto;
+    padding: 3.5px;
+    background-color: rgb(var(--bluemateX),0.35);
+    transition: var(--fast);
+    border: 1px solid rgba(var(--white),0.35);
+}
+.AuthBtn:hover{
+    background-color: rgb(var(--bluemateX),0.7);
+}
+.errorMsg{
+    font-size: 0.6rem;
+    text-align: right;
+    margin: 2px;
+    color: rgb(var(--white),1);
+    width: max-content;
+    padding: 0.1px 0.35rem;
+}
+.Warning{
+    animation: SellAttraction calc(var(--slotrans)/2.1) 0s infinite;
+}
+@keyframes SellAttraction{
+    0%{opacity: 1;border: 1px solid rgb(var(--white),0);}
+    50%{opacity: 0.35;border: 1px solid rgb(var(--white),0.7);}
+    100%{opacity: 1;border: 1px solid rgb(var(--white),0);}
+}
+#Email{
+    margin: 7px 0 0 0;
+}
+#Email p,
+#SignUpLabels span{
+    margin: 7px 0 0 0;
+    font-size: 0.7rem;
+    text-align: right;
+    color: rgb(var(--white),1);
+}
+#Email p:nth-child(1){
+    text-shadow: 1px 1px black;
+}
+#StrongPsswCriteria{
+    grid-area: StrongPsswCriteria;
+    margin: 14px 0 0 0;
+}
+#SignUpLabels span{
+    padding: 0px 1rem;
+    margin: 0 7px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    border-radius: 14px;
+    cursor: pointer;
+    background-color: rgb(var(--white),0.4);
+    color: rgb(var(--black),1);
+    transition: var(--fast);
+}
+#SignUpLabels span:hover{
+    background-color: rgb(var(--white),0.8);
+    color: rgb(var(--black),1);
+}
+#SignUpLabels label{
+    color: rgb(var(--white),1);
+    font-size: 0.8rem;
+    text-align: left;
+}
+#SignUpLabels input{
+    width: 300px;
+    width: 100%;
+    padding: 0 7px;
+    font-size: 0.9rem;
+    color: rgb(var(--bluemateX),1);
+    border-bottom: 1px solid rgb(var(--white),0.7);
+    transition: var(--fast);
+}
+#SignUpLabels input:hover{
+    border-radius: 7px;
+    background-color: rgb(var(--white),1);
+}
+.TermsPrivacy {
+    display: flex;
+    justify-content: center;
+    grid-area: TermsPrivacy;
+    margin: auto;
+}
+.TermsPrivacy > a{
+    color: rgb(var(--white),0.5);
+    margin: 0 1rem;;
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+    transition: var(--fast);
+}
+.TermsPrivacy > a:hover{
+    color: rgb(var(--white),1);
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+#ACloseAuth{
+  backdrop-filter: blur(var(--auth-blur, 7px));
+  background: var(--auth-backdrop, transparent);
+}
+#ModalSignUp{
+  background: var(--auth-modal-bg, rgb(var(--bgm), .85));
+  color: var(--auth-modal-fg, rgb(var(--fontcolor)));
+  border-radius: var(--auth-modal-radius, 14px);
+}

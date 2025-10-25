@@ -1,0 +1,263 @@
+.SlidCardContainer{
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    grid-template-rows: max-content max-content max-content;
+    grid-template-areas: 
+        'null top nulo'
+        'left slider right'
+        'vacio bottom empty'
+    ;
+    margin: auto;
+    overflow: hidden;
+}
+.SliderCardLink{
+    position: relative;
+    overflow: hidden;
+    border-radius: 7px;
+    min-width: clamp(70px,7vw,70%);
+    min-height: clamp(70px,7vw,70%);
+    border: 3.5px solid transparent;
+    cursor: pointer;
+    grid-area: slider;
+}
+.MiniGalleryContainer{
+    position: relative;
+    display: block;
+    overflow: auto;
+}
+.CardTitle, .CardDescription,.CardUrl{
+    color:white;
+    white-space: nowrap;
+    background-color: rgb(var(--blackmate),0.5);
+    overflow: hidden;
+    z-index: 1;
+    text-align: center;
+    font-size: 0.6rem;
+    line-height: 1rem;
+    padding: 2px;
+    text-overflow: ellipsis;
+    position: absolute;
+}
+.CardTitle{
+    max-width: 70%;
+    border-bottom-right-radius: 7px;
+    left: 0px;
+    top: 0px;
+}
+.CardUrl{
+    max-width: 28%;
+    border-bottom-left-radius: 7px;
+    right: 0px;
+    top: 0px;
+}
+.CardDescription{
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+}
+.PrvImgSlideCard,
+.NxtImgSlideCard{
+    position: absolute;
+    width: 1rem;
+    padding: 10px;
+    font-weight: 900;
+    font-size: larger;
+    background-color: rgb(var(--whitemate),0.3);
+    color: rgb(var(--bluemate),1);
+    justify-content: center;
+    display: flex;
+    bottom: 35%;
+    transition: var(--fastrans);
+    z-index: 1;
+}
+.PrvImgSlideCard{
+    border-radius: 0 50% 50% 0;
+    left: 0px;
+}
+.NxtImgSlideCard{
+    border-radius: 50% 0 0 50%;
+    right: 0px;
+}
+.PrvImgSlideCard:hover,
+.NxtImgSlideCard:hover{
+    background-color: rgb(var(--whitemate),0.7);
+    color: transparent;
+}
+.GalleriesContainer{
+    display: flex;
+    margin: auto;
+    flex-wrap: nowrap;
+    background-color: transparent;
+    border-radius: 3.5px;
+    border: 3.5px solid transparent;
+    gap: 3.5px;
+    overflow: auto;
+}
+.SlideImage1{
+    flex: 0 0 auto;
+    position: relative;
+    display: block;
+    border-radius: 7px;
+    overflow: hidden;
+}
+.MoreGalleries{
+    position: absolute;
+    width: 1rem;
+    display: block;
+    border-radius: 100%;
+    color: rgb(var(--whitemate),1);
+    top: 7%;
+    left: calc(50% - .5rem);
+    transition: var(--fastrans);
+    z-index: 1;
+    margin: auto;
+}
+
+/* Grupo para dispositivos iPhone 5 a iPhone 12 Max en orientación vertical */
+@media only screen and (max-device-width: 428px) and (orientation: portrait) {
+
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.SliderCardLink{
+  border-radius: var(--slider-card-radius, 7px);
+}
+.NxtImgSlideCard,
+.PrvImgSlideCard{
+  color: var(--slider-arrow-fg, rgb(var(--whitemate),1));
+}
+
+/* ─────────────────────────────────────────────────────────
+   ADITIVO — Parametrización por variables (preserva look actual)
+   ⛔ No usa :global(:root); tema con scope local + :global(html.dark|light)
+   Categorías: colores, tiempos, espacios, fuentes, radios, sombras
+   ───────────────────────────────────────────────────────── */
+
+/* Contenedor de la tarjeta/slider */
+.SlidCardContainer{
+  /* espacios y layout */
+  gap: var(--slider-grid-gap, 0.75rem);
+  padding: var(--slider-grid-pad, 0);
+  /* transición suave para hover/entradas si aplica */
+  transition: opacity var(--slider-trans-fast, 180ms ease-out);
+}
+
+/* Link/tarjeta clickeable (superficie principal) */
+.SliderCardLink{
+  background: var(--slider-card-bg, transparent);
+  border: var(--slider-card-border, 0 solid transparent);
+  border-radius: var(--slider-card-radius, 7px);
+  box-shadow: var(--slider-card-shadow, 0 1px 2px rgba(0,0,0,.08));
+  transition: transform var(--slider-trans-fast, 180ms ease-out),
+              box-shadow var(--slider-trans-fast, 180ms ease-out),
+              background-color var(--slider-trans-fast, 180ms ease-out);
+}
+.SliderCardLink:hover{
+  box-shadow: var(--slider-card-shadow-hover, 0 6px 18px rgba(0,0,0,.22));
+  transform: translateY(-1px);
+}
+
+/* Título (sobreimpreso o bloque superior) */
+.CardTitle{
+  color: var(--slider-title-fg, rgb(var(--whitemate), 1));
+  font-size: var(--slider-title-size, 1.125rem);
+  line-height: var(--slider-title-lh, 1.5rem);
+  font-weight: var(--slider-title-weight, 700);
+  text-shadow: var(--slider-title-shadow, 0 1px 2px rgba(0,0,0,.35));
+  margin: var(--slider-title-m, 0);
+}
+
+/* Subtítulo si existe (usa mismo selector del archivo si lo tienes) */
+.CardSubtitle{
+  color: var(--slider-subtitle-fg, rgba(255,255,255,.9));
+  font-size: var(--slider-subtitle-size, .95rem);
+  line-height: var(--slider-subtitle-lh, 1.375rem);
+  font-weight: var(--slider-subtitle-weight, 600);
+  text-shadow: var(--slider-subtitle-shadow, 0 1px 2px rgba(0,0,0,.35));
+  margin: var(--slider-subtitle-m, 0);
+}
+
+/* Descripción corta / banda inferior */
+.CardDescription{
+  color: var(--slider-desc-fg, rgba(255,255,255,.95));
+  background: var(--slider-desc-bg,
+    linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0))
+  );
+  padding: var(--slider-desc-pad, .5rem .75rem);
+  text-shadow: var(--slider-desc-shadow, 0 1px 2px rgba(0,0,0,.35));
+}
+
+/* Icono/enlace a URL externa (ancla) */
+.CardUrl{
+  color: var(--slider-url-fg, rgb(var(--whitemate), 1));
+  background: var(--slider-url-bg, rgba(0,0,0,.25));
+  border: 1px solid var(--slider-url-border, rgba(255,255,255,.18));
+  border-radius: var(--slider-url-radius, 10px);
+  padding: var(--slider-url-pad, .25rem .4rem);
+  transition: background-color var(--slider-trans-fast, 180ms ease-out),
+              opacity var(--slider-trans-fast, 180ms ease-out);
+}
+.CardUrl:hover{
+  background: var(--slider-url-bg-hover, rgba(0,0,0,.35));
+  opacity: var(--slider-url-opacity-hover, 1);
+}
+
+/* Arrows anterior/siguiente */
+.PrvImgSlideCard,
+.NxtImgSlideCard{
+  background: var(--slider-arrow-bg, rgba(0,0,0,.30));
+  color: var(--slider-arrow-fg, rgb(var(--whitemate),1));
+  border: 1px solid var(--slider-arrow-border, rgba(255,255,255,.18));
+  border-radius: var(--slider-arrow-radius, 12px);
+  backdrop-filter: var(--slider-arrow-blur, saturate(140%) blur(2px));
+  transition: background-color var(--slider-trans-fast, 180ms ease-out),
+              transform var(--slider-trans-fast, 180ms ease-out),
+              opacity var(--slider-trans-fast, 180ms ease-out);
+}
+.PrvImgSlideCard:hover,
+.NxtImgSlideCard:hover{
+  background: var(--slider-arrow-bg-hover, rgba(0,0,0,.42));
+  transform: translateY(-1px);
+}
+
+/* Badge “más galerías” (si aplica) */
+.MoreGalleries{
+  color: var(--slider-badge-fg, rgb(var(--whitemate),1));
+  background: var(--slider-badge-bg, rgba(0,0,0,.32));
+  border: 1px solid var(--slider-badge-border, rgba(255,255,255,.18));
+  border-radius: var(--slider-badge-radius, 12px);
+  padding: var(--slider-badge-pad, .25rem .5rem);
+  text-shadow: var(--slider-badge-shadow, 0 1px 2px rgba(0,0,0,.35));
+}
+
+/* Imagen (capa visual) */
+.SlideImage,
+.SlideImage1{
+  border-radius: var(--slider-image-radius, 7px);
+  background: var(--slider-image-bg, #000); /* evita flash blanco */
+  box-shadow: var(--slider-image-shadow, 0 2px 10px rgba(0,0,0,.25));
+}
+
+/* Contenedor de “otras galerías” si existe */
+.GalleriesContainer{
+  gap: var(--slider-gals-gap, .5rem);
+  padding: var(--slider-gals-pad, .25rem);
+  background: var(--slider-gals-bg, transparent);
+  border-radius: var(--slider-gals-radius, 8px);
+}
+
+/* Tema */
+:global(html.light) .SliderCardLink{
+  background: var(--slider-card-bg-light, transparent);
+  border-color: var(--slider-card-border-light, rgba(0,0,0,.12));
+  box-shadow: var(--slider-card-shadow-light, 0 1px 2px rgba(0,0,0,.06));
+}
+:global(html.dark) .SliderCardLink{
+  background: var(--slider-card-bg-dark, transparent);
+  border-color: var(--slider-card-border-dark, rgba(255,255,255,.12));
+  box-shadow: var(--slider-card-shadow-dark, 0 1px 2px rgba(0,0,0,.22));
+}
+
+.rounded{ border-radius: var(--slider-rounded, .5rem); }

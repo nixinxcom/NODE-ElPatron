@@ -1,0 +1,281 @@
+.detailsContainer {
+  display: flex;
+  flex-direction: row;        /* 👈 distribución horizontal */
+  flex-wrap: wrap;            /* permite que se ajuste si es necesario */
+  gap: 1rem;                  /* separación entre elementos */
+  justify-content: center;   /* centra los elementos horizontalmente */
+  align-items: flex-start;   /* alinea al inicio vertical */
+  background: white;
+  color: #000;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* Mobile-first modal backdrop */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* difuminado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Panel central que contiene el video */
+.panel {
+  background: transparent; /* el fondo lo da el backdrop; panel transparente para ver blur si quieres */
+  border-radius: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+/* Header con botón cerrar */
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  pointer-events: auto;
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: none;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Area del video: ocupa el espacio disponible */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  width: 100%;
+}
+
+/* video nativo responsivo */
+.video {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  display: block;
+  outline: none;
+}
+
+/* iframe responsivo */
+.iframe {
+  width: 100%;
+  height: 56.25vw; /* 16:9 por defecto (ajusta con media queries abajo) */
+  max-height: 80vh;
+  max-width: 100%;
+  border: none;
+  display: block;
+}
+
+/* hidden focus helper */
+.hiddenFocus {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  border: 0;
+}
+
+/* Media queries: ajustar tamaño y relaciones */
+
+/* Móviles pequeños: altura mayor para video vertical */
+@media (max-width: 420px) {
+  .iframe {
+    height: 70vh;
+  }
+}
+
+/* Tablets: limitar altura y mantener relación 16:9 más ancha */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .panel {
+    border-radius: 14px;
+  }
+  .iframe {
+    height: calc(60vh);
+  }
+}
+
+/* Desktop: panel centrado, más ancho */
+@media (min-width: 1025px) {
+  .panel {
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 16px;
+  }
+  .iframe {
+    height: calc(60vh);
+  }
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.detailsContainer{
+  background: var(--player-details-bg, #ffffff);
+  color: var(--player-details-fg, #000000);
+  border: 1px solid var(--player-details-border, transparent);
+  border-radius: var(--player-details-radius, 12px);
+}
+.backdrop{
+  background: var(--player-backdrop, rgba(0,0,0,.5));
+}
+.panel{
+  background: var(--player-panel-bg, #111);
+  color: var(--player-panel-fg, #fff);
+}
+
+/* ADITIVO — parametrización por variables (quita este bloque para volver al look actual)
+   PlayerComp: colores, espacios, tiempos, radios, y tamaños via --player-*
+   ⛔ No usa :global(:root); tema con scope local a la clase + :global(html.dark|light)
+*/
+
+/* ===== Base “tokens de consumo” con fallbacks que preservan el look actual ===== */
+:where(.backdrop){
+  background: var(--player-backdrop, rgba(0,0,0,.55));
+  transition: opacity var(--player-trans-fast, 180ms ease-out);
+}
+
+:where(.panel){
+  background: var(--player-panel-bg, #111);
+  color: var(--player-panel-fg, #fff);
+  border: 1px solid var(--player-panel-border, rgba(255,255,255,.12));
+  border-radius: var(--player-panel-radius, 16px);
+  box-shadow: var(--player-panel-shadow, 0 12px 32px rgba(0,0,0,.45));
+  padding: var(--player-panel-pad, 1rem);
+  outline: none;
+  transition: transform var(--player-trans-fast, 180ms ease-out),
+              opacity var(--player-trans-fast, 180ms ease-out),
+              background-color var(--player-trans-medium, 260ms ease-out);
+}
+
+/* Tamaños del panel (antes estaba inline en el TSX) */
+.panelFit{
+  max-width: var(--player-panel-max-w, 1200px);
+  width: var(--player-panel-w, 95%);
+  max-height: var(--player-panel-max-h, 90vh);
+}
+
+/* Encabezado del modal */
+:where(.header){
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--player-header-gap, .75rem);
+  padding: var(--player-header-pad, .5rem .75rem);
+  border-bottom: 1px solid var(--player-header-border, rgba(255,255,255,.08));
+}
+
+/* Botón cerrar */
+:where(.closeBtn){
+  appearance: none;
+  background: var(--player-close-bg, transparent);
+  color: var(--player-close-fg, #fff);
+  border: 1px solid var(--player-close-border, transparent);
+  border-radius: var(--player-close-radius, 10px);
+  padding: var(--player-close-pad, .375rem .5rem);
+  opacity: var(--player-close-opacity, .9);
+  cursor: pointer;
+  transition: opacity var(--player-trans-fast, 180ms ease-out),
+              background-color var(--player-trans-fast, 180ms ease-out),
+              transform var(--player-trans-fast, 180ms ease-out);
+}
+:where(.closeBtn):hover{
+  opacity: var(--player-close-hover-opacity, 1);
+}
+:where(.closeBtn):active{
+  transform: translateY(1px) scale(.98);
+}
+:where(.closeBtn):focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px var(--player-focus-ring, rgba(59,130,246,.45));
+}
+
+/* Contenido del modal (frame + detalles) */
+:where(.content){
+  display: grid;
+  gap: var(--player-content-gap, .75rem);
+  padding: var(--player-content-pad, .75rem);
+}
+
+/* Detalles complementarios (texto debajo/lateral del player) */
+:where(.detailsContainer){
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--player-details-gap, 1rem);
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--player-details-bg, #ffffff);
+  color: var(--player-details-fg, #000000);
+  padding: var(--player-details-pad, .5rem 1rem);
+  margin-top: var(--player-details-mt, 1rem);
+  max-width: 100%;
+  overflow: visible;
+  border: 1px solid var(--player-details-border, rgba(0,0,0,.08));
+  border-radius: var(--player-details-radius, 12px);
+}
+
+/* Elementos de reproducción */
+:where(.video),
+:where(.iframe){
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  border-radius: var(--player-media-radius, 12px);
+  background: var(--player-media-bg, #000); /* evita flashes blancos */
+  box-shadow: var(--player-media-shadow, 0 4px 16px rgba(0,0,0,.25));
+}
+
+/* Altura base 16:9 para iframe con fallback responsivo */
+:where(.iframe){
+  height: var(--player-iframe-h, 56.25vw); /* 16:9 */
+  max-height: var(--player-iframe-max-h, 80vh);
+}
+
+/* Accesibilidad: elemento para gestionar foco (mantener oculto pero accesible) */
+:where(.hiddenFocus){
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+  overflow: hidden; white-space: nowrap;
+}
+
+/* ===== Tema (opcional): scope local + :global ===== */
+:global(html.dark) .panel{
+  background: var(--player-panel-bg-dark, var(--player-panel-bg, #111));
+  color: var(--player-panel-fg-dark, var(--player-panel-fg, #fff));
+}
+
+:global(html.light) .panel,
+:global(html:not(.dark)) .panel{
+  background: var(--player-panel-bg-light, #fff);
+  color: var(--player-panel-fg-light, #111);
+  border-color: var(--player-panel-border-light, rgba(0,0,0,.12));
+}
+
+:global(html.light) .detailsContainer,
+:global(html:not(.dark)) .detailsContainer{
+  background: var(--player-details-bg-light, #fff);
+  color: var(--player-details-fg-light, #111);
+  border-color: var(--player-details-border-light, rgba(0,0,0,.10));
+}

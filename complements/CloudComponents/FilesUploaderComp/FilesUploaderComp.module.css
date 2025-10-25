@@ -1,0 +1,148 @@
+#DctoCompContainer{
+    width: max-content;
+    max-width: 95%;
+    min-width: min-content;
+    min-height: min-content;
+    position: relative;
+    border-radius: 14px;
+    margin: 2.8rem auto;
+    padding: 7px;
+    background-color: rgb(var(--basecolor),1);
+    color:white;
+    transition: var(--fast);
+    overflow: auto;
+}
+.DocumentSelector{
+    position: relative;
+    margin: 0px 3.5px 7px 3.5px;
+    font-size: 0.8rem;
+    border: 1px dashed rgb(210,210,210,0.21);
+    overflow: hidden;
+    border-radius: 7px;
+}
+.FileSelector{
+    visibility: hidden;
+}
+.DctoCompForm{
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content:space-evenly;
+}
+.SelLabel{
+    display: block;
+    cursor: pointer;
+    padding: 3.5px;
+    width: 100%;
+    height: 100%;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    text-align: center;
+}
+.DctoPreview{
+    border: 1px solid white;
+    border-radius: 7px;
+    margin: 0px 3.5px 7px 3.5px;
+    height: max(min-content, auto, 20px);
+    width: max(min-content, auto, 20px);
+    position: relative;
+    overflow: hidden;
+    font-size: 0.8rem;
+    display: flex;
+    padding: 7px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.ImgPreview{
+    position: relative;
+    margin: 0px 3.5px 7px 3.5px;
+    width: 100px;
+    height: 100px;
+    font-size: 0.8rem;
+    border-radius: 7px;
+    overflow: hidden;
+}
+.SpanDelete::before{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    text-align: center;
+    transition: var(--fast);
+    z-index: 1;
+}
+.SpanDelete::before{
+    content: 'X';
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+    border-radius:  0 7px;
+    color: white;
+    background-color: rgb(var(--redX),0.5);
+}
+
+.blockquote::after {
+    position: absolute;
+    text-align: center;
+    content: attr(cite);
+    transition: var(--fast);
+    height: 100%;
+    width: 100%;
+    right: 0;
+    font-size: 0.7rem;
+    cursor:alias;
+    border-radius: 7px;
+    color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-weight: 300;
+    z-index: 1;
+    background-color: rgb(var(--redX),0.35);
+}
+.SpanContain{
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgb(var(--redX),0.7);
+    text-align: center;
+    font-size: x-small;
+    border-radius: 7px;
+    margin: 0px 3.5px 7px 3.5px;
+}
+#SubmitImages{
+    display: block;
+    width: max-content;
+    margin: auto;
+    padding: 7px;
+    border-radius: 12px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid rgb(var(--fontcolor),0.21);
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    box-shadow: 1px 1px 3.5px rgb(var(--fontcolor),0.1);
+    transition: var(--fast);
+    background-color: rgb(var(--bluemate),0.7);
+    color: rgb(var(--fontcolor),1);
+}
+#SubmitImages:hover{
+    background-color: rgb(var(--bluemate),0.7);
+    text-shadow: 7px 7px 7px rgb(var(--basecolor),1);
+    border: 1px solid white;
+}
+.SpanVerified::before{
+    display: none;
+}
+.SpanVerified{
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    width: 25px;
+    height: 21px;
+    border-radius:  0 7px;
+    color: white;
+    background-color: rgb(var(--fontcolor),0.7);
+}
+.DocVerified{
+    width: 100%;
+    height: 100%;
+}

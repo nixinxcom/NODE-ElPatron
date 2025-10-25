@@ -1,0 +1,74 @@
+.backgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+.backgroundMedia {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    border: none; /* Asegura que el iframe no tenga bordes */
+}
+
+.blocker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 1; /* Asegura que el bloqueador esté sobre el video */
+}
+
+.muteButton {
+    position: absolute;
+    bottom: 7px; /* Ajusta según tu preferencia */
+    left: 7px; /* Ajusta según tu preferencia */
+    padding: 3px 20px;
+    background-color: rgba(70, 140, 210, 0.5);
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 2; /* Asegura que el botón esté sobre el bloqueador */
+}
+
+.muteButton:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.backgroundContainer{
+  z-index: var(--bgm-z, 0);
+}
+.backgroundMedia{
+  object-fit: var(--bgm-fit, cover);
+  background-position: var(--bgm-pos, center);
+  background-size: var(--bgm-size, cover);
+  border: var(--bgm-border, none);
+}
+.overlay{
+  background: var(--bgm-overlay, rgba(0,0,0,0.35));
+}
+.blocker{
+  background: var(--bgm-blocker, rgba(0,0,0,0.3));
+}
+.muteButton{
+  bottom: var(--bgm-mute-bottom, 7px);
+  left: var(--bgm-mute-left, 7px);
+  padding: var(--bgm-mute-pad, 3px 20px);
+  background-color: var(--bgm-mute-bg, rgba(70,140,210,0.5));
+  color: var(--bgm-mute-fg, #ffffff);
+  border: 1px solid var(--bgm-mute-border, #ffffff);
+  border-radius: var(--bgm-mute-radius, 5px);
+}
+.muteButton:hover{
+  background-color: var(--bgm-mute-hover-bg, rgba(0,0,0,0.7));
+}

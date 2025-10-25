@@ -1,0 +1,56 @@
+.LangsContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    width: max-content;
+    border: 1px solid white;
+    border-radius: 7px;
+    padding: 2px;
+    z-index: 300;
+    font-size: 0.7rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.Lngdiv {
+    margin: 7px;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: var(--fast);
+}
+
+.Lngdiv:hover {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 14px;
+    background-color: rgba(var(--bluemateX), 0.35);
+}
+
+.minimized {
+    padding: 0px;
+    border-radius: 50%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+
+.minimized .Lngdiv {
+    margin: 0;
+    padding: 0;
+}
+
+.minimized .LngLgnd {
+    display: none;
+}
+
+.expanded {
+    border-radius: 14px;
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.LangsContainer{
+  border: 1px solid var(--i18n-border, #ffffff);
+  border-radius: var(--i18n-radius, 7px);
+  background: var(--i18n-bg, transparent);
+  color: var(--i18n-fg, inherit);
+}

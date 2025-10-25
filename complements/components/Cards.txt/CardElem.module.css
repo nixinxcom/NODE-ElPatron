@@ -1,0 +1,336 @@
+.AddContainer{
+    position: relative;
+    width: max-content;
+    height: min-content;
+    margin: auto;
+}
+.CardContainer{
+    position: relative;
+    width: min-content;
+    height: 500px;
+    margin: 7px;
+}
+.FrontContainer{
+    position: relative;
+    overflow: hidden;
+    padding: 7px;
+    border-radius: 10px;
+    margin: auto;
+    background-color: rgba(27, 73, 85, 0.35);
+    border: 1px solid rgba(255,255,255,0.35);
+    width: 100%;
+    height: min-content;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(6,min-content);
+    grid-template-areas: 
+        'Contact        Carrusel     Price       Price'
+        'MediaPlay      Stick       Stick       Logo'
+        'Multimedia     Multimedia  Multimedia  Multimedia'
+        'Title          Title       Title     Details'
+        'SocMedia       SocMedia    SocMedia   SocMedia'
+        'Platforms      Platforms   Platforms  Platforms'
+    ;
+}
+.Carrusel{
+    grid-area: Carrusel;
+    position: relative;
+    margin-left: auto;
+    border-radius: 4px;
+    width: 35%;
+    height: 100%;
+    background-color: white;
+    user-select: none;
+}
+.SocialMediaContainer{
+    grid-area: SocMedia;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: 3.5px 0 0 0;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 50px;
+    padding: 3.5px;
+    gap: 5px;
+}
+.PlatformsContainer{
+    grid-area: Platforms;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: 3.5px 0 0 0;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 50px;
+    padding: 3.5px;
+    gap: 5px;
+    user-select: none;
+}
+.DeliveryIcon{
+    position: relative;
+    overflow: hidden;
+    border-radius: 100%;
+    width: 28px;
+    height: 28px;
+    margin: 2px;
+}
+.ImgCont{
+    width: max-content;
+    height: max-content;
+    align-content: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: auto;
+    grid-area: Multimedia;
+    user-select: none; 
+}
+.FrontContainer:hover .Logotype,
+.FrontContainer:hover .MediaPlayer {
+    opacity: 0.7;
+}
+.Logotype{
+    width: 40px;
+    height: 40px;
+    grid-area: Logo;
+    border-radius: 7px;
+    border: 1px solid white;
+    box-shadow: -1px 1px 1px whitesmoke;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    transition: 0.7s;
+    user-select: none;
+}
+.Logotype > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.MediaPlayer{
+    width: 40px;
+    height: 40px;
+    background-color: rgba(10,10,10,0.7);
+    grid-area: MediaPlay;
+    border-radius: 7px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 1px whitesmoke;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    left: 0px;
+    cursor: pointer;
+    transition: 0.7s;
+    user-select: none;
+}
+.blocker{
+    position: absolute;
+    background-color: none;
+    z-index: 1;
+}
+.Title{
+    grid-area: Title;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    left: 0px;
+    bottom: 0px;
+    margin: 7px;
+    text-transform: capitalize;
+    font-size: x-large;
+    align-content: center;
+    user-select: none; 
+}
+.Details{
+    grid-area: Details;
+    border: 1px solid white;
+    border-radius: 100%;
+    padding: 3px;
+    text-align: center;
+    width: max-content;
+    text-transform: capitalize;
+    align-content: center;
+    user-select: none; 
+}
+.Price{
+    grid-area: Price;
+    padding: 3.5px;
+    right: 0px;
+    top: 0px;
+    text-align: right;
+    user-select: none; 
+}
+.Contact{
+    grid-area: Contact;
+    padding: 3.5px;
+    right: 0px;
+    top: 0px;
+    text-align: left;
+    text-transform: uppercase;
+    border-radius: 7px 7px 0 0;
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    width: min-content;
+    padding: 0 7px;
+    margin: 3px;
+    cursor: pointer;
+    user-select: none; 
+}
+.StatusEnabled{
+    display: none;
+}
+.StatusDisabled{
+    position: absolute;
+    border:1px solid darkred;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed;
+    z-index: 700;
+}
+.ContactInfoContainer{
+    position: absolute;
+    left: 0;
+    text-transform: capitalize;
+    width: 100%;
+    z-index: 10;
+    padding: 0.7rem;
+    transition: 0.3s;
+}
+.Flex > input{
+    width: fit-content;
+    margin: 3px 0;
+    color: black;
+    text-align: left;
+    text-indent: 7px;
+    border-radius: 3px;
+    white-space: nowrap; /* Evita que el texto salte a la siguiente línea */
+    text-overflow: ellipsis; /* Agrega "..." si el texto es demasiado largo */
+    overflow: hidden;
+}
+.ContactInfoContainer > button{
+    margin: 7px 0;
+    width: 100%;
+    right: 0;
+    border: 1px solid white;
+    text-align: center;
+    border-radius: 7px;
+}
+.Flex{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content:space-between;
+    align-items: center;
+}
+.Ranking{
+    overflow: hidden;
+    position: absolute;
+    top: -35px;
+    left: 40%;
+    width: 40px;
+    height: 40px;
+    margin: 3.5px auto;
+    cursor: crosshair;
+    user-select: none;
+}
+.Rank{
+    position: absolute;
+    text-align: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    color: white;
+    border-radius: 100%;
+    border: 1px solid black;
+    user-select: none; 
+}
+
+/* Estilos de la parte posterior del anuncio */
+
+.BackContainer{
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: auto;
+    background-color: rgba(27, 73, 85, 0.35);
+    border: 1px solid rgba(255,255,255,0.35);
+    display: grid;
+    grid-template-columns: 1fr, min-content, min-content, 1fr;
+    grid-template-rows: min-content, 50%, auto;
+    grid-template-areas: 
+        'Contact        Link            Stick           Regresar'
+        'Mapa           Mapa            Mapa            Mapa'
+        'Description    Description     Description     Description'
+    ;
+}
+.Description {
+    grid-area: Description;
+    padding: 7px;
+    overflow: auto;
+    line-height: 1.4; /* Altura de línea para mejorar la legibilidad */
+    overflow-wrap: break-word; /* Rompe palabras largas */
+    word-wrap: break-word; 
+    white-space: normal; /* Permite el salto de línea */
+}
+.Link{
+    grid-area: Link;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    margin: 3.5px;
+}
+.StickyIcon{
+    grid-area: Stick;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    margin: 3.5px;
+}
+.MapContainer{
+    grid-area: Mapa;
+    overflow: hidden;
+}
+.Return{
+    grid-area: Regresar;
+    top: 0px;
+    justify-self: end;
+    border-radius: 7px 7px 0 0;
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    width: min-content;
+    padding: 0 4px;
+    margin: 3px;
+    cursor: pointer;
+    user-select: none; 
+}
+
+/* Estilos del popup del anuncio */
+
+.ScreenPopupContainer{
+    position: relative;
+    border:1px solid green;
+    display: none;
+    width: 200px;
+    height: 200px; 
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.FrontContainer{
+  background: var(--card-front-bg, transparent);
+  border: 1px solid var(--card-front-border, rgba(255,255,255,.15));
+  border-radius: var(--card-front-radius, 7px);
+}
+.AdTitle{
+  color: var(--card-title-fg, inherit);
+}
+.AdDescription{
+  color: var(--card-desc-fg, inherit);
+}
+.ScreenPopupContainer{
+  border-color: var(--card-popup-border, green);
+}

@@ -1,0 +1,27 @@
+/* ADITIVO: parametrización por variables; elimina este bloque para volver al look actual */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--theme-toggle-radius, 0.75rem);
+  padding: var(--theme-toggle-pad, 6px);
+  background: var(--theme-toggle-bg, rgba(255,255,255,0.07));
+  transition: background-color var(--trans-fast, 180ms ease-out),
+              opacity var(--trans-fast, 180ms ease-out),
+              transform 120ms ease-out;
+}
+.btn:hover{ background: var(--theme-toggle-hover-bg, rgba(255,255,255,0.12)); }
+.btn:active{ transform: scale(0.96); }
+
+.icon{
+  width: var(--theme-toggle-size, 28px);
+  height: var(--theme-toggle-size, 28px);
+  display: block;
+}
+
+.floating{
+  position: fixed;
+  right: var(--theme-toggle-right, 12px);
+  bottom: var(--theme-toggle-bottom, 12px);
+  z-index: var(--theme-toggle-z, 9999);
+}

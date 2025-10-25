@@ -1,0 +1,127 @@
+.page {
+  --bg: #0b0f14;
+  --surface: #10161f;
+  --muted: #121a24;
+  --text: #eaf2f8;
+  --sub: #a9b8c7;
+  --primary: #18a0fb;
+  --accent: #ffb703;
+  --border: #233043;
+
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 0 16px 64px;
+}
+
+.h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 20px;
+}
+
+.tab {
+  background: var(--muted);
+  color: var(--text);
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tab[aria-selected="true"] {
+  background: var(--primary);
+  color: #061018;
+  border-color: transparent;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 6px 22px rgba(0,0,0,.25);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.grid1 { display: grid; gap: 12px; }
+
+/* ← NO selectores puros. Todo con clases locales */
+.fieldset {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 8px 0;
+}
+.legend {
+  color: var(--sub);
+  padding: 0 8px;
+}
+
+.label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--sub);
+}
+
+.input {
+  width: 100%;
+  background: #0f1520;
+  color: var(--text);
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+}
+.textarea {
+  composes: input;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.rowKV {
+  display: grid;
+  grid-template-columns: 2fr 3fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  background: var(--muted);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btnPrimary { background: var(--primary); color: #061018; border-color: transparent; }
+.btnGhost   { background: transparent; border-color: var(--border); }
+.btnDanger  { background: #2a1212; border-color: #5c1f1f; }
+
+.toolbar { display: flex; gap: 8px; margin-top: 8px; }
+
+.notice {
+  background: #2b1e12;
+  color: #ffcf89;
+  border: 1px solid #5a412b;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.status { font-size: 13px; color: var(--sub); margin-top: 8px; }

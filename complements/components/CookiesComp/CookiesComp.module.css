@@ -1,0 +1,106 @@
+.coockieWindow{
+    position:fixed;
+    width:90%;
+    height:80%;
+    top: 1rem;
+    left: 1rem;
+    border: 10px solid silver;
+    border-radius: 14px;
+    z-index:10;
+    text-align:center;
+    vertical-align:middle;
+    padding:2rem;
+    background-color:rgb(var(--basecolor),1);
+    box-shadow:  0px 0px 12px -2px rgba(255,255,255,0.43);
+    overflow:hidden;
+}
+.CookiePoint{
+    position: fixed;
+    font-size: 0.7rem;
+    color: white;
+    width: max-content;
+    max-width: 180px;
+    text-align: center;
+    background-color: rgb(var(--basecolor),1);
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 14;
+    height: max-content;
+    margin: auto;
+    padding: 7px;
+    border-radius: 7px;
+    border: 1px solid white;
+    transition: var(--fast);
+    box-shadow:  0px 0px 12px -2px rgba(255,255,255,0.43);
+}
+.Btns{
+    height: max-content;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    padding: 3.5px;
+    margin: 0.3rem 0;
+    border-radius: 21px;
+}
+.cookieBtn{
+    width: max-content;
+    font-size: 0.7rem;
+    margin: 7px 3.5px 0 3.5px;
+    border: 1px solid rgb(var(--bluemate),1);
+    padding: 3.5px 7px;
+    cursor: pointer;
+    text-align: center;
+    background-color: rgb(var(--bluemate),0.5);
+    border-radius: 7px;
+    font-weight: lighter;
+    color: white;
+}
+#cookiesnotification{
+    font-size: 0.7rem;
+    cursor: pointer;
+    border-radius: 7px;
+    padding: 3.5px;
+    transition: var(--fast);
+}
+.cookieBtn:hover{
+    transition: var(--fast);
+    background-color: rgb(var(--bluemate),1);
+    color: white;
+}
+.CookieLegend{
+    font-weight: 700;
+    max-width: 210px;
+    word-wrap: break-word;
+}
+.BtnLegend{
+    font-weight: lighter;
+    color: white;
+}
+.contract{
+    padding: 7px;
+    width: calc(100% - 14px);
+    height: calc(100% - 14px);
+    border: 1px solid rgb(var(--fontcolor));
+    overflow: auto;
+    top: 0px;
+    text-align: justify;
+    left: 0px;
+    color: rgb(var(--fontcolor),1);
+    background-color: rgb(var(--basecolor),1);
+}
+#Coockimage{
+    position: absolute;
+}
+
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.coockieWindow{
+  border-color: var(--cookies-window-border, silver) !important;
+  box-shadow: var(--cookies-window-shadow, 0 0 12px -2px rgba(255,255,255,.43)) !important;
+}
+.contract{
+  border-color: var(--cookies-contract-border, rgb(var(--fontcolor))) !important;
+  background-color: var(--cookies-contract-bg, rgb(var(--basecolor))) !important;
+  color: var(--cookies-contract-fg, rgb(var(--fontcolor))) !important;
+}

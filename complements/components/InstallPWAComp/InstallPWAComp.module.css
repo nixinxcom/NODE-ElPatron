@@ -1,0 +1,130 @@
+
+.InstallPWA {
+  position: fixed;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  appearance: none;
+  background-color: #FFFFFF;
+  border-width: 0;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Clarkson,Helvetica,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1em;
+  margin: 7px;
+  opacity: 1;
+  outline: 0;
+  padding: 1.5em 2.2em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-rendering: geometricprecision;
+  text-transform: uppercase;
+  transition: opacity 300ms cubic-bezier(.694, 0, 0.335, 1),background-color 100ms cubic-bezier(.694, 0, 0.335, 1),color 100ms cubic-bezier(.694, 0, 0.335, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.InstallPWA:before {
+  animation: opacityFallbackOut .5s step-end forwards;
+  backface-visibility: hidden;
+  background-color: #EBEBEB;
+  clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateZ(0);
+  transition: clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1), -webkit-clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1);
+  width: 100%;
+}
+
+.InstallPWA:hover:before {
+  animation: opacityFallbackIn 0s step-start forwards;
+  clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+}
+
+.InstallPWA:after {
+  background-color: #FFFFFF;
+}
+
+.InstallPWA span {
+  z-index: 1;
+  position: relative;
+}
+
+
+/* ADITIVO: parametrización por variables (elimina este bloque para volver) */
+.InstallPWA{
+  background-color: var(--pwa-btn-bg, #ffffff);
+  color: var(--pwa-btn-fg, #000000);
+  border-radius: var(--pwa-btn-radius, 14px);
+  box-shadow: var(--pwa-btn-shadow, 0 0 0 rgba(0,0,0,0));
+}
+.InstallPWA:after{
+  background-color: var(--pwa-btn-after-bg, #ffffff);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   ADITIVO — Themificación por variables (no altera el look actual)
+   Quita este bloque para volver al estado anterior.
+   ────────────────────────────────────────────────────────────── */
+
+/* Botón principal */
+.InstallPWA{
+  /* Colores y superficie (fallan a tu look actual) */
+  background: var(--pwa-btn-bg, #ffffff);
+  color: var(--pwa-btn-fg, #000000);
+  border-radius: var(--pwa-btn-radius, 14px);
+  box-shadow: var(--pwa-btn-shadow, 0 0 0 rgba(0,0,0,0));
+
+  /* Espacios/legibilidad (parametrizables si lo requieres) */
+  padding: var(--pwa-btn-pad, 10px 16px);
+  border: var(--pwa-btn-border, none);
+  transition: opacity var(--trans-fast, 180ms ease-out), transform var(--trans-fast, 180ms ease-out);
+}
+
+/* Capa posterior “after” del efecto */
+.InstallPWA:after{
+  background-color: var(--pwa-btn-after-bg, #ffffff);
+}
+
+/* Estado hover/focus — respeta tu efecto actual pero parametrizable */
+.InstallPWA:hover{
+  opacity: var(--pwa-btn-hover-opacity, 1);
+  transform: var(--pwa-btn-hover-scale, none);
+}
+
+/* Variante compacta (si la usas por prop/condición) */
+.InstallPWACompact{
+  padding: var(--pwa-btn-compact-pad, 8px 12px);
+  border-radius: var(--pwa-btn-compact-radius, 12px);
+}
+
+/* Texto interno asegurando contraste sobre la capa decorativa */
+.InstallPWA span{
+  position: relative;
+  z-index: 1;
+  color: var(--pwa-btn-fg, #000000);
+}
+
+/* Soporte tema oscuro/claro (si alternas .dark/.light en <html>) */
+:global(html.dark) .InstallPWA{
+  background: var(--pwa-btn-bg-dark, #ffffff);
+  color: var(--pwa-btn-fg-dark, #000000);
+}
+:global(html.light) .InstallPWA,
+:global(html:not(.dark)) .InstallPWA{
+  background: var(--pwa-btn-bg-light, #ffffff);
+  color: var(--pwa-btn-fg-light, #000000);
+}

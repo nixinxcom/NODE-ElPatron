@@ -1,0 +1,61 @@
+/* ADITIVO — parametrización por variables (quita este archivo para volver al look actual) */
+
+/* Título “text-2xl font-bold mb-6” (dejamos text-center inline) */
+.title{
+  font-size: var(--reviews-title-size, 1.5rem); /* text-2xl */
+  line-height: 2rem;
+  font-weight: var(--reviews-title-weight, 700);
+  margin-bottom: var(--reviews-title-mb, 1.5rem); /* mb-6 */
+  color: var(--reviews-title-fg, inherit);
+}
+
+/* Texto atenuado (loading / empty): “opacity-70” (dejamos text-center inline) */
+.muted{
+  opacity: var(--reviews-muted-opacity, .70);
+  font-size: var(--reviews-muted-size, 1rem);
+}
+
+/* Contenedor scroll horizontal: “w-full overflow-x-auto” */
+.railWrap{
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Rail: “flex gap-6 md:gap-8 px-2 md:px-4 pb-2 snap-x snap-mandatory” */
+.rail{
+  display: flex;
+  gap: var(--reviews-gap, 1.5rem);            /* gap-6 */
+  padding-left:  var(--reviews-pad-x, .5rem); /* px-2 */
+  padding-right: var(--reviews-pad-x, .5rem);
+  padding-bottom: var(--reviews-pad-b, .5rem);/* pb-2 */
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 768px){
+  .rail{
+    gap: var(--reviews-gap-md, 2rem);         /* md:gap-8 */
+    padding-left:  var(--reviews-pad-x-md, 1rem); /* md:px-4 */
+    padding-right: var(--reviews-pad-x-md, 1rem);
+  }
+}
+
+/* Card: “min-w-[260px] sm:min-w-[320px] max-w-[380px] bg-gray-100 p-6 rounded shadow snap-start” */
+.card{
+  min-width: var(--reviews-card-minw, 260px);
+  max-width: var(--reviews-card-maxw, 380px);
+  padding: var(--reviews-card-pad, 1.5rem);       /* p-6 */
+  border-radius: var(--reviews-card-radius, .25rem); /* rounded */
+  background: var(--reviews-card-bg, #f3f4f6);    /* bg-gray-100 */
+  box-shadow: var(--reviews-card-shadow, 0 1px 2px rgba(0,0,0,.08));
+  scroll-snap-align: start;
+}
+@media (min-width: 640px){ /* sm */
+  .card{ min-width: var(--reviews-card-minw-sm, 320px); }
+}
+
+/* Texto del autor: “mt-4 font-bold” */
+.author{
+  margin-top: var(--reviews-author-mt, 1rem); /* mt-4 */
+  font-weight: var(--reviews-author-weight, 700);
+}

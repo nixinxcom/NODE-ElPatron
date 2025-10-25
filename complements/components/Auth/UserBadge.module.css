@@ -1,0 +1,53 @@
+/* ADITIVO — parametrización por variables (elimina este archivo para volver al look actual) */
+
+.wrap{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ub-gap, .5rem);                         /* gap-2 */
+  border-radius: 9999px;                             /* rounded-full */
+  border: 1px solid var(--ub-border, rgba(255,255,255,.10)); /* border-white/10 */
+  background: var(--ub-bg, rgba(255,255,255,.06));   /* bg-white/[0.06] */
+  padding: var(--ub-pad-y, .25rem) var(--ub-pad-x, .625rem); /* py-1 px-2.5 */
+  color: var(--ub-fg, rgba(255,255,255,.90));        /* text-white/90 */
+  box-sizing: border-box;
+}
+
+/* Tamaños de fuente (compact ? 14px : 12px) */
+.textXs{
+  font-size: var(--ub-text-xs, .75rem);              /* text-xs ≈ 12px */
+  line-height: 1rem;
+}
+.textSm{
+  font-size: var(--ub-text-sm, .875rem);             /* ≈ 14px */
+  line-height: 1.25rem;
+}
+
+/* “Avatar” circular con inicial */
+.avatar{
+  height: 1.25rem;                                   /* h-5 */
+  width:  1.25rem;                                   /* w-5 */
+  border-radius: 9999px;                             /* rounded-full */
+  background: var(--ub-avatar-bg, #ffffff);          /* bg-white */
+  color: var(--ub-avatar-fg, #000000);               /* text-black */
+  font-size: .75rem;                                 /* text-[12px] */
+  font-weight: 700;                                  /* font-bold */
+  display: grid;
+  place-items: center;                               /* grid place-items-center */
+}
+
+/* Nombre/correo truncado */
+.name{
+  max-width: 220px;                                  /* max-w-[220px] */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;                               /* truncate */
+}
+
+/* Punto de estado */
+.dot{
+  margin-left: .25rem;                               /* ml-1 */
+  height: .5rem; width: .5rem;                       /* h-2 w-2 */
+  border-radius: 9999px;                             /* rounded-full */
+}
+.dotOn{  background: var(--ub-dot-on, rgba(52,211,153,.90)); }  /* bg-emerald-400/90 */
+.dotOff{ background: var(--ub-dot-off, rgba(255,255,255,.30)); }/* bg-white/30 */
