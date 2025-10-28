@@ -4,11 +4,18 @@
 import FM from "@/complements/i18n/FM";
 import styles from "./page.module.css";
 import PayPalButtonsComp from "@/complements/components/PayPal/PayPalButtonsComp";
+import { useState } from "react";
+import { Points, PrepaidMemberships, PromiseMemberships } from "@/complements/components/StripeLoaderComp/PaymentModels";
 
 export default function HomePublicPage({
   ssrTime,
   locale,
 }: { ssrTime: string; locale: string }) {
+  const [ShowStripePoint, setShowStripePoint] = useState(true);
+  const [ShowStripePrepaidMembership, setShowStripePrepaidMembership] = useState(true);
+  const [ShowStripePromiseMembership, setShowStripePromiseMembership] = useState(true);
+
+
   return (
     <div className={styles.New}>
       <PayPalButtonsComp
@@ -23,6 +30,9 @@ export default function HomePublicPage({
         onResult={(r)=>console.log(r)}        // (r)=>void | opcional
         onError={(e)=>console.error(e)}       // (e)=>void | opcional
       />
+      {ShowStripePoint && <Points />}
+      {ShowStripePrepaidMembership && <PrepaidMemberships />}
+      {ShowStripePromiseMembership && <PromiseMemberships />}
       <h1><FM id="NuevaPlantilla" defaultMessage="Esta Plantilla ya puede conectarse con Firebase" /></h1>
       <p className={styles.note}>
         <FM id="plantilla.locale" defaultMessage="Locale:" /> {locale} ·{" "}
