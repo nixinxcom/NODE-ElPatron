@@ -1,114 +1,126 @@
-'use client';
+// complements/components/PayPal/PayPalButtonsComp.tsx
+"use client";
 
-import React from 'react';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import type { ReactPayPalScriptOptions, PayPalButtonsComponentProps } from '@paypal/react-paypal-js';
+import React from "react";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  type ReactPayPalScriptOptions,
+} from "@paypal/react-paypal-js";
 
 type Props = {
-  amount: string;
-  currency?: 'CAD' | 'USD' | 'EUR';
-  createOrderUrl?: string;
-  captureOrderUrl?: string;
-  onApproved?: (details: any) => void;
-  onError?: (err: any) => void;
-  style?: PayPalButtonsComponentProps['style'];
+  amount: string | number;                // "2800.00" (unidades mayores)
+  currency?: "CAD" | "MXN" | "USD";
+  intent?: "CAPTURE" | "AUTHORIZE";
+  locale?: string;                         // "es", "es_CA", "es-ES" (se normaliza)
+  className?: string;
+
+  /** Compatibilidad con tu page.tsx */
+  createOrderUrl?: string;                 // default: /api/paypal/create-order
+  captureOrderUrl?: string;                // default: /api/paypal/capture-order
+  onApproved?: (d: any) => void;          // alias de onResult
+  onError?: (e: any) => void;
+
+  /** Opcionales “nuevos” */
+  returnUrl?: string;
+  cancelUrl?: string;
+  metadata?: Record<string, string>;
+  onResult?: (r: any) => void;
 };
 
-export default function PayPalButtonsComp({
-  amount,
-  currency = 'CAD',
-  createOrderUrl = '/api/paypal/create-order',
-  captureOrderUrl = '/api/paypal/capture-order',
-  onApproved,
-  onError,
-  style,
-}: Props) {
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!;
+function normalizeSdkLocale(input?: string): string | undefined {
+  if (!input) return undefined;
+  const cleaned = input.replace("-", "_");
+  const [l, r] = cleaned.split("_");
+  const loc = `${(l || "").toLowerCase()}${r ? "_" + r.toUpperCase() : ""}`;
+  const supported = new Set([
+    "en_CA","fr_CA","es_MX",
+  ]);
+  if (supported.has(loc)) return loc;
+  const fb: Record<string, string> = {
+    es: "es_MX", en: "en_CA", fr: "fr_CA",
+  };
+  return fb[(l || "").toLowerCase()] || "en_CA";
+}
 
-  // 👇 Usa clientId (camelCase) y 'capture' en minúsculas
+export default function PayPalButtonsComp(p: Props) {
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+  if (!clientId) {
+    console.error("Falta NEXT_PUBLIC_PAYPAL_CLIENT_ID");
+    return null;
+  }
+
+  const currency = p.currency ?? "CAD";
+  const intentLower = (p.intent ?? "CAPTURE").toLowerCase() as "capture" | "authorize";
+  const amountStr = typeof p.amount === "number" ? p.amount.toFixed(2) : p.amount;
+  const sdkLocale = normalizeSdkLocale(p.locale);
+
+  const createOrderUrl = p.createOrderUrl || "/api/paypal/create-order";
+  const captureOrderUrl = p.captureOrderUrl || "/api/paypal/capture-order";
+
   const options: ReactPayPalScriptOptions = {
     clientId,
     currency,
-    intent: 'capture',
-    components: 'buttons',
+    intent: intentLower,
+    components: "buttons",
+    locale: sdkLocale,
+  };
+
+  const handleApproved = (d: any) => {
+    p.onResult?.(d);
+    p.onApproved?.(d);
   };
 
   return (
     <PayPalScriptProvider options={options}>
-      <PayPalButtons
-        style={style ?? { layout: 'vertical', shape: 'rect' }}
-        forceReRender={[amount, currency]}
-        createOrder={async () => {
-          const res = await fetch(createOrderUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount, currency }),
-          });
-          const data = await res.json();
-          return data.id as string; // orderID
-        }}
-        onApprove={async (data) => {
-          const res = await fetch(captureOrderUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ orderID: (data as any).orderID }),
-          });
-          const capture = await res.json();
-          onApproved?.(capture);
-        }}
-        onError={(err) => {
-          console.error('PayPal error:', err);
-          onError?.(err);
-        }}
-      />
+      <div className={p.className}>
+        <PayPalButtons
+          style={{ layout: "vertical", label: "paypal" }}
+          forceReRender={[amountStr, currency, intentLower, sdkLocale]}
+          createOrder={async () => {
+            try {
+              const res = await fetch(createOrderUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  amount: amountStr,
+                  currency,
+                  intent: intentLower.toUpperCase(), // "CAPTURE" | "AUTHORIZE"
+                  locale: p.locale,
+                  metadata: p.metadata,
+                  return_url: p.returnUrl,
+                  cancel_url: p.cancelUrl,
+                }),
+              });
+              const data = await res.json();
+              if (!res.ok || !data?.id) {
+                throw new Error(data?.error || "create-order failed");
+              }
+              return data.id as string; // PayPal Order ID
+            } catch (e) {
+              p.onError?.(e);
+              throw e;
+            }
+          }}
+          onApprove={async (data) => {
+            try {
+              const res = await fetch(captureOrderUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ orderId: data.orderID, metadata: p.metadata }),
+              });
+              const out = await res.json();
+              handleApproved(out);
+            } catch (e) {
+              p.onError?.(e);
+            }
+          }}
+          onError={(err) => {
+            console.error(err);
+            p.onError?.(err);
+          }}
+        />
+      </div>
     </PayPalScriptProvider>
   );
 }
-
-/* ─────────────────────────────────────────────────────────
-DOC: PayPalButtonsComp — complements/components/PayPal/PayPalButtonsComp.tsx
-QUÉ HACE:
-  Renderiza los botones oficiales de PayPal (SDK) y orquesta create/capture mediante rutas internas.
-  Expone callbacks de resultado/errores.
-
-API / EXPORTS / RUTA:
-  — export interface PayPalButtonsProps {
-      amount: number; currency?: "CAD"|"USD"; returnUrl?: string; cancelUrl?: string;
-      metadata?: Record<string,string>; intent?: "CAPTURE"|"AUTHORIZE"; locale?: string; className?: string;
-      onResult?: (r:{ status:string; orderId?:string })=>void; onError?: (e:any)=>void
-    }
-  — export default function PayPalButtonsComp(p:PayPalButtonsProps): JSX.Element
-
-USO (ejemplo completo):
-  "use client";
-  <PayPalButtonsComp amount={2800} returnUrl="/ok" cancelUrl="/cancel" metadata={{orderRef:"HTW-1"}} />
-
-NOTAS CLAVE:
-  — Validación de monto en servidor. Webhook para conciliación.
-  — Cargar SDK una sola vez (helpers de app/lib/paypal).
-
-DEPENDENCIAS:
-  window.paypal SDK · "@/app/lib/paypal"
-────────────────────────────────────────────────────────── */
-/* ─────────────────────────────────────────────────────────
-DOC: USO — complements/components/PayPal/PayPalButtonsComp.tsx
-  "use client";
-  import PayPalButtonsComp from "@/complements/components/PayPal/PayPalButtonsComp";
-
-  export default function Checkout() {
-    return (
-      <PayPalButtonsComp
-        amount={2800}                         // number | requerido | centavos
-        currency="CAD"                        // "CAD"|"USD" | opcional | default: "CAD"
-        returnUrl="/checkout/success"         // string | opcional
-        cancelUrl="/checkout/cancel"          // string | opcional
-        metadata={{ orderRef:"HTW-00123" }}   // Record<string,string> | opcional
-        intent="CAPTURE"                      // "CAPTURE"|"AUTHORIZE" | opcional | default: "CAPTURE"
-        locale="es_CA"                        // string | opcional
-        className="mt-4"
-        onResult={(r)=>console.log(r)}        // (r)=>void | opcional
-        onError={(e)=>console.error(e)}       // (e)=>void | opcional
-      />
-    );
-  }
-────────────────────────────────────────────────────────── */
