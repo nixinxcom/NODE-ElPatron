@@ -13,7 +13,7 @@ export type ImageProps = NextImageProps & {
   className?: string;
 };
 
-export function Image({ kind = 'image', variant, size, state, scheme, className, ...props }: ImageProps) {
+export function IMAGE({ kind = 'image', variant, size, state, scheme, className, ...props }: ImageProps) {
   const Styles = useStylesRDD();
   const _scheme = scheme || detectScheme();
 

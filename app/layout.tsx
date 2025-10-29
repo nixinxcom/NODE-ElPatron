@@ -191,7 +191,6 @@ export default async function RootLayout({
               <ThemeProviders>
                 <BrandingCacheHydrator/> 
                 <AuthProvider>
-                  {/* Opciones de Idiomas  — ¡Respetado tal cual! */}
                   <InterComp
                     Langs={[
                       {

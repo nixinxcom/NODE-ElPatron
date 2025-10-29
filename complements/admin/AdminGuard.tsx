@@ -6,8 +6,7 @@ import { FbAuth, GoogleProvider } from '@/app/lib/services/firebase'
 import UserBadge from '@/complements/components/Auth/UserBadge'
 import FM from '../i18n/FM'
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle'
-import { Button, Link, NextImage, Image, Div, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
-
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 /* ------------------------- Context para exponer user+token (ADITIVO: allowed/checking) ------------------------- */
 interface AuthContextType {
   user: User | null
@@ -185,12 +184,12 @@ function AdminGate({
         <Card>
           <TitleBlock />
           <div className="flex items-center gap-3">
-            <Button onClick={handleLogin}><FM id="loginWithGoogle" defaultMessage="Acceso de Controlador" /></Button>
+            <BUTTON onClick={handleLogin}><FM id="loginWithGoogle" defaultMessage="Acceso de Controlador" /></BUTTON>
           </div>
           <Divider />
-          <Link href={"/"} className="rounded-full border border-white/20 p-3.5 text-xs text-white/70 hover:bg-white/30">
+          <LINK href={"/"} className="rounded-full border border-white/20 p-3.5 text-xs text-white/70 hover:bg-white/30">
             <FM id="backtohome" defaultMessage="Pagina de Inicio" />
-          </Link>
+          </LINK>
           <Divider />
           <p className="text-xs text-white/50"><FM id="restrictedPanel" defaultMessage="Panel restringido a cuentas autorizadas." /></p>
         </Card>
@@ -206,7 +205,7 @@ function AdminGate({
           {showUserChip && <div className="mb-3"><Chip text={user.email ?? '—'} /></div>}
           <p className="text-sm text-white/70"><FM id="checkingPermissions" defaultMessage="Verificando permisos…" /></p>
           <Divider />
-          <Button variant="ghost" onClick={handleLogout}><FM id="logout" defaultMessage="Cerrar sesión" /></Button>
+          <BUTTON variant="ghost" onClick={handleLogout}><FM id="logout" defaultMessage="Cerrar sesión" /></BUTTON>
         </Card>
       </Wrapper>
     )
@@ -221,7 +220,7 @@ function AdminGate({
           <p className="text-sm text-red-300/90">No tienes permisos para ver este panel.</p>
           {error && <p className="mt-1 text-xs text-red-300/70">{error}</p>}
           <Divider />
-          <Button variant="ghost" onClick={handleLogout}>Cerrar sesión</Button>
+          <BUTTON variant="ghost" onClick={handleLogout}>Cerrar sesión</BUTTON>
         </Card>
       </Wrapper>
     )
@@ -234,16 +233,16 @@ function AdminGate({
         <div className="flex items-center gap-3">
           <UserBadge compact />
         </div>
-        <Link href={"/"} className="bg-white text-black pr-2 pl-2 rounded-md">
+        <LINK href={"/"} className="bg-white text-black pr-2 pl-2 rounded-md">
           <FM id="nav.homeAlt" defaultMessage="Página de Inicio" />
-        </Link>
+        </LINK>
         <ThemeToggle />
-        <Link href={"/admin"} className="bg-white text-black pr-2 pl-2 rounded-md">
+        <LINK href={"/admin"} className="bg-white text-black pr-2 pl-2 rounded-md">
           <FM id="nav.panel" defaultMessage="Panel de Control" />
-        </Link>
-        <Button variant="ghost" onClick={handleLogout}>
+        </LINK>
+        <BUTTON variant="ghost" onClick={handleLogout}>
           <FM id="logout" defaultMessage="Cerrar sesión" />
-        </Button>
+        </BUTTON>
       </div>
       {children}
     </AuthContext.Provider>

@@ -7,7 +7,7 @@ import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
 import { useAppContext } from '@/context/AppContext';
 import { useI18nHref } from '@/app/lib/useI18nHref';
-import { Button, Link, NextImage, Image, Div, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { H6, IMAGE } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -37,7 +37,7 @@ export default function AboutUsPage({ locale }: Props) {
             </p>
           </div>
           <div className={styles.imageContainer}>
-            <Image
+            <IMAGE
               src="https://firebasestorage.googleapis.com/v0/b/patronbarandgrill-pwa.appspot.com/o/PWAStorage%2FWebContent%2Frestaurant_700x700.webp?alt=media&token=04a86a24-78ae-4e55-8f1b-403e971affb6"
               alt="El Patrón Interior"
               fill
@@ -62,7 +62,7 @@ export default function AboutUsPage({ locale }: Props) {
             </p>
           </div>
           <div className={styles.imageContainer}>
-            <Image
+            <IMAGE
               src="https://firebasestorage.googleapis.com/v0/b/patronbarandgrill-pwa.appspot.com/o/PWAStorage%2FWebContent%2Fdancefloor_700x700.webp?alt=media&token=67552274-6889-4154-97b2-7b4c559b2223"
               alt="Dance floor"
               fill
@@ -87,7 +87,7 @@ export default function AboutUsPage({ locale }: Props) {
             </p>
           </div>
           <div className={styles.imageContainer}>
-            <Image
+            <IMAGE
               src="https://firebasestorage.googleapis.com/v0/b/patronbarandgrill-pwa.appspot.com/o/PWAStorage%2FWebContent%2Fkaraoke_700x700.webp?alt=media&token=cc7dc974-1246-418f-bb24-b812f5bd61a6"
               alt="Karaoke night"
               fill
@@ -118,7 +118,7 @@ export default function AboutUsPage({ locale }: Props) {
             </p>
           </div>
           <div className={styles.imageContainer}>
-            <Image
+            <IMAGE
               src="https://firebasestorage.googleapis.com/v0/b/patronbarandgrill-pwa.appspot.com/o/PWAStorage%2FWebContent%2Frenovation_700x700.webp?alt=media&token=27ab6500-c1e1-4702-8c10-855eebf656ac"
               alt="Renovations"
               fill

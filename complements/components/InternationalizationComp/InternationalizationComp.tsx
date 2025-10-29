@@ -1,7 +1,8 @@
 'use client';
 
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import styles from "./InternationalizationComp.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -112,20 +113,20 @@ export default function InterComp(props: iInternational) {
         // Muestra SIEMPRE el “siguiente” respecto al actual → primer clic siempre cambia
         <div className={styles.Lngdiv} key={`one-${nextIdx}`}>
           {props.Langs[nextIdx]?.icon && (
-            <Link
+            <LINK
               href={buildHref(order[nextIdx].short)}
               replace
               scroll={false}
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
+              <IMAGE
                 src={props.Langs[nextIdx].icon!}
                 width={props.Langs[nextIdx].width}
                 height={props.Langs[nextIdx].height}
                 priority={props.Langs[nextIdx].prioritario}
                 alt={props.Langs[nextIdx].alt || ""}
               />
-            </Link>
+            </LINK>
           )}
           {!minimized && props.Langs[nextIdx]?.language && (
             <p className={styles.LngLgnd}>{props.Langs[nextIdx].language}</p>
@@ -136,20 +137,20 @@ export default function InterComp(props: iInternational) {
         props.Langs.map((lang, index) => (
           <div className={styles.Lngdiv} key={`all-${index}`}>
             {lang.icon && (
-              <Link
+              <LINK
                 href={buildHref(shortOf(lang.locale))}
                 replace
                 scroll={false}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Image
+                <IMAGE
                   src={lang.icon}
                   width={lang.width}
                   height={lang.height}
                   priority={lang.prioritario}
                   alt={lang.alt || ""}
                 />
-              </Link>
+              </LINK>
             )}
             {!minimized && lang.language && (
               <p className={styles.LngLgnd}>{lang.language}</p>
@@ -160,39 +161,3 @@ export default function InterComp(props: iInternational) {
     </div>
   );
 }
-
-/* ─────────────────────────────────────────────────────────
-DOC: InternationalizationComp — complements/components/InternationalizationComp/InternationalizationComp.tsx
-QUÉ HACE:
-  Selector de idioma/locale (es/en/fr) que ajusta rutas (subpaths) y persiste preferencia.
-
-API / EXPORTS / RUTA:
-  — export interface IntlCompProps { locales?: Array<"es"|"en"|"fr">; current?: "es"|"en"|"fr"; onChange?: (l:"es"|"en"|"fr")=>void; className?: string }
-  — export default function InternationalizationComp(p:IntlCompProps): JSX.Element
-
-USO (ejemplo completo):
-  <InternationalizationComp current="es" onChange={(l)=>location.assign(`/${l}`)} />
-
-NOTAS CLAVE:
-  — Usar buildI18nHref para generar URLs correctas con query/hash.
-  — Guardar elección en cookie/storage (“locale”).
-
-DEPENDENCIAS:
-  "@/app/lib/useI18nHref" (opcional) · storage/cookies helpers
-────────────────────────────────────────────────────────── */
-/* ─────────────────────────────────────────────────────────
-DOC: USO — complements/components/InternationalizationComp/InternationalizationComp.tsx
-  "use client";
-  import InternationalizationComp from "@/complements/components/InternationalizationComp/InternationalizationComp";
-
-  export default function LocaleSwitcher() {
-    return (
-      <InternationalizationComp
-        locales={["es","en","fr"]}           // Array<"es"|"en"|"fr"> | opcional
-        current="es"                          // "es"|"en"|"fr" | opcional
-        onChange={(l)=>location.assign(`/${l}`)} // (l)=>void | opcional
-        className="ml-auto"
-      />
-    );
-  }
-────────────────────────────────────────────────────────── */

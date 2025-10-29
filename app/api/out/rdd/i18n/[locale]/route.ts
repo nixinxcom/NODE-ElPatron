@@ -11,14 +11,21 @@ export async function GET(req: Request, ctx: any) {
   const params = typeof maybeParams?.then === "function" ? await maybeParams : maybeParams;
 
   const url = new URL(req.url);
-  const q = (params?.locale || url.searchParams.get("locale") || DEFAULT_LOCALE_SHORT).trim();
-  const locale = toShortLocale(q);
 
-  const dict = await getI18nEffectiveServer(locale);
+  // Permite corto o largo (p.ej. "es" o "es-MX")
+  const localeInput = (params?.locale || url.searchParams.get("locale") || DEFAULT_LOCALE_SHORT).trim();
+  const localeShort = toShortLocale(localeInput);
+
+  // Tenant por query (?tenant=elpatronbarandgrill)
+  const tenant = (url.searchParams.get("tenant") || "").trim().toLowerCase() || undefined;
+
+  // Pasa el locale *tal cual* (corto o largo) para que el loader pueda resolver ambos
+  const dict = await getI18nEffectiveServer(localeInput, tenant);
 
   return Response.json({
     ok: true,
-    locale,
+    locale: localeShort,      // mantenemos salida corta como antes
+    tenant: tenant ?? null,   // añadimos visibilidad del tenant
     dict,
     updatedAt: new Date().toISOString(),
   });

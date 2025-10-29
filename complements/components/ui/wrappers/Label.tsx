@@ -12,7 +12,7 @@ export type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
   scheme?: 'light'|'dark';
 };
 
-export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(function Label({
+export const LABEL = React.forwardRef<HTMLLabelElement, LabelProps>(function Label({
   kind = 'label',
   variant,
   size,

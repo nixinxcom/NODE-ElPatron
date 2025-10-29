@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./NavBar.module.css";
 import { FormattedMessage, FormattedNumber} from 'react-intl';
 import FM from "@/complements/i18n/FM";
-import { Button, Link, NextImage, Image, Div, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import { useI18nHref } from '@/app/lib/useI18nHref';
 import { useEffect } from "react";
 import { onAuthStateChanged, signInAnonymously, signOut } from "firebase/auth";
@@ -69,13 +69,13 @@ export default function NavBar(props: iBotons){
         <nav className={styles.NavBarContainer}>
             {props.Logo && (
                 <div className={`${styles.LogoContainer} ${MenuDisplay ? styles.LogoHiden : ''}`}>
-                    <Link href={i18nHref('/')}>
-                        <Image className={styles.Logo} priority src={props.Logo} width={90} height={90} alt="Logo" />
-                    </Link>
+                    <LINK href={i18nHref('/')}>
+                        <IMAGE className={styles.Logo} priority src={props.Logo} width={90} height={90} alt="Logo" />
+                    </LINK>
                 </div>
             )}
             <div className={styles.HamburgerMenu} onClick={() => setMenuDisplay(!MenuDisplay)}>
-                <Image src="/Icons/MenuIcon.png" width={28} height={28} alt="Menu" />
+                <IMAGE src="/Icons/MenuIcon.png" width={28} height={28} alt="Menu" />
             </div>
             <div className={`${styles.NavIconContMiddle} ${MenuDisplay ? styles.NavIconContMiddleVisible : ''}`}>
                 {props.Botons?.map((item, index) => {
@@ -86,14 +86,14 @@ export default function NavBar(props: iBotons){
 
                     return (
                         <div className={styles.NavIcon} key={index+'mb'}>
-                        <Link
+                        <LINK
                             target={isExternal ? "_blank" : "_self"}
                             rel={isExternal ? 'noopener noreferrer' : undefined}
                             className={styles.MenuButtom}
                             href={href}
                         >
                             <FM id={item.FormattedMessage} defaultMessage={item.defaultMessage} />
-                        </Link>
+                        </LINK>
                         </div>
                     );
                 })}
@@ -103,7 +103,7 @@ export default function NavBar(props: iBotons){
                     props.SocMed.map((socmed, index) => {
                         return(
                             <a className={styles.Footeritem} href={socmed.PUrl} key={index+'sm'} target="_blank" rel="noopener noreferrer">
-                                {socmed.PIcon && <Image src={socmed.PIcon} style={{ width: "auto", height: "auto", borderRadius: "7px" }} width={30} height={30} alt={'Social Media'}/>}
+                                {socmed.PIcon && <IMAGE src={socmed.PIcon} style={{ width: "auto", height: "auto", borderRadius: "7px" }} width={30} height={30} alt={'Social Media'}/>}
                                 {socmed.PName && socmed.PName}
                             </a>
                         )
@@ -115,7 +115,7 @@ export default function NavBar(props: iBotons){
                     props.DeliveryPlatforms.map((plat, index) => {
                         return(
                             <a className={styles.Footeritem} href={plat.PUrl} key={index+'pf'} target="_blank" rel="noopener noreferrer">
-                                {plat.PIcon && <Image src={plat.PIcon} style={{ width: "auto", height: "auto", borderRadius: "7px" }} width={30} height={30} alt={'Platforms'}/>}
+                                {plat.PIcon && <IMAGE src={plat.PIcon} style={{ width: "auto", height: "auto", borderRadius: "7px" }} width={30} height={30} alt={'Platforms'}/>}
                                 {plat.PName && plat.PName}
                             </a>
                         )

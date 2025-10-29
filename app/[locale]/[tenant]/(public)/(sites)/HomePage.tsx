@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import React, { useEffect, useState } from 'react';
 import PlayerComp from "@/complements/components/PlayerComp/PlayerComp";
 import { useEvents } from "@/complements/hooks/useEvents";
-import { Button, Link, NextImage, Image, Div, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import { useAppContext } from "@/context/AppContext";
 import FooterComp from "@/complements/components/FooterComp/FooterComp";
 import InstallPWAButton from "@/complements/components/InstallPWAComp/InstallPWAComp";
@@ -107,38 +107,38 @@ export default function HomePage() {
           </div>
 
           <div className={clsx(styles.linksRow)}>
-            <Link href={`/${loc}/menus`}>
+            <LINK href={`/${loc}/menus`}>
               <FM id="home.cta.menu" defaultMessage="Ver Menú" />
-            </Link>
+            </LINK>
 
-            <Link
+            <LINK
               href="https://order.tbdine.com/pickup/28824/menu"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FM id="home.cta.orderonline" defaultMessage="Ordena en Linea" />
-            </Link>
+            </LINK>
 
-            <Link href={`/${loc}/reservas`}>
+            <LINK href={`/${loc}/reservas`}>
               <FM id="home.cta.reservar" defaultMessage="Reserva Ahora" />
-            </Link>
+            </LINK>
 
             {/* Teléfono: SOLO si viene de Branding */}
             {telHref && (
-              <Link href={telHref}>
+              <LINK href={telHref}>
                 <FM id="home.cta.llamar" defaultMessage="Llama Ahora" />
-              </Link>
+              </LINK>
             )}
 
             {/* Cómo llegar: SOLO si hay placeQuery en Branding */}
             {placeQ && (
-              <Link
+              <LINK
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeQ)}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FM id="home.cta.comollegar" defaultMessage="¿Cómo llegar?" />
-              </Link>
+              </LINK>
             )}
           </div>
         </section>
@@ -173,7 +173,7 @@ export default function HomePage() {
           <div className={styles.eventGrid}>
             {events.map((ev) => (
               <div key={ev.id} className={styles.eventCard}>
-                <Image
+                <IMAGE
                   src={ev.img}
                   alt={ev.titulo}
                   className={styles.eventImage}
@@ -184,14 +184,14 @@ export default function HomePage() {
                 <div className={styles.eventInfo}>
                   <H3 className={styles.eventName}>{ev.titulo}</H3>
                   {ev.video && (
-                    <Button
+                    <BUTTON
                       onClick={() => {
                         onOpenVideo(ev.video!);
                         setActiveEvent(ev);
                       }}
                     >
                       <FM id="home.events.viewvideo" defaultMessage="Ver video" />
-                    </Button>
+                    </BUTTON>
                   )}
                 </div>
               </div>
@@ -206,14 +206,14 @@ export default function HomePage() {
 
         {/* CTA final */}
         <section className={`${styles.sectionSurfaceDark} text-center`}>
-          <Link
+          <LINK
             href="/reservas"
             className={`${styles.ctaWhite} ${styles.btnMd} ${styles.smoothTrans} m-7 font-semibold inline-block mt-4`}
           >
             <span className={`${styles.hoverAccent} ${styles.smoothTrans} cursor-pointer`}>
               <FM id="home.cta.final" defaultMessage="¡Reserva tu mesa!" />
             </span>
-          </Link>
+          </LINK>
           <InstallPWAButton />
         </section>
         {playerOpen && (
@@ -282,14 +282,14 @@ export default function HomePage() {
         </div>
 
         {placeQ && (
-          <Link
+          <LINK
             href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(placeQ)}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.ctaWhite} ${styles.btnMd} ${styles.smoothTrans} ${styles.borderSubtle} b-1 font-semibold inline-block mt-4 flex m-auto w-max`}
           >
             <FM id="home.cta.direccion" defaultMessage="Cómo llegar" />
-          </Link>
+          </LINK>
         )}
 
         <div id={styles.GridCont8}>

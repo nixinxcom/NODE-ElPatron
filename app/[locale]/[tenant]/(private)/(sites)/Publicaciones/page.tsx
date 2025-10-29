@@ -20,7 +20,6 @@ import { collection, addDoc, doc, setDoc, serverTimestamp } from "firebase/fires
 import FilesUploaderComp, {
   IFile as UploaderFile,
 } from "@/complements/CloudComponents/FilesUploaderComp/FilesUploaderComp";
-import Link from "next/link";
 import ThemeToggle from "@/complements/components/ThemeToggle/ThemeToggle";
 
 /* ========= Config ========= */

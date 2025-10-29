@@ -15,7 +15,7 @@ export type BtnProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'colo
   scheme?: 'light'|'dark';
 };
 
-export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, BtnProps>(
+export const BUTTON = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, BtnProps>(
   function Button({
     kind = 'button',
     variant,

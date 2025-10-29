@@ -8,7 +8,7 @@ import { useI18nHref } from '@/app/lib/useI18nHref';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FM from '@/complements/i18n/FM';
 import { useAppContext } from '@/context/AppContext';
-import { Button, Link, NextImage, Image, Div, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type LinkItem = { name?: string; title?: string; url?: string; href?: string; enabled?: boolean; icon?: string };
 
@@ -132,7 +132,7 @@ export default function FooterComp() {
                     className={styles.footerLink}
                   >
                     {b.icon ? (
-                      <NextImage src={b.icon!} width={16} height={16} alt="Branch Icon" />
+                      <NEXTIMAGE src={b.icon!} width={16} height={16} alt="Branch Icon" />
                     ) : null}{' '}
                     <span>{b.name}</span>
                   </A>
@@ -155,13 +155,13 @@ export default function FooterComp() {
 
         <div className={styles.socials}>
           {onlineOrder.enabled && onlineOrder.url && (
-            <Link
+            <LINK
               href={onlineOrder.url}
               className={styles.icon}
               target="_blank"
               rel="noopener"
             >
-              <NextImage
+              <NEXTIMAGE
                 src="/Icons/onlineOrder.png"
                 width={40}
                 height={40}
@@ -170,34 +170,34 @@ export default function FooterComp() {
                   defaultMessage: 'Online Order',
                 })}
               />
-            </Link>
+            </LINK>
           )}
 
           {doordash.enabled && doordash.url && (
-            <Link href={doordash.url} className={styles.icon} target="_blank" rel="noopener">
-              <NextImage
+            <LINK href={doordash.url} className={styles.icon} target="_blank" rel="noopener">
+              <NEXTIMAGE
                 src="/Icons/Doordash.png"
                 width={40}
                 height={40}
                 alt={intl.formatMessage({ id: 'footer.alt.doordash', defaultMessage: 'Doordash' })}
               />
-            </Link>
+            </LINK>
           )}
 
           {uberEats.enabled && uberEats.url && (
-            <Link href={uberEats.url} className={styles.icon} target="_blank" rel="noopener">
-              <NextImage
+            <LINK href={uberEats.url} className={styles.icon} target="_blank" rel="noopener">
+              <NEXTIMAGE
                 src="/Icons/Uber Eats.png"
                 width={40}
                 height={40}
                 alt={intl.formatMessage({ id: 'footer.alt.ubereats', defaultMessage: 'Uber Eats' })}
               />
-            </Link>
+            </LINK>
           )}
 
           {skipTheDishes.enabled && skipTheDishes.url && (
-            <Link href={skipTheDishes.url} className={styles.icon} target="_blank" rel="noopener">
-              <NextImage
+            <LINK href={skipTheDishes.url} className={styles.icon} target="_blank" rel="noopener">
+              <NEXTIMAGE
                 src="/Icons/SkipTheDishes.jpg"
                 width={40}
                 height={40}
@@ -206,7 +206,7 @@ export default function FooterComp() {
                   defaultMessage: 'Skip The Dishes',
                 })}
               />
-            </Link>
+            </LINK>
           )}
         </div>
 
@@ -219,21 +219,21 @@ export default function FooterComp() {
 
         <div className={styles.socials}>
           {facebook.enabled && facebook.url && (
-            <Link href={facebook.url} className={styles.icon} target="_blank" rel="noopener">
-              <NextImage src="/Icons/FacebookIcon.png" width={40} height={40} alt="Facebook" />
-            </Link>
+            <LINK href={facebook.url} className={styles.icon} target="_blank" rel="noopener">
+              <NEXTIMAGE src="/Icons/FacebookIcon.png" width={40} height={40} alt="Facebook" />
+            </LINK>
           )}
 
           {instagram.enabled && instagram.url && (
-            <Link href={instagram.url} className={styles.icon} target="_blank" rel="noopener">
-              <NextImage src="/Icons/InstaIcon.png" width={40} height={40} alt="Instagram" />
-            </Link>
+            <LINK href={instagram.url} className={styles.icon} target="_blank" rel="noopener">
+              <NEXTIMAGE src="/Icons/InstaIcon.png" width={40} height={40} alt="Instagram" />
+            </LINK>
           )}
 
           {tiktok.enabled && tiktok.url && (
-            <Link href={tiktok.url} className={styles.icon} target="_blank" rel="noopener">
-              <NextImage src="/Icons/TikTok.webp" width={40} height={40} alt="TikTok" />
-            </Link>
+            <LINK href={tiktok.url} className={styles.icon} target="_blank" rel="noopener">
+              <NEXTIMAGE src="/Icons/TikTok.webp" width={40} height={40} alt="TikTok" />
+            </LINK>
           )}
         </div>
 
@@ -256,21 +256,21 @@ export default function FooterComp() {
         <div className={styles.socials} style={{ marginTop: '0.75rem' }}>
           {/* Google Maps */}
           {googleMapsUrl && (
-            <Link href={googleMapsUrl} className={styles.icon} target="_blank" rel="noopener">
+            <LINK href={googleMapsUrl} className={styles.icon} target="_blank" rel="noopener">
               <FM id="footer.gmaps" defaultMessage="Google Maps" />
-            </Link>
+            </LINK>
           )}
 
           {/* WhatsApp (mismo número del teléfono de contacto) */}
           {Branding.contact?.phone ? (
-            <Link
+            <LINK
               href={`https://wa.me/${Branding.contact.phone}?text=Hola%20El%20Patr%C3%B3n%2C%20quiero%20informaci%C3%B3n.`}
               className={styles.icon}
               target="_blank"
               rel="noopener"
             >
               WhatsApp
-            </Link>
+            </LINK>
           ) : null}
 
           {/* Email */}
@@ -285,9 +285,9 @@ export default function FooterComp() {
 
           {/* YouTube */}
           {youtube.enabled && youtube.url && (
-            <Link href={youtube.url} className={styles.icon} target="_blank" rel="noopener">
+            <LINK href={youtube.url} className={styles.icon} target="_blank" rel="noopener">
               <FM id="footer.youtube" defaultMessage="YouTube" />
-            </Link>
+            </LINK>
           )}
         </div>
       </div>

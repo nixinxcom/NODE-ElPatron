@@ -45,27 +45,48 @@ async function fetchDocREST(projectId: string, apiKey: string, coll: string, id:
   }
 }
 
-/**
- * Devuelve el diccionario i18n desde Firestore via REST.
- * Prioridad de doc: <locale largo> → <locale corto> → {}.
- * Ej.: "en-US" → "en"
- */
-export async function getI18nEffectiveServer(locale: string) {
+// --- ADD: loader de seeds por cliente (app/[locale]/<cliente>/i18n) ---
+import { toShortLocale } from "@/app/lib/i18n/locale"; // si ya existía, reutilízalo
+
+async function loadTenantSeed(locale: string, tenant?: string): Promise<Record<string,string>> {
+  const short = toShortLocale(locale);
+  const t = (tenant || "").toLowerCase();
+  if (!t) return {};
+  try {
+    // Incluye todos los i18n locales de clientes en el bundle:
+    const mod = await import(
+      /* webpackInclude: /app\/\[locale\]\/[^/]+\/i18n\/index\.(ts|js)$/ */
+      `@/app/[locale]/${t}/i18n`
+    );
+    const dicts = (mod.default ?? mod) as Record<string, Record<string,string>>;
+    return dicts[short] ?? {};
+  } catch {
+    return {};
+  }
+}
+
+// --- REPLACE: función efectiva (FS > seeds del cliente) ---
+export async function getI18nEffectiveServer(locale: string, tenant?: string) {
+  // 1) Seeds locales del cliente (carpeta bajo [locale])
+  const seeds = await loadTenantSeed(locale, tenant);
+
+  // 2) Firestore (tu código existente para traer el diccionario desde FS)
+  //    Mantén tu lógica actual (colección, projectId/apiKey, shortId/longId, fetchDocREST, etc.)
   const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
   const apiKey    = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
   const I18N_COLL = process.env.NEXT_PUBLIC_I18N_COLL || "i18n_global";
-  if (!projectId || !apiKey || !locale) return {};
-  const shortId = (locale.split("-")[0] || "").trim(); // "en"
-  const longId  = locale;                               // "en-US"
+  if (!projectId || !apiKey || !locale) return seeds;
 
-  // 1) corto
-  if (shortId) {
-    const shortDoc = await fetchDocREST(projectId, apiKey, I18N_COLL, shortId);
-    if (shortDoc) return shortDoc;
+  const shortId = (locale.split("-")[0] || "").trim();
+  const longId  = locale;
+
+  // NOTE: asume que ya tienes una función fetchDocREST(projectId, apiKey, coll, docId)
+  let fsDoc: Record<string,string> = {};
+  if (shortId) fsDoc = (await fetchDocREST(projectId, apiKey, I18N_COLL, shortId)) || {};
+  if (!Object.keys(fsDoc).length) {
+    fsDoc = (await fetchDocREST(projectId, apiKey, I18N_COLL, longId)) || {};
   }
-  // 2) largo (back-compat temporal)
-  const longDoc = await fetchDocREST(projectId, apiKey, I18N_COLL, longId);
-  if (longDoc) return longDoc;
 
-  return {};
+  // 3) Prioridad RDD: FS pisa seeds del cliente
+  return { ...seeds, ...fsDoc };
 }

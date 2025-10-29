@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import styles from './NotFound.module.css';
 import SecretAdminTrigger from '@/complements/components/SecretAdminTrigger';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Locale = 'es' | 'en' | 'fr';
 
@@ -135,9 +135,9 @@ export default function NotFound() {
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
           />
-          <Link className={styles.homeBtn} href={`/${locale}`}>
+          <LINK className={styles.homeBtn} href={`/${locale}`}>
             {t.backHome}
-          </Link>
+          </LINK>
         </div>
 
         {/* Auto redirect */}
@@ -158,10 +158,10 @@ export default function NotFound() {
         <h2 className={styles.sectionTitle}>{t.popular}</h2>
         <nav className={styles.grid}>
           {filtered.map((l) => (
-            <Link key={l.href} href={l.href} className={styles.linkItem}>
+            <LINK key={l.href} href={l.href} className={styles.linkItem}>
               <span className={styles.linkLabel}>{l.label}</span>
               <span className={styles.linkPath}>{l.href}</span>
-            </Link>
+            </LINK>
           ))}
         </nav>
       </div>

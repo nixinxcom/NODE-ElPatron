@@ -1,11 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import FM from '@/complements/i18n/FM';
 import styles from './NotFound.module.css';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Locale = 'es' | 'en' | 'fr';
 
@@ -104,9 +104,9 @@ export default function NotFound() {
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
           />
-          <Link className={styles.homeBtn} href={`/${locale}`}>
+          <LINK className={styles.homeBtn} href={`/${locale}`}>
             <FM id="404.backHome" defaultMessage="Back to home" />
-          </Link>
+          </LINK>
         </div>
 
         <div className={styles.autoRow}>
@@ -136,12 +136,12 @@ export default function NotFound() {
 
         <nav className={styles.grid}>
           {filtered.map((l) => (
-            <Link key={l.href} href={l.href} className={styles.linkItem}>
+            <LINK key={l.href} href={l.href} className={styles.linkItem}>
               <span className={styles.linkLabel}>
                 <FM id={l.labelId} defaultMessage={l.defaultLabel} />
               </span>
               <span className={styles.linkPath}>{l.href}</span>
-            </Link>
+            </LINK>
           ))}
         </nav>
       </div>

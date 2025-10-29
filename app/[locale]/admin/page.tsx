@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import { useParams } from 'next/navigation';
 import AdminGuard from '@/complements/admin/AdminGuard'; 
 import styles from './admin-home.module.css';
@@ -65,10 +65,10 @@ export default function AdminHome() {
         <div className={styles.grid}>
           {cards.map((c) => (
             c.enabled && (
-              <Link key={c.key} href={c.href} className={styles.card}>
+              <LINK key={c.key} href={c.href} className={styles.card}>
                 <div className={styles.cardTitle}>{c.title}</div>
                 <div className={styles.cardDesc}>{c.desc}</div>
-              </Link>
+              </LINK>
             )
           ))}
         </div>

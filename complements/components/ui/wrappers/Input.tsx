@@ -12,7 +12,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   scheme?: 'light'|'dark';
 };
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input({
+export const INPUT = React.forwardRef<HTMLInputElement, InputProps>(function Input({
   kind = 'input',
   variant,
   size,

@@ -12,7 +12,7 @@ export type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   scheme?: 'light'|'dark';
 };
 
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(function Select({
+export const SELECT = React.forwardRef<HTMLSelectElement, SelectProps>(function Select({
   kind = 'select',
   variant,
   size,

@@ -3,7 +3,7 @@ import { useAppContext } from '@/context/AppContext';
 import {IntlProvider, FormattedMessage, FormattedNumber} from 'react-intl';
 import FM from "@/complements/i18n/FM";
 import SliderCardComp from '@/complements/components/SliderComp/SliderCardComp';
-import Link from 'next/link';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import Image from 'next/image';
 import ReactPlayer from 'react-player/lazy'
 import styles from './CardElem.module.css';
@@ -133,13 +133,13 @@ export default function CardElem(
                             <div className={styles.FrontContainer} ref={frontRef} style={{backgroundColor: backgroundColor && backgroundColor, color: textColor && textColor}}>
                                 {logo && 
                                     (website ? (
-                                        <Link className={styles.Logotype} href={website} passHref target="_blank" rel="noopener noreferrer">
+                                        <LINK className={styles.Logotype} href={website} passHref target="_blank" rel="noopener noreferrer">
                                             <img 
                                                 style={{cursor: 'alias'}} 
                                                 src={logo} 
                                                 alt="Logotype" 
                                             />
-                                        </Link>
+                                        </LINK>
                                     ) : (
                                         <img 
                                             className={styles.Logotype} 
@@ -329,7 +329,7 @@ export default function CardElem(
                                 }
                                 {linkURL &&
                                     <a className={styles.Link} href={linkURL}  target="_blank" rel="noopener noreferrer">
-                                        <Image src="/icons/LinkURL.png" fill alt=""/>
+                                        <IMAGE src="/icons/LinkURL.png" fill alt=""/>
                                     </a>
                                 }
                                 {BusSettings.showFavoriteIcon &&
