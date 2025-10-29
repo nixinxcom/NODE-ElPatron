@@ -145,9 +145,9 @@ export default function NotFound() {
           {autoRedirect ? (
             <>
               <span className={styles.muted}>{t.auto(seconds)}</span>
-              <button className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
+              <BUTTON className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
                 {t.cancel}
-              </button>
+              </BUTTON>
             </>
           ) : (
             <span className={styles.muted}>{t.deactivated}</span>

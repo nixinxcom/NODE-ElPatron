@@ -1,0 +1,18 @@
+# Carpetas innecesarias
+node_modules/
+.next/
+turbo/
+public/
+scripts/
+seeds/
+internalFiles/
+src/
+app/
+context/
+firebase/
+*.env
+*.local
+*.lock
+*.log
+tsconfig*.json
+.vscode/

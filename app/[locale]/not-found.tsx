@@ -119,9 +119,9 @@ export default function NotFound() {
                   values={{ seconds }}
                 />
               </span>
-              <button className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
+              <BUTTON className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
                 <FM id="404.cancel" defaultMessage="Cancel redirect" />
-              </button>
+              </BUTTON>
             </>
           ) : (
             <span className={styles.muted}>
