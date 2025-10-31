@@ -1,6 +1,6 @@
 {
   "name": "@nixinx/core",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "publishConfig": {
     "access": "restricted"
@@ -30,61 +30,30 @@
     "_git:push": "powershell -NoProfile -Command \"$b=(git rev-parse --abbrev-ref HEAD); git status; git add -A; git commit -m 'General Adjustments' 2>$null; git push -u origin $b\"",
     "clean": "node -e \"const fs=require('fs');for(const p of ['.next','.turbo','node_modules','dist']){try{fs.rmSync(p,{recursive:true,force:true});console.log('removed',p);}catch{}}\"",
     "clean:deep": "node -e \"const fs=require('fs');for(const p of ['.next','.turbo','node_modules','dist']){try{fs.rmSync(p,{recursive:true,force:true});console.log('removed',p);}catch{}}\"",
-    "build:pkg": "tsc -p tsconfig.pkg.json",
     "publish:nixinx": "npm run clean:deep && npm install && npm run build:pkg && npm publish --access=restricted",
-    "deploy:nixinx": "npm run clean:deep && npm install && npm run env:use:nixinx && npm run typecheck && npm run lint && npm run build:pkg && npm run _git:push && npm publish --access=restricted && npm run dev:nixinx"
+    "deploy:nixinx": "npm run clean:deep && npm install && npm run env:use:nixinx && npm run typecheck && npm run lint && npm run build:pkg && npm run _git:push && npm publish --access=restricted && npm run dev:nixinx",
+    "build:pkg": "node scripts/copy-css.js && tsc -p tsconfig.pkg.json"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "README.md",
-    "package.json"
+    "package.json",
+    "seeds/meta.global.json",
+    "seeds/meta.pages.json",
+    "seeds/meta.site.json"
   ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./wrappers": {
-      "types": "./dist/complements/components/ui/wrappers/index.d.ts",
-      "default": "./dist/complements/components/ui/wrappers/index.js"
-    },
-    "./StyleDesigner": {
-      "types": "./dist/complements/components/StyleDesigner/StyleDesigner.d.ts",
-      "default": "./dist/complements/components/StyleDesigner/StyleDesigner.js"
-    },
-    "./admin/BrandingTab": {
-      "types": "./dist/complements/admin/BrandingTab.d.ts",
-      "default": "./dist/complements/admin/BrandingTab.js"
-    },
-    "./admin/EnvWizard": {
-      "types": "./dist/complements/admin/EnvWizard.d.ts",
-      "default": "./dist/complements/admin/EnvWizard.js"
-    },
-    "./admin/FMsTab": {
-      "types": "./dist/complements/admin/FMsTab.d.ts",
-      "default": "./dist/complements/admin/FMsTab.js"
-    },
-    "./admin/MetaTab": {
-      "types": "./dist/complements/admin/MetaTab.d.ts",
-      "default": "./dist/complements/admin/MetaTab.js"
-    },
-    "./seeds/styles": {
-      "types": "./dist/seeds/styles.d.ts",
-      "default": "./dist/seeds/styles.js"
-    },
-    "./ui/providers": {
-      "types": "./dist/app/ui/providers.d.ts",
-      "default": "./dist/app/ui/providers.js"
-    },
-    "./coreinterfaces": {
-      "types": "./dist/coreinterfaces.d.ts",
-      "default": "./dist/coreinterfaces.js"
-    },
     "./styles/core-globals.css": "./dist/app/globals.css"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
     "@capacitor/core": "^7.4.4",
     "@ducanh2912/next-pwa": "^10.2.4",
@@ -124,8 +93,6 @@
     "@types/estree": "^1.0.8",
     "@types/google.maps": "^3.58.1",
     "@types/gtag.js": "^0.0.18",
-    "@types/minimatch": "^6.0.0",
-    "@types/next": "^9.0.0",
     "@types/node": "^20.19.9",
     "@types/prop-types": "^15.7.15",
     "@types/react": "^18.3.23",

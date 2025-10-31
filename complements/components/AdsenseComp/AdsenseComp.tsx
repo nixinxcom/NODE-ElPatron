@@ -32,7 +32,7 @@ function pushOnce(ins?: Element | null) {
   pushed.add(ins);
 }
 
-export function AdSense(props: Props) {
+export default function AdSense(props: Props) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => { pushOnce(ref.current?.querySelector('ins.adsbygoogle')); }, []);
 

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist",
+    "rootDir": ".",
     "declaration": true,
     "emitDeclarationOnly": true,
     "module": "ESNext",
@@ -17,10 +18,21 @@
       "@/*": ["./*"]
     }
   },
-    "include": [
+  "include": [
+    "app/**/*",
+    "types/css-modules.d.ts",
     "index.ts",
     "global.d.ts",
-    "complements/components/ui/wrappers",
+    "complements/components/**/*",
+    "complements/admin/**/*",
+    "complements/**/*",
+    "seeds/**/*",
+    "app/ui/providers.tsx",
     "src/interfaces/coreinterfaces.ts"
-    ]
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts"
+  ]
 }

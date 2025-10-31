@@ -1,7 +1,7 @@
 "use client";
 import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
-import { AdSense } from "@/complements/components/AdsenseComp/AdsenseComp";
+import AdSense from "@/complements/components/AdsenseComp/AdsenseComp";
 import { EnsureAdsense } from '@/app/lib/adsense';
 import { FormattedMessage } from "react-intl";
 import FM from "@/complements/i18n/FM";
