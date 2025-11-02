@@ -5,7 +5,7 @@ import type iSettings from '@/app/lib/settings/interface';
 // Carga por regla (FS > TSX(FM) > JSON > TSX). En settings normalmente no hay FM, pero respetamos el orden.
 import { getSettingsEffectiveForUI } from '@/complements/data/ruleUI';
 import { saveSettingsClient } from '@/app/lib/settings/client';       // writer a FS
-import { BUTTON, H1, LABEL } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 
 // ----------------- helpers -----------------
@@ -97,8 +97,8 @@ function ArrayField({
       {/* Array vacío: selector de tipo para primer ítem */}
       {value.length === 0 ? (
         <div className="flex items-center gap-3 py-2">
-          <span className="opacity-80">Tipo de elementos:</span>
-          <select
+          <SPAN className="opacity-80">Tipo de elementos:</SPAN>
+          <SELECT
             className="rounded-lg px-3 py-2 bg-[#0f172a] border border-[#1f2937]"
             value={emptyKind}
             onChange={(e) => setEmptyKind(e.target.value as ArrKind)}
@@ -107,7 +107,7 @@ function ArrayField({
             <option value="number">Número</option>
             <option value="boolean">Booleano</option>
             <option value="object">Objeto</option>
-          </select>
+          </SELECT>
           <BUTTON
             className="rounded-lg px-3 py-2 bg-[#2563eb] text-white"
             onClick={() => addItem(emptyKind)}
@@ -127,8 +127,8 @@ function ArrayField({
               if (k === 'string') {
                 return (
                   <div key={id} className="flex items-center gap-2">
-                    <span className="text-sm opacity-70 w-14">#{i + 1}</span>
-                    <input
+                    <SPAN className="text-sm opacity-70 w-14">#{i + 1}</SPAN>
+                    <INPUT
                       type="text"
                       className="flex-1 rounded-xl px-3 py-2 bg-[#0f172a] border border-[#1f2937]"
                       value={item as string}
@@ -146,8 +146,8 @@ function ArrayField({
               if (k === 'number') {
                 return (
                   <div key={id} className="flex items-center gap-2">
-                    <span className="text-sm opacity-70 w-14">#{i + 1}</span>
-                    <input
+                    <SPAN className="text-sm opacity-70 w-14">#{i + 1}</SPAN>
+                    <INPUT
                       type="number"
                       className="flex-1 rounded-xl px-3 py-2 bg-[#0f172a] border border-[#1f2937]"
                       value={item as number}
@@ -165,14 +165,14 @@ function ArrayField({
               if (k === 'boolean') {
                 return (
                   <div key={id} className="flex items-center gap-2">
-                    <span className="text-sm opacity-70 w-14">#{i + 1}</span>
+                    <SPAN className="text-sm opacity-70 w-14">#{i + 1}</SPAN>
                     <LABEL className="flex items-center gap-2">
-                      <input
+                      <INPUT
                         type="checkbox"
                         checked={!!item}
                         onChange={(e) => updateItem(i, e.target.checked)}
                       />
-                      <span>Activo</span>
+                      <SPAN>Activo</SPAN>
                     </LABEL>
                     <div className="flex gap-1 ml-auto">
                       <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, -1)} type="button">↑</BUTTON>
@@ -187,7 +187,7 @@ function ArrayField({
               return (
                 <div key={id} className="rounded-xl border border-[#1f2937] p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm opacity-70">Elemento #{i + 1}</span>
+                    <SPAN className="text-sm opacity-70">Elemento #{i + 1}</SPAN>
                     <div className="flex gap-1">
                       <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, -1)} type="button">↑</BUTTON>
                       <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, +1)} type="button">↓</BUTTON>
@@ -214,7 +214,7 @@ function ArrayField({
           </div>
 
           <div className="flex items-center gap-2 mt-3">
-            <span className="opacity-70">Añadir elemento</span>
+            <SPAN className="opacity-70">Añadir elemento</SPAN>
             <BUTTON className="px-3 py-2 rounded bg-[#2563eb] text-white" onClick={() => addItem(uniform === 'unknown' || uniform === 'mixed' ? 'string' : uniform)} type="button">
               + {uniform === 'unknown' || uniform === 'mixed' ? 'Texto' : uniform}
             </BUTTON>
@@ -273,13 +273,13 @@ function Field({
   if (typeof value === 'boolean') {
     return (
       <LABEL className="flex items-center gap-2 py-2">
-        <input
+        <INPUT
           id={id}
           type="checkbox"
           checked={!!value}
           onChange={(e) => onChange(path, e.target.checked)}
         />
-        <span>{label ?? path}</span>
+        <SPAN>{label ?? path}</SPAN>
       </LABEL>
     );
   }
@@ -288,7 +288,7 @@ function Field({
     return (
       <div className="flex flex-col gap-1 py-2">
         <LABEL htmlFor={id}>{label ?? path}</LABEL>
-        <input
+        <INPUT
           id={id}
           type="number"
           className="rounded-xl px-3 py-2 bg-[#0f172a] border border-[#1f2937] w-full"
@@ -303,7 +303,7 @@ function Field({
     return (
       <div className="flex flex-col gap-1 py-2">
         <LABEL htmlFor={id}>{label ?? path}</LABEL>
-        <input
+        <INPUT
           id={id}
           type="text"
           className="rounded-xl px-3 py-2 bg-[#0f172a] border border-[#1f2937] w-full"
@@ -510,7 +510,7 @@ function PWAIconsUpload({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <input type="file" accept="image/*" onChange={onPick} />
+        <INPUT type="file" accept="image/*" onChange={onPick} />
         <BUTTON onClick={uploadOriginal} disabled={!file || busy}
           className="px-3 py-2 rounded bg-black text-white disabled:opacity-50">
           Subir icono
@@ -519,20 +519,20 @@ function PWAIconsUpload({
           className="px-3 py-2 rounded bg-slate-700 text-white disabled:opacity-50">
           Detectar variantes
         </BUTTON>
-        {busy && <span className="opacity-70">Procesando…</span>}
+        {busy && <SPAN className="opacity-70">Procesando…</SPAN>}
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="text-xs opacity-70">Preview:</span>
+        <SPAN className="text-xs opacity-70">Preview:</SPAN>
         {preview ? (
           <img src={preview} alt="pwa-icon" style={{ width: 96, height: 96, objectFit: "cover", borderRadius: 8 }} />
         ) : null}
       </div>
 
       {msg ? <div className="text-xs opacity-80">{msg}</div> : null}
-      <p className="text-[11px] opacity-60">
+      <P className="text-[11px] opacity-60">
         Al detectar, este panel setea <code>settings.pwa.icons</code>. Luego dale “Guardar cambios” (usa tu <code>saveSettingsClient</code>) para que pase a FS y se respete la RDD.
-      </p>
+      </P>
     </div>
   );
 }
@@ -662,8 +662,8 @@ function PWAScreenshotsUpload({ value, onChange }:{ value?:_Shot[]; onChange:(v:
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
-          <LABEL className="text-sm opacity-80">Screenshot <b>wide</b></LABEL>
-          <input type="file" accept="image/*" onChange={pickWide} />
+          <LABEL className="text-sm opacity-80">Screenshot <B>wide</B></LABEL>
+          <INPUT type="file" accept="image/*" onChange={pickWide} />
           <BUTTON className="px-3 py-2 rounded bg-black text-white disabled:opacity-50" disabled={!fileW||busy} onClick={()=>upload("wide")}>Subir wide</BUTTON>
           <div className="border rounded-lg bg-white overflow-hidden" style={box(1280,720)}>
             {pvW ? <img src={pvW || FALLBACK_W} alt="wide"  style={{width:"100%",height:"100%",objectFit:"cover"}} /> : null}
@@ -671,8 +671,8 @@ function PWAScreenshotsUpload({ value, onChange }:{ value?:_Shot[]; onChange:(v:
         </div>
 
         <div className="flex flex-col gap-2">
-          <LABEL className="text-sm opacity-80">Screenshot <b>narrow</b></LABEL>
-          <input type="file" accept="image/*" onChange={pickNarrow} />
+          <LABEL className="text-sm opacity-80">Screenshot <B>narrow</B></LABEL>
+          <INPUT type="file" accept="image/*" onChange={pickNarrow} />
           <BUTTON className="px-3 py-2 rounded bg-black text-white disabled:opacity-50" disabled={!fileN||busy} onClick={()=>upload("narrow")}>Subir narrow</BUTTON>
           <div className="border rounded-lg bg-white overflow-hidden" style={box(1080,1920)}>
             {pvN ? <img src={pvN || FALLBACK_N} alt="narrow" style={{width:"100%",height:"100%",objectFit:"cover"}} /> : null}
@@ -682,10 +682,10 @@ function PWAScreenshotsUpload({ value, onChange }:{ value?:_Shot[]; onChange:(v:
 
       <div className="flex items-center gap-2">
         <BUTTON className="px-3 py-2 rounded bg-slate-700 text-white disabled:opacity-50" disabled={busy} onClick={()=>detect(true)}>Detectar variantes</BUTTON>
-        {busy && <span className="opacity-70">Procesando…</span>}
-        {msg && <span className="text-xs opacity-80">{msg}</span>}
+        {busy && <SPAN className="opacity-70">Procesando…</SPAN>}
+        {msg && <SPAN className="text-xs opacity-80">{msg}</SPAN>}
       </div>
-      <p className="text-[11px] opacity-60">Se actualiza <code>settings.pwa.screenshots</code>.</p>
+      <P className="text-[11px] opacity-60">Se actualiza <code>settings.pwa.screenshots</code>.</P>
     </div>
   );
 }

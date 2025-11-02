@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, FormEvent, ReactElement } from 'react';
 import styles from './FormComp.module.css';
 import { UseFirestoreFunc } from '@/functionalities/CommonFunctions/UseFirestoreFunc';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface iFormComp {
   InlineStyles?: React.CSSProperties;
@@ -125,7 +126,7 @@ USO (ejemplo completo):
   />
 
 NOTAS CLAVE:
-  — Accesibilidad: <label htmlFor>, aria-invalid, mensajes claros.
+  — Accesibilidad: <LABEL htmlFor>, aria-invalid, mensajes claros.
   — Validación: síncrona mínima; integrar Zod/Yup si se requiere.
   — Seguridad: sanitizar antes de enviar; no exponer PII en logs.
 

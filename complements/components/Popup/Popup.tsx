@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./Popup.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface iPopup{
   Message: string;
@@ -7,7 +8,7 @@ interface iPopup{
 function FeedbackPopup (props: iPopup){
   return (
     <div className={styles.Popup}>
-      <p>{props.Message}</p>
+      <P>{props.Message}</P>
     </div>
   )
 }
@@ -43,14 +44,14 @@ DOC: USO — complements/components/Popup/Popup.tsx
     const [open, setOpen] = useState(false);
     return (
       <>
-        <button onClick={()=>setOpen(true)}>Abrir</button>
+        <BUTTON onClick={()=>setOpen(true)}>Abrir</BUTTON>
         <Popup
           open={open}                    // boolean | requerido
           onClose={()=>setOpen(false)}   // ()=>void | requerido
           title="Aviso importante"       // string | opcional
           className="max-w-lg"
         >
-          <p>Contenido del popup…</p>
+          <P>Contenido del popup…</P>
         </Popup>
       </>
     );

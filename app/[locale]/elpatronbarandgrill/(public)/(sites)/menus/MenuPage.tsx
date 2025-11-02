@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -50,15 +51,15 @@ export default function MenuPage({ locale }: Props) {
 
       <section className={styles.pagePadLg}>
         <header className={styles.headStack}>
-          <h1 className={styles.title}>
+          <H1 className={styles.title}>
             <FM id="sites.menu.h1" defaultMessage="Menú" />
-          </h1>
-          <p className={styles.muted80}>
+          </H1>
+          <P className={styles.muted80}>
             <FM
               id="sites.menu.subtitle"
               defaultMessage="Explora nuestros menús de alimentos, licores y cocteles."
             />
-          </p>
+          </P>
         </header>
 
         {/* Pestañas */}
@@ -67,7 +68,7 @@ export default function MenuPage({ locale }: Props) {
             const isActive = k === active;
             const label = intl.formatMessage(MENU_MSG[k]);
             return (
-              <button
+              <BUTTON
                 key={k}
                 type="button"
                 onClick={() => setActive(k)}
@@ -77,7 +78,7 @@ export default function MenuPage({ locale }: Props) {
                 title={label}
               >
                 {label}
-              </button>
+              </BUTTON>
             );
           })}
         </div>
@@ -95,9 +96,9 @@ export default function MenuPage({ locale }: Props) {
         </div>
 
         {/* (Opcional) leyenda bajo la imagen */}
-        <p className={styles.caption}>
+        <P className={styles.caption}>
           {activeLabel}
-        </p>
+        </P>
       </section>
 
       {/* Si ya usas estilos locales, esto mantiene compatibilidad */}

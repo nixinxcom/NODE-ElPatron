@@ -4,6 +4,7 @@ import React, { useMemo, useState, useCallback, useRef, useEffect } from "react"
 import styles from "./BlogCardComp.module.css";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { FbDB } from "@/app/lib/services/firebase";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
@@ -226,11 +227,11 @@ export default function BlogCardComp({ event, locale, variant }: Props) {
 
       {/* Body */}
       <div ref={bodyRef} className={styles.body}>
-        <h3 className={styles.title}>{event.title}</h3>
-        <p className={styles.meta}>
+        <H3 className={styles.title}>{event.title}</H3>
+        <P className={styles.meta}>
           {toHumanDate(event.date, event.startTime ?? undefined, event.endTime ?? undefined)}
           {event.location ? ` • ${event.location}` : ""}
-        </p>
+        </P>
 
         {variant === "upcoming" ? (
           <>
@@ -259,74 +260,74 @@ export default function BlogCardComp({ event, locale, variant }: Props) {
 
             {event.description ? (
               <div className={styles.descWrap}>
-                <button className={styles.descToggle} onClick={() => setDescOpen(v => !v)}>
+                <BUTTON className={styles.descToggle} onClick={() => setDescOpen(v => !v)}>
                   {descOpen
                     ? intl.formatMessage({ id: "blogcard.desc.hide", defaultMessage: "Ocultar descripción" })
                     : intl.formatMessage({ id: "blogcard.desc.show", defaultMessage: "Mostrar descripción" })
                   }
-                </button>
-                {descOpen ? <p className={styles.descText}>{event.description}</p> : null}
+                </BUTTON>
+                {descOpen ? <P className={styles.descText}>{event.description}</P> : null}
               </div>
             ) : null}
           </>
         ) : (
           <>
-            {event.description ? <p className={styles.descClamp}>{event.description}</p> : null}
-            <button className={styles.reviewBtn} onClick={() => setFbOpen(v => !v)}>
+            {event.description ? <P className={styles.descClamp}>{event.description}</P> : null}
+            <BUTTON className={styles.reviewBtn} onClick={() => setFbOpen(v => !v)}>
               {fbOpen
                 ? intl.formatMessage({ id: "blogcard.review.close", defaultMessage: "Cerrar reseña" })
                 : intl.formatMessage({ id: "blogcard.review.open", defaultMessage: "Dejar reseña del evento" })
               }
-            </button>
+            </BUTTON>
 
             {fbOpen && (
               <div className={styles.form}>
                 <div className={styles.ratingRow}>
                   {[1,2,3,4,5].map((n) => (
-                    <button
+                    <BUTTON
                       key={n}
                       className={`${styles.star} ${rating && rating >= n ? styles.active : ""}`}
                       type="button"
                       onClick={() => setRating(n)}
-                    >★</button>
+                    >★</BUTTON>
                   ))}
                 </div>
 
-                <label className={styles.label}>
+                <LABEL className={styles.label}>
                   {/*i18n*/}<FM id="blogcard.label.name" defaultMessage="Nombre*" />
-                  <input
+                  <INPUT
                     className={styles.input}
                     type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}
                     placeholder={intl.formatMessage({ id: "blogcard.ph.name", defaultMessage: "Tu nombre" })}
                   />
-                </label>
+                </LABEL>
 
                 <div className={styles.row}>
-                  <label className={styles.label}>
+                  <LABEL className={styles.label}>
                     {/*i18n*/}<FM id="blogcard.label.email" defaultMessage="Correo" />
-                    <input
+                    <INPUT
                       className={styles.input}
                       type="email"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder={intl.formatMessage({ id: "blogcard.ph.email", defaultMessage: "tu@email.com" })}
                     />
-                  </label>
-                  <label className={styles.label}>
+                  </LABEL>
+                  <LABEL className={styles.label}>
                     {/*i18n*/}<FM id="blogcard.label.phone" defaultMessage="Teléfono" />
-                    <input
+                    <INPUT
                       className={styles.input}
                       type="tel"
                       value={phone}
                       onChange={e => setPhone(e.target.value)}
                       placeholder={intl.formatMessage({ id: "blogcard.ph.phone", defaultMessage: "+52 55…" })}
                     />
-                  </label>
+                  </LABEL>
                 </div>
 
-                <label className={styles.label}>
+                <LABEL className={styles.label}>
                   <textarea
                     className={`${styles.input} ${styles.textarea}`}
                     rows={3}
@@ -334,13 +335,13 @@ export default function BlogCardComp({ event, locale, variant }: Props) {
                     onChange={e => setComment(e.target.value)}
                     placeholder={intl.formatMessage({ id: "blogcard.ph.comment", defaultMessage: "¿Qué te pareció el evento?" })}
                   />
-                </label>
+                </LABEL>
 
-                <label className={styles.consent}>
-                  <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />
+                <LABEL className={styles.consent}>
+                  <INPUT type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />
                   <FM
                     id="blogcard.form.consent"
-                    defaultMessage={"Acepto los <link>términos</link> para ser contactado con fines de marketing."}
+                    defaultMessage={"Acepto los </LINK>términos</link> para ser contactado con fines de marketing."}
                     values={{
                       link: (chunks) => (
                         <a key="consent-link" href="/terminos" target="_blank" rel="noopener noreferrer">
@@ -349,18 +350,18 @@ export default function BlogCardComp({ event, locale, variant }: Props) {
                       ),
                     }}
                   />
-                </label>
+                </LABEL>
 
-                {errMsg ? <p className={styles.error}>{errMsg}</p> : null}
-                {okMsg ? <p className={styles.success}>{okMsg}</p> : null}
+                {errMsg ? <P className={styles.error}>{errMsg}</P> : null}
+                {okMsg ? <P className={styles.success}>{okMsg}</P> : null}
 
                 <div className={styles.formActions}>
-                  <button className={styles.submit} onClick={submitFeedback} disabled={saving}>
+                  <BUTTON className={styles.submit} onClick={submitFeedback} disabled={saving}>
                     {saving
                       ? intl.formatMessage({ id: "blogcard.submit.sending", defaultMessage: "Enviando…" })
                       : intl.formatMessage({ id: "blogcard.submit", defaultMessage: "Enviar reseña" })
                     }
-                  </button>
+                  </BUTTON>
                 </div>
               </div>
             )}

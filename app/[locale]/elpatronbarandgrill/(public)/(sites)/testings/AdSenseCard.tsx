@@ -6,6 +6,7 @@ import { EnsureAdsense } from '@/app/lib/adsense';
 import { FormattedMessage } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import s from './AdSenseCard.module.css';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -67,7 +68,7 @@ export default function AdSenseCard({ locale }: Props) {
       />
 
       {/* usa `locale` si necesitas condicionar algo */}
-      <p className={s.meta}><FM id="ads.locale" defaultMessage="Locale" />: {locale}</p>
+      <P className={s.meta}><FM id="ads.locale" defaultMessage="Locale" />: {locale}</P>
     </div>
   );
 }

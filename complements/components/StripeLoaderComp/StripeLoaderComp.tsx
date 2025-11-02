@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface StripePricingTableProps {
   pricingTableId: string;
@@ -88,12 +89,12 @@ DOC: USO — complements/components/StripeLoaderComp/StripeLoaderComp.tsx
           className="max-w-md mx-auto"
         >
           <PaymentElement />
-          <button
+          <BUTTON
             onClick={async ()=>{ await confirmPayment({ elements: (window as any).__elements }); }}
             className="btn mt-4"
           >
             Pagar
-          </button>
+          </BUTTON>
         </StripeLoaderComp>
       </Elements>
     );

@@ -422,7 +422,7 @@
   "branding.seeds.default_value": "Valeur par défaut",
   "settings.pwa.icons": "Icônes",
   "branding.brand.description": "Entreprise Exemple est un fournisseur leader de solutions innovantes.",
-  "blogcard.form.consent": "J’accepte les <link>conditions</link> pour être contacté à des fins marketing.",
+  "blogcard.form.consent": "J’accepte les </LINK>conditions</link> pour être contacté à des fins marketing.",
   "kiosk.survey.channel.walk_in": "Sans réservation / Passage",
   "pub.new.h1": "Nouvelle publication",
   "reservation.submit": "Envoyer",

@@ -3,6 +3,7 @@
 import React, { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/complements/components/AuthenticationComp/AuthContext';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Role = 'anon' | 'user' | 'admin' | 'superadmin';
 

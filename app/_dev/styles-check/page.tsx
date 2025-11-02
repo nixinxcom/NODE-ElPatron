@@ -1,6 +1,7 @@
 // app/_dev/styles-check/page.tsx
 import { getSettingsEffective } from "@/complements/data/settingsFS";
 import { getStylesEffective } from "@/complements/data/stylesFS";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Colors = { primary?: string; background?: string };
 type StyleThemes = Record<string, any>;
@@ -51,10 +52,10 @@ export default async function StylesCheckPage() {
 
   return (
     <main style={{padding:24, fontFamily:"system-ui, sans-serif"}}>
-      <h1 style={{fontSize:22, marginBottom:12}}>Styles – Data Rule Check</h1>
+      <H1 style={{fontSize:22, marginBottom:12}}>Styles – Data Rule Check</H1>
 
       <section style={{marginBottom:16}}>
-        <h2 style={{fontSize:16}}>Aliases</h2>
+        <H2 style={{fontSize:16}}>Aliases</H2>
         <pre style={{background:"#0b1220", color:"#e5e7eb", padding:12, borderRadius:8}}>
 {JSON.stringify(settings?.website?.theme?.aliases ?? {}, null, 2)}
         </pre>
@@ -62,28 +63,28 @@ export default async function StylesCheckPage() {
 
       <section style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:16}}>
         <div style={{padding:12, border:"1px solid #1f2937", borderRadius:8}}>
-          <h3>Light → <code>{lightName}</code></h3>
+          <H3>Light → <code>{lightName}</code></H3>
           {swatch("primary", light.primary)}
           {swatch("background", light.background)}
         </div>
         <div style={{padding:12, border:"1px solid #1f2937", borderRadius:8}}>
-          <h3>Dark → <code>{darkName}</code></h3>
+          <H3>Dark → <code>{darkName}</code></H3>
           {swatch("primary", dark.primary)}
           {swatch("background", dark.background)}
         </div>
       </section>
 
       <section style={{marginTop:16}}>
-        <h2 style={{fontSize:16}}>Temas disponibles (keys)</h2>
+        <H2 style={{fontSize:16}}>Temas disponibles (keys)</H2>
         <pre style={{background:"#0b1220", color:"#e5e7eb", padding:12, borderRadius:8, maxHeight:240, overflow:"auto"}}>
 {JSON.stringify(Object.keys(themes || {}), null, 2)}
         </pre>
       </section>
 
-      <p style={{opacity:.75, marginTop:16}}>
+      <P style={{opacity:.75, marginTop:16}}>
         * Si un color aparece “(sin definir)”, falta en ese tema físico o está en otra ruta;
         amplía el lector <code>readColor()</code> si tu shape es distinto.
-      </p>
+      </P>
     </main>
   );
 }

@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import css from "./AutoMediaCarousel.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 /**
  * AutoMediaCarousel
@@ -282,7 +283,7 @@ export default function AutoMediaCarousel({
               aria-hidden={!isActive}
             >
               {/* Capa clicable para acción */}
-              <button
+              <BUTTON
                 type="button"
                 className={css.clickLayer}
                 onClick={() => runAction(slide, i)}
@@ -318,7 +319,7 @@ export default function AutoMediaCarousel({
 
       {/* Controles izquierda/derecha */}
       <div className={css.controlsBar}>
-        <button
+        <BUTTON
           type="button"
           className={css.arrowBtn}
           aria-label="Anterior"
@@ -326,15 +327,15 @@ export default function AutoMediaCarousel({
         >
           {/* Icono simple */}
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button
+        </BUTTON>
+        <BUTTON
           type="button"
           className={css.arrowBtn}
           aria-label="Siguiente"
           onClick={next}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
+        </BUTTON>
       </div>
 
       {/* Dots */}
@@ -343,7 +344,7 @@ export default function AutoMediaCarousel({
           {slides.map((s, i) => {
             const active = i === index;
             return (
-              <button
+              <BUTTON
                 key={s.id ?? i}
                 type="button"
                 aria-label={s.label ? `Ir a ${s.label}` : `Ir a la diapositiva ${i + 1}`}

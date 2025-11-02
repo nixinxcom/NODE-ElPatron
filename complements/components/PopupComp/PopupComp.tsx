@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 /*Estilos*/
 import styles from './PopupComp.module.css'
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface IVideo{
     text: string,
@@ -27,9 +28,9 @@ function PopupComp(props:IPopUp) {
     return (
         <div className={styles.MsgContainer}>
             <div className={styles.Msg}>
-                <h1 className={styles.MainMessage}>{props.mainmessage}</h1>
-                <span className={styles.CloseMsg} onClick={()=>props.setPopUp(false)}>X</span>
-                <p className={styles.description}>{props.description}</p>
+                <H1 className={styles.MainMessage}>{props.mainmessage}</H1>
+                <SPAN className={styles.CloseMsg} onClick={()=>props.setPopUp(false)}>X</SPAN>
+                <P className={styles.description}>{props.description}</P>
                 <div className={styles.opt}>
                     <div className={styles.choseBtn}>
                             {props.LeftAction && props.LeftAction}

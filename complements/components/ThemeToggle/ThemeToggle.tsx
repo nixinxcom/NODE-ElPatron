@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import Image from "next/image";
 import s from "./ThemeToggle.module.css";
 import { useAppContext } from "@/context/AppContext";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Theme = "light" | "dark";
 
@@ -62,7 +63,7 @@ export default function ThemeToggle({
     .join(" ");
 
   return (
-    <button
+    <BUTTON
       type="button"
       onClick={toggle}
       className={cls}
@@ -82,6 +83,6 @@ export default function ThemeToggle({
         className={s.icon}
         priority
       />
-    </button>
+    </BUTTON>
   );
 }

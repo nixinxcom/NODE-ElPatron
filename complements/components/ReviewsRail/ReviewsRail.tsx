@@ -14,6 +14,8 @@ import FM from "@/complements/i18n/FM";
 import { useParams } from "next/navigation";
 import styles from "./ReviewsRail.module.css";
 import { toShortLocale, DEFAULT_LOCALE_SHORT } from '@/app/lib/i18n/locale';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+
 
 type ReviewDoc = {
   comment?: string | null;
@@ -122,15 +124,15 @@ export default function ReviewsRail({
 
   return (
     <section className={`w-full ${className}`} key={`reviews-${activeLocale}`}>
-      <h4 className={`text-center ${styles.title}`}>{title}</h4>
+      <H4 className={`text-center ${styles.title}`}>{title}</H4>
 
       {loading ? (
-        <p className={`text-center ${styles.muted}`}><FM id="ReviewsRail.loading" defaultMessage="Loading…" /></p>
+        <P className={`text-center ${styles.muted}`}><FM id="ReviewsRail.loading" defaultMessage="Loading…" /></P>
       ) : rows.length === 0 ? (
         <>
-        <p className={`text-center ${styles.muted}`}>
+        <P className={`text-center ${styles.muted}`}>
           <FM id="ReviewsRail.nocomments" defaultMessage="No Comments at the moment" />
-        </p>
+        </P>
         </>
       ) : (
         <div className={styles.railWrap}>
@@ -140,8 +142,8 @@ export default function ReviewsRail({
                 key={i}
                 className={styles.card}
               >
-                <p className="italic">{r.comment}</p>
-                <p className={styles.author}>{authorFor(r)}</p>
+                <P className="italic">{r.comment}</P>
+                <P className={styles.author}>{authorFor(r)}</P>
               </div>
             ))}
           </div>

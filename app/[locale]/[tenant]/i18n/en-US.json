@@ -188,7 +188,7 @@
 "blogcard.ph.email": "you@example.com",
 "blogcard.ph.phone": "+1 555…",
 "blogcard.ph.comment": "What did you think of the event?",
-"blogcard.form.consent": "I accept the <link>terms</link> to be contacted for marketing purposes.",
+"blogcard.form.consent": "I accept the </LINK>terms</link> to be contacted for marketing purposes.",
 "blogcard.submit.sending": "Sending…",
 "blogcard.submit": "Send review",
 "blogcard.err.noname": "Please enter your name.",

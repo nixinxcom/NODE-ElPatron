@@ -4,6 +4,7 @@ import React from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BrandingTab from "@/complements/admin/BrandingTab";  // ADITIVO
 import FM from '@/complements/i18n/FM';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 const ALL_TABS = ['branding'] as const;
 type TabKey = typeof ALL_TABS[number];
@@ -31,8 +32,8 @@ export default function BrandingPage() {
   return (
     <div className="w-full">
       <header className="mb-4">
-        <h1 className="text-xl font-semibold text-white"><FM id="branding.title" defaultMessage="Marca" /></h1>
-        <p className="text-sm text-neutral-600"><FM id="branding.description" defaultMessage="Administra branding, metadatos e i18n (FMs) para el sitio." /></p>
+        <H1 className="text-xl font-semibold text-white"><FM id="branding.title" defaultMessage="Marca" /></H1>
+        <P className="text-sm text-neutral-600"><FM id="branding.description" defaultMessage="Administra branding, metadatos e i18n (FMs) para el sitio." /></P>
       </header>
 
       <div className="border-b border-neutral-200 mb-3">
@@ -40,7 +41,7 @@ export default function BrandingPage() {
           {ALL_TABS.map((t) => {
             const active = tab === t;
             return (
-              <button
+              <BUTTON
                 key={t}
                 onClick={() => setTab(t)}
                 className={[
@@ -51,7 +52,7 @@ export default function BrandingPage() {
                 ].join(' ')}
               >
                 <FM id="fms.tab.title" defaultMessage="Formatted Messages" />
-              </button>
+              </BUTTON>
             );
           })}
         </nav>
@@ -59,8 +60,8 @@ export default function BrandingPage() {
 
       <section className="rounded-md border border-neutral-200 bg-black  p-4">
         <div className={tab === 'branding' ? '' : 'hidden'}>
-          <h2 className="font-medium mb-2 text-white"><FM id="branding.section.title" defaultMessage="Sección de Branding" /></h2>
-          <p className="text-sm text-neutral-600"><FM id="branding.section.description" defaultMessage="Aquí irá la configuración de identidad visual." /></p>
+          <H2 className="font-medium mb-2 text-white"><FM id="branding.section.title" defaultMessage="Sección de Branding" /></H2>
+          <P className="text-sm text-neutral-600"><FM id="branding.section.description" defaultMessage="Aquí irá la configuración de identidad visual." /></P>
           <BrandingTab />
         </div>
       </section>

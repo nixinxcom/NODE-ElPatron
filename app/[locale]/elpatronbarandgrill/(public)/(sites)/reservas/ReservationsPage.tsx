@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import FM from "@/complements/i18n/FM";
 import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -96,10 +97,10 @@ export default function ReservationsPage({ locale }: Props) {
         <div className={styles.container}>
           <form method="post" ref={form} onSubmit={sendEmail} className={styles.form}>
             {/* Nombre */}
-            <label htmlFor="name">
+            <LABEL htmlFor="name">
               <FM id="reservation.name" defaultMessage="Nombre:" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               name="name"
               id="name"
               type="text"
@@ -111,10 +112,10 @@ export default function ReservationsPage({ locale }: Props) {
             />
 
             {/* Email */}
-            <label htmlFor="email">
+            <LABEL htmlFor="email">
               <FM id="reservation.email" defaultMessage="Correo:" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               name="email"
               id="email"
               type="email"
@@ -126,10 +127,10 @@ export default function ReservationsPage({ locale }: Props) {
             />
 
             {/* Teléfono */}
-            <label htmlFor="phone">
+            <LABEL htmlFor="phone">
               <FM id="reservation.phone" defaultMessage="Teléfono:" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               type="tel"
               id="phone"
               name="phone"
@@ -145,16 +146,16 @@ export default function ReservationsPage({ locale }: Props) {
               required
             />
             {phoneInvalid && (
-              <p className={styles.errorText} role="alert">
+              <P className={styles.errorText} role="alert">
                 <FM id="reservation.phoneWarning" defaultMessage="Debe tener 10 dígitos y no iniciar en 0" />
-              </p>
+              </P>
             )}
 
             {/* Fecha y hora */}
-            <label htmlFor="date">
+            <LABEL htmlFor="date">
               <FM id="reservation.date" defaultMessage="Fecha y hora:" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               type="datetime-local"
               id="date"
               name="date"
@@ -166,10 +167,10 @@ export default function ReservationsPage({ locale }: Props) {
             />
 
             {/* Motivo / Razón */}
-            <label htmlFor="reason">
+            <LABEL htmlFor="reason">
               <FM id="reservation.reason" defaultMessage="Motivo:" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               name="reason"
               id="reason"
               type="text"
@@ -180,10 +181,10 @@ export default function ReservationsPage({ locale }: Props) {
             />
 
             {/* Asistentes */}
-            <label htmlFor="asistentes">
+            <LABEL htmlFor="asistentes">
               <FM id="reservation.asistants" defaultMessage="Número de asistentes:" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               type="number"
               id="asistentes"
               name="asistentes"
@@ -200,15 +201,15 @@ export default function ReservationsPage({ locale }: Props) {
               required
             />
             {asistentesInvalid && (
-              <p className="text-red-500 text-sm mt-1" role="alert">
+              <P className="text-red-500 text-sm mt-1" role="alert">
                 <FM id="reservation.asistantsWarning" defaultMessage="Entre 1 y 199" />
-              </p>
+              </P>
             )}
 
             {/* Mensaje */}
-            <label htmlFor="message">
+            <LABEL htmlFor="message">
               <FM id="reservation.message" defaultMessage="Mensaje:" />
-            </label>
+            </LABEL>
             <textarea
               name="message"
               id="message"
@@ -219,9 +220,9 @@ export default function ReservationsPage({ locale }: Props) {
               aria-label={intl.formatMessage({ id: 'reservation.message', defaultMessage: 'Mensaje:' })}
             />
 
-            <button type="submit">
+            <BUTTON type="submit">
               <FM id="reservation.submit" defaultMessage="Enviar" />
-            </button>
+            </BUTTON>
           </form>
         </div>
       </main>

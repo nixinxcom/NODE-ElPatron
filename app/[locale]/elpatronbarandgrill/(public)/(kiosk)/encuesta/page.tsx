@@ -6,6 +6,7 @@ import { FbDB } from '@/app/lib/services/firebase';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useParams } from 'next/navigation';
 import FM from "@/complements/i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type YesNo = true | false | null;
 type Channel =
@@ -205,9 +206,9 @@ export default function SurveyPage() {
 
   return (
     <div onClick={touch} className="wrap">
-      <h1 className="title">
+      <H1 className="title">
         <FM id="kiosk.survey.h1" defaultMessage="Encuesta rápida" />
-      </h1>
+      </H1>
 
       {/* GRID de tarjetas */}
       <div className="grid">
@@ -219,22 +220,22 @@ export default function SurveyPage() {
               <div className="label">{label}</div>
               <div className="spacer" />
               <div className="choices">
-                <button
+                <BUTTON
                   className={`thumb thumb-no ${v === false ? 'active' : ''}`}
                   onClick={() => setAnswer(c.key, v === false ? null : false)}
                   aria-label={intl.formatMessage({ id: 'kiosk.survey.thumb_aria.no', defaultMessage: 'No - {label}' }, { label })}
                   aria-pressed={v === false}
                 >
                   👎
-                </button>
-                <button
+                </BUTTON>
+                <BUTTON
                   className={`thumb thumb-yes ${v === true ? 'active' : ''}`}
                   onClick={() => setAnswer(c.key, v === true ? null : true)}
                   aria-label={intl.formatMessage({ id: 'kiosk.survey.thumb_aria.yes', defaultMessage: 'Sí - {label}' }, { label })}
                   aria-pressed={v === true}
                 >
                   👍
-                </button>
+                </BUTTON>
               </div>
             </div>
           );
@@ -243,27 +244,27 @@ export default function SurveyPage() {
 
       {/* Canales */}
       <div className="channels">
-        <h2>
+        <H2>
           <FM id="kiosk.survey.how_heard" defaultMessage="¿Cómo supo de nosotros?" />
-        </h2>
+        </H2>
         <div className="chips">
           {(['recomendacion', 'walk_in', 'social_media', 'flyer', 'medios_digitales', 'otro'] as const).map(v => (
-            <button
+            <BUTTON
               key={v}
               className={`chip ${channel === v ? 'active' : ''}`}
               onClick={() => selectChannel(v)}
             >
               {intl.formatMessage(channelMsg[v])}
-            </button>
+            </BUTTON>
           ))}
         </div>
       </div>
 
       {/* Comentarios */}
       <div className="commentsBox">
-        <label className="commentsLabel" htmlFor="survey-comment">
+        <LABEL className="commentsLabel" htmlFor="survey-comment">
           <FM id="kiosk.survey.comment.label" defaultMessage="¿Algo que quieras contarnos?" />
-        </label>
+        </LABEL>
         <textarea
           id="survey-comment"
           className="commentsText"
@@ -279,15 +280,15 @@ export default function SurveyPage() {
 
       {/* Acciones */}
       <div className="actions">
-        <button className="submit" onClick={handleSubmit} disabled={sending}>
+        <BUTTON className="submit" onClick={handleSubmit} disabled={sending}>
           {sending
             ? intl.formatMessage({ id: 'kiosk.survey.submitting', defaultMessage: 'Enviando…' })
             : intl.formatMessage({ id: 'kiosk.survey.submit', defaultMessage: 'Enviar' })
           }
-        </button>
-        <button className="reset" onClick={resetAll} disabled={sending}>
+        </BUTTON>
+        <BUTTON className="reset" onClick={resetAll} disabled={sending}>
           {intl.formatMessage({ id: 'kiosk.survey.reset', defaultMessage: 'Limpiar' })}
-        </button>
+        </BUTTON>
       </div>
 
       {/* Overlay de Gracias */}

@@ -101,7 +101,7 @@ export default function FirestoreComp({ collection, Width, Height, BackgroundCol
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.formGroup}>
-        <label className={styles.label}>Document Data (JSON):</label>
+        <LABEL className={styles.label}>Document Data (JSON):</LABEL>
         <textarea
           className={styles.input}
           value={inputValue}
@@ -110,15 +110,15 @@ export default function FirestoreComp({ collection, Width, Height, BackgroundCol
         />
       </div>
 
-      <button className={styles.button} onClick={Create}>Add Document</button>
-      <button className={styles.button} onClick={Retrieve}>Retrieve Documents</button>
+      <BUTTON className={styles.button} onClick={Create}>Add Document</BUTTON>
+      <BUTTON className={styles.button} onClick={Retrieve}>Retrieve Documents</BUTTON>
 
       <div className={styles.output}>
         {documents.map((doc) => (
           <div key={doc.id} className={styles.item}>
             <pre>{JSON.stringify(doc, null, 2)}</pre>
-            <button className={styles.button} onClick={() => Update(doc.id)}>Update</button>
-            <button className={styles.button} onClick={() => Delete(doc.id)}>Delete</button>
+            <BUTTON className={styles.button} onClick={() => Update(doc.id)}>Update</BUTTON>
+            <BUTTON className={styles.button} onClick={() => Delete(doc.id)}>Delete</BUTTON>
           </div>
         ))}
       </div>

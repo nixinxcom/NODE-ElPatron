@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useCallback } from "react";
 import styles from "./PlayerComp.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export interface IPlayer {
   url: string;
@@ -193,14 +194,14 @@ export default function PlayerComp(props: IPlayer) {
         /* movido a CSS: .panelFit (—> PlayerComp.module.css) */
       >
         <div className={styles.header}>
-          <button
+          <BUTTON
             aria-label="Cerrar"
             onClick={handleClose}
             className={styles.closeBtn}
             ref={firstFocusableRef}
           >
             ✕
-          </button>
+          </BUTTON>
         </div>
 
         <div className={styles.content}>
@@ -211,7 +212,7 @@ export default function PlayerComp(props: IPlayer) {
         </div>
 
         {/* botón oculto al final para ayudar al focus trap */}
-        <button
+        <BUTTON
           className={styles.hiddenFocus}
           aria-hidden
           ref={lastFocusableRef}

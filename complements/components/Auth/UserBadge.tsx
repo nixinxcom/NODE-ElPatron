@@ -3,6 +3,7 @@
 import React from 'react'
 import { useAuth } from '@/complements/components/AuthenticationComp/AuthContext';
 import styles from "./UserBadge.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // Genera un color basado en el email
 function circleColor(email?: string | null) {
@@ -31,10 +32,10 @@ export default function UserBadge({ compact = false }: { compact?: boolean }) {
       >
         {initial}
       </div>
-      <span className={styles.name}>
+      <SPAN className={styles.name}>
         {authed ? email || name || 'usuario' : 'no auth'}
-      </span>
-      <span
+      </SPAN>
+      <SPAN
         className={`${styles.dot} ${authed ? styles.dotOn : styles.dotOff}`}
         aria-hidden
       />

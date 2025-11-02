@@ -6,6 +6,7 @@ import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import styles from "./EmailmarketingPage.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -33,19 +34,19 @@ export default function EmailmarketingPage({ locale }: Props) {
       <main className={styles.pageMain}>
         <section className={styles.card}>
           <div className={styles.iconOk}>
-            <span aria-hidden className="text-2xl">✉️</span>
+            <SPAN aria-hidden className="text-2xl">✉️</SPAN>
           </div>
 
-          <h1 className={styles.title}>
+          <H1 className={styles.title}>
             <FM id="sites.mail.h1" defaultMessage="Suscripción a correos" />
-          </h1>
+          </H1>
 
-          <p className={styles.subtitle}>
+          <P className={styles.subtitle}>
             <FM
               id="sites.mail.subtitle"
               defaultMessage="Suscríbete para enterarte de eventos, música y promociones."
             />
-          </p>
+          </P>
 
           <div className={styles.actionsGrid}>
             <a
@@ -65,12 +66,12 @@ export default function EmailmarketingPage({ locale }: Props) {
             </a>
           </div>
 
-          <p className={styles.note}>
+          <P className={styles.note}>
             <FM
               id="sites.mail.privacy"
               defaultMessage="Respetamos tu privacidad. Solo te enviaremos correos relevantes y no compartiremos tus datos."
             />
-          </p>
+          </P>
         </section>
       </main>
     </>

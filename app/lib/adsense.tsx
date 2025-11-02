@@ -73,7 +73,7 @@ USO (ejemplo completo):
   export default function Articulo() {
     return (
       <section>
-        <p>Contenido del artículo…</p>
+        <P>Contenido del artículo…</P>
         <AdSense
           client="ca-pub-1234567890123456"    // string | requerido | "ca-pub-*" | —
           slot="9876543210"                   // string | requerido | id de bloque | —
@@ -83,7 +83,7 @@ USO (ejemplo completo):
           layoutKey="-gw-3+1f-3d+2z"          // string | opcional | clave de layout | —
           style={{ display: "block", minHeight: 200 }} // CSS | opcional | — | {}
         />
-        <p>Más contenido…</p>
+        <P>Más contenido…</P>
       </section>
     );
   }
@@ -95,7 +95,7 @@ NOTAS CLAVE:
   — Rendimiento: el script de AdSense es pesado; considera lazy loading y tamaños de contenedor explícitos para evitar CLS.
   — SEO: los anuncios no deben bloquear contenido principal ni afectar Core Web Vitals.
   — i18n/Tracking: no añade UTM; el tracking lo gestiona Google Ads/AdSense. Evita manipular el DOM del anuncio.
-  — Accesibilidad: provee tamaños/espaciados adecuados; no insertes anuncios dentro de <h1>/<h2> o elementos interactivos.
+  — Accesibilidad: provee tamaños/espaciados adecuados; no insertes anuncios dentro de <H1>/<H2> o elementos interactivos.
 
 DEPENDENCIAS:
   React · Next.js (App Router) · (opcional) next/script para cargar el script con estrategia "afterInteractive"

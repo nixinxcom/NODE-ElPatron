@@ -15,6 +15,7 @@ import { Analytics } from "@vercel/analytics/next";
 import ThemeProviders from "./providers/ThemeProviders";
 import BrandingCacheHydrator from "@/app/providers/BrandingCacheHydrator";
 import { getBssEffectiveCached } from '@/app/lib/bss/server';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // 1) Metadata global para toda la app (usa tus defaults y, si tienes, FS/meta_*).
 export const generateMetadata = withSitesLayoutMetadata();

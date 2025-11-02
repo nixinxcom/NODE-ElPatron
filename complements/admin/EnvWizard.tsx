@@ -4,6 +4,7 @@ import { envSchema, envMeta, type iEnvVars } from '../../app/lib/env';
 import { FbDB, FbAuth } from '../../app/lib/services/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { resolveTenantFromHost } from '../../app/lib/tenant/resolve';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // En UI todo se maneja como string
 type EnvValues = Partial<Record<keyof iEnvVars, string>>;
@@ -116,11 +117,11 @@ export default function EnvWizard() {
   return (
     <section className="grid gap-6">
       <header className="space-y-1">
-        <h2 className="text-xl font-semibold">Variables de Entorno</h2>
-        <p className="text-sm text-muted-foreground">
+        <H2 className="text-xl font-semibold">Variables de Entorno</H2>
+        <P className="text-sm text-muted-foreground">
           Requeridas por el Core. Las que comienzan con <code>NEXT_PUBLIC_</code>{' '}
           pueden mostrarse en UI; otras se tratan como secretas.
-        </p>
+        </P>
       </header>
 
       <div className="grid gap-4">
@@ -134,8 +135,8 @@ export default function EnvWizard() {
           const secret = Boolean(meta?.secret) && !String(k).startsWith('NEXT_PUBLIC_');
 
           return (
-            <label key={String(k)} className="grid gap-2">
-              <span className="text-sm font-medium">
+            <LABEL key={String(k)} className="grid gap-2">
+              <SPAN className="text-sm font-medium">
                 {label} <code className="opacity-70">({String(k)})</code>
                 {docUrl ? (
                   <>
@@ -146,8 +147,8 @@ export default function EnvWizard() {
                     </a>
                   </>
                 ) : null}
-              </span>
-              <input
+              </SPAN>
+              <INPUT
                 type={secret ? 'password' : 'text'}
                 autoComplete="off"
                 className="border rounded px-3 py-2"
@@ -155,42 +156,42 @@ export default function EnvWizard() {
                 value={(values[k] as string) ?? ''}
                 onChange={(e) => setVal(String(k), e.target.value)}
               />
-            </label>
+            </LABEL>
           );
         })}
       </div>
 
       <div className="grid gap-2">
         <div className="flex items-center justify-between">
-          <h3 className="font-medium">Variables adicionales (opcionales)</h3>
-          <button onClick={addExtra} className="px-3 py-1 rounded border">
+          <H3 className="font-medium">Variables adicionales (opcionales)</H3>
+          <BUTTON onClick={addExtra} className="px-3 py-1 rounded border">
             Añadir
-          </button>
+          </BUTTON>
         </div>
 
         {Object.entries(extra).map(([k, v]) => (
           <div key={k} className="flex gap-2 items-center">
             <code className="min-w-56">{k}</code>
-            <input
+            <INPUT
               className="flex-1 border rounded px-3 py-2"
               value={v}
               onChange={(e) => setExtra((s) => ({ ...s, [k]: e.target.value }))}
             />
-            <button onClick={() => rmExtra(k)} className="px-2 py-1 border rounded">
+            <BUTTON onClick={() => rmExtra(k)} className="px-2 py-1 border rounded">
               Eliminar
-            </button>
+            </BUTTON>
           </div>
         ))}
       </div>
 
       <div>
-        <button
+        <BUTTON
           disabled={busy}
           onClick={save}
           className="px-4 py-2 rounded bg-black text-white disabled:opacity-50"
         >
           {busy ? 'Guardando…' : 'Guardar ENV'}
-        </button>
+        </BUTTON>
       </div>
     </section>
   );

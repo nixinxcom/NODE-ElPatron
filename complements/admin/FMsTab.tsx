@@ -18,6 +18,7 @@ import {
 } from "@/app/lib/i18n/store";
 import { normalizeRouteKey } from "@/app/lib/i18n/utils";
 import FM from "../i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 
 /* Wrappers defensivos (por si el store aún no exporta algo) */
@@ -87,7 +88,7 @@ function Badge({ s, size = 12 }: { s: Traffic; size?: number }) {
     s === "yellow" ? "#f59e0b" : // amber/yellow-500
                      "#10b981";  // emerald-500
   return (
-    <span
+    <SPAN
       className="inline-block rounded-full shrink-0"
       style={{ width: size, height: size, backgroundColor: bg }}
     />
@@ -602,26 +603,26 @@ async function deleteIdHere(id: string) {
       <div className="sticky top-0 z-20 bg-neutral-100/20 dark:bg-neutral-900/90 backdrop-blur border-b border-neutral-200 dark:border-neutral-800">
         <div className="max-w-6xl mx-auto px-3 py-2 flex flex-wrap items-center gap-3">
           <div className="text-sm flex items-center gap-2">
-            <Badge s="red" /> <span><FM id="metaTab.filter.red" defaultMessage="id = valor" /></span>
-            <Badge s="yellow" /> <span><FM id="metaTab.filter.yellow" defaultMessage="vacío / incompleto" /></span>
-            <Badge s="green" /> <span><FM id="metaTab.filter.green" defaultMessage="ok" /></span>
+            <Badge s="red" /> <SPAN><FM id="metaTab.filter.red" defaultMessage="id = valor" /></SPAN>
+            <Badge s="yellow" /> <SPAN><FM id="metaTab.filter.yellow" defaultMessage="vacío / incompleto" /></SPAN>
+            <Badge s="green" /> <SPAN><FM id="metaTab.filter.green" defaultMessage="ok" /></SPAN>
           </div>
           <div className="text-sm opacity-80">
             {loading ? status || "Procesando…" : `Celdas: ${counts.total} · ✓ ${counts.green} · ! ${counts.yellow} · × ${counts.red}`}
           </div>
           <div className="ml-auto flex gap-2">
             {/* NUEVO: recarga manual desde Firestore */}
-            <button onClick={() => reloadData(true)} className={btnBase} disabled={loading}>
+            <BUTTON onClick={() => reloadData(true)} className={btnBase} disabled={loading}>
               <FM id="metaTab.reload" defaultMessage="Cargar desde Firestore" />
-            </button>
+            </BUTTON>
             {scope === "site" && (
-              <button onClick={suggestAndMoveGlobalsFromSite} className={btnBase} disabled={loading}>
+              <BUTTON onClick={suggestAndMoveGlobalsFromSite} className={btnBase} disabled={loading}>
                 <FM id="metaTab.suggest" defaultMessage="Sugerir globales y mover" />
-              </button>
+              </BUTTON>
             )}
-            <button onClick={saveAll} className={btnPrimary} disabled={loading}>
+            <BUTTON onClick={saveAll} className={btnPrimary} disabled={loading}>
               <FM id="metaTab.saveAll" defaultMessage="Guardar todo" />
-            </button>
+            </BUTTON>
           </div>
         </div>
       </div>
@@ -631,25 +632,25 @@ async function deleteIdHere(id: string) {
         <div className="grid gap-4 md:grid-cols-3">
           <div>
             <div className={label}><FM id="metaTab.scope" defaultMessage="Ámbito" /></div>
-            <select className={inputBase + " mt-1"} value={scope} onChange={(e) => setScope(e.target.value as Scope)}>
+            <SELECT className={inputBase + " mt-1"} value={scope} onChange={(e) => setScope(e.target.value as Scope)}>
               <option value="page"><FM id="metaTab.scope.page" defaultMessage="Por página" /></option>
               <option value="site"><FM id="metaTab.scope.site" defaultMessage="Site (todas las páginas)" /></option>
               <option value="global"><FM id="metaTab.scope.global" defaultMessage="Global (componentes)" /></option>
-            </select>
+            </SELECT>
           </div>
 
           {scope === "page" && (
             <div>
               <div className={label}>Ruta (subsección)</div>
               <div className="flex gap-2 mt-1">
-                <select className={inputBase} value={routeKey} onChange={(e) => setRouteKey(normalizeRouteKey(e.target.value))}>
+                <SELECT className={inputBase} value={routeKey} onChange={(e) => setRouteKey(normalizeRouteKey(e.target.value))}>
                   {Array.from(KNOWN_ROUTES).map((r) => (
                     <option key={r} value={r}>
                       {r}
                     </option>
                   ))}
-                </select>
-                <input
+                </SELECT>
+                <INPUT
                   className={inputBase}
                   placeholder="o escribe: /, /aboutus, /(kiosk)/encuesta"
                   onBlur={(e) => {
@@ -668,14 +669,14 @@ async function deleteIdHere(id: string) {
               {locales.map((loc) => {
                 const active = activeLocales.includes(loc);
                 return (
-                  <button
+                  <BUTTON
                     key={loc}
                     data-active={active}
                     className={pill}
                     onClick={() => setActiveLocales((prev) => (prev.includes(loc) ? prev.filter((x) => x !== loc) : [...prev, loc]))}
                   >
                     {loc}
-                  </button>
+                  </BUTTON>
                 );
               })}
             </div>
@@ -683,24 +684,24 @@ async function deleteIdHere(id: string) {
 
           <div className="md:col-span-2">
             <div className={label}><FM id="metaTab.searchId" defaultMessage="Buscar ID" /></div>
-            <input className={inputBase + " mt-1"} placeholder="filtra por texto del ID…" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <INPUT className={inputBase + " mt-1"} placeholder="filtra por texto del ID…" value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
 
           <div>
             <div className={label}><FM id="metaTab.filterByStatus" defaultMessage="Filtrar por estado" /></div>
             <div className="flex items-center gap-2 mt-1">
-              <button className={pill} data-active={colorFilter === "all"} onClick={() => setColorFilter("all")}>
+              <BUTTON className={pill} data-active={colorFilter === "all"} onClick={() => setColorFilter("all")}>
                 <FM id="metaTab.filter.all" defaultMessage="Todos" />
-              </button>
-              <button className={pill + " flex items-center gap-2"} data-active={colorFilter === "green"} onClick={() => setColorFilter("green")}>
+              </BUTTON>
+              <BUTTON className={pill + " flex items-center gap-2"} data-active={colorFilter === "green"} onClick={() => setColorFilter("green")}>
                 <Badge s="green" /> <FM id="metaTab.filter.green" defaultMessage="Verde" />
-              </button>
-              <button className={pill + " flex items-center gap-2"} data-active={colorFilter === "yellow"} onClick={() => setColorFilter("yellow")}>
+              </BUTTON>
+              <BUTTON className={pill + " flex items-center gap-2"} data-active={colorFilter === "yellow"} onClick={() => setColorFilter("yellow")}>
                 <Badge s="yellow" /> <FM id="metaTab.filter.yellow" defaultMessage="Amarillo" />
-              </button>
-              <button className={pill + " flex items-center gap-2"} data-active={colorFilter === "red"} onClick={() => setColorFilter("red")}>
+              </BUTTON>
+              <BUTTON className={pill + " flex items-center gap-2"} data-active={colorFilter === "red"} onClick={() => setColorFilter("red")}>
                 <Badge s="red" /> <FM id="metaTab.filter.red" defaultMessage="Rojo" />
-              </button>
+              </BUTTON>
             </div>
           </div>
         </div>
@@ -711,7 +712,7 @@ async function deleteIdHere(id: string) {
         <div className={surface}>
           <div className={h6}><FM id="metaTab.addId" defaultMessage="Añadir ID" /></div>
           <div className="flex gap-2 mt-2">
-            <input
+            <INPUT
               className={inputBase}
               placeholder="ej: home.welcome"
               value={newKey}
@@ -723,11 +724,11 @@ async function deleteIdHere(id: string) {
                 }
               }}
             />
-            <button className={btnBase} onClick={() => { addKey(newKey); setNewKey(""); }}>
+            <BUTTON className={btnBase} onClick={() => { addKey(newKey); setNewKey(""); }}>
               <FM id="metaTab.addId" defaultMessage="Añadir" />
-            </button>
+            </BUTTON>
           </div>
-          <p className="text-xs opacity-70 mt-2"><FM id="metaTab.addId.description" defaultMessage="Se crea una fila por cada locale activo. Por defecto, el valor = id (rojo) para ubicarlo en la UI." /></p>
+          <P className="text-xs opacity-70 mt-2"><FM id="metaTab.addId.description" defaultMessage="Se crea una fila por cada locale activo. Por defecto, el valor = id (rojo) para ubicarlo en la UI." /></P>
         </div>
 
         <div className={surface}>
@@ -743,9 +744,9 @@ async function deleteIdHere(id: string) {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) importIds();
               }}
             />
-            <button className={btnBase} onClick={importIds}>
+            <BUTTON className={btnBase} onClick={importIds}>
               <FM id="metaTab.import" defaultMessage="Importar" />
-            </button>
+            </BUTTON>
           </div>
         </div>
       </section>
@@ -757,27 +758,27 @@ async function deleteIdHere(id: string) {
           <div className="space-y-2">
             <div className={label}><FM id="metaTab.mode" defaultMessage="Modo" /></div>
             <div className="flex flex-wrap gap-4">
-              <label className="flex items-center gap-2 text-sm">
-                <input type="radio" name="importMode" checked={importMode === "global"} onChange={() => setImportMode("global")} />
-                <span><FM id="metaTab.mode.global" defaultMessage="Global (1 documento por idioma)" /></span>
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <input type="radio" name="importMode" checked={importMode === "site"} onChange={() => setImportMode("site")} />
-                <span><FM id="metaTab.mode.site" defaultMessage="Site (1 documento por idioma)" /></span>
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <input type="radio" name="importMode" checked={importMode === "split"} onChange={() => setImportMode("split")} />
-                <span><FM id="metaTab.mode.split" defaultMessage="Dividir por página (home, aboutus…)" /></span>
-              </label>
+              <LABEL className="flex items-center gap-2 text-sm">
+                <INPUT type="radio" name="importMode" checked={importMode === "global"} onChange={() => setImportMode("global")} />
+                <SPAN><FM id="metaTab.mode.global" defaultMessage="Global (1 documento por idioma)" /></SPAN>
+              </LABEL>
+              <LABEL className="flex items-center gap-2 text-sm">
+                <INPUT type="radio" name="importMode" checked={importMode === "site"} onChange={() => setImportMode("site")} />
+                <SPAN><FM id="metaTab.mode.site" defaultMessage="Site (1 documento por idioma)" /></SPAN>
+              </LABEL>
+              <LABEL className="flex items-center gap-2 text-sm">
+                <INPUT type="radio" name="importMode" checked={importMode === "split"} onChange={() => setImportMode("split")} />
+                <SPAN><FM id="metaTab.mode.split" defaultMessage="Dividir por página (home, aboutus…)" /></SPAN>
+              </LABEL>
             </div>
-            <p className="text-xs opacity-70">
+            <P className="text-xs opacity-70">
               <FM id="metaTab.uploadFiles" defaultMessage="Sube archivos <code>es.json</code>, <code>en.json</code>, <code>fr.json</code>. Si un JSON excede ~0.9 MiB, se divide por página automáticamente." />
-            </p>
+            </P>
           </div>
 
           <div className="flex items-center gap-3 justify-end">
-            <input id="i18n-json-file" type="file" accept=".json" multiple className={btnBase + " cursor-pointer"} onChange={(e) => handleJsonImport(e.currentTarget.files)} />
-            {inlineStatus && <span className="text-xs text-emerald-600 dark:text-emerald-400">{inlineStatus}</span>}
+            <INPUT id="i18n-json-file" type="file" accept=".json" multiple className={btnBase + " cursor-pointer"} onChange={(e) => handleJsonImport(e.currentTarget.files)} />
+            {inlineStatus && <SPAN className="text-xs text-emerald-600 dark:text-emerald-400">{inlineStatus}</SPAN>}
           </div>
         </div>
       </section>
@@ -789,15 +790,15 @@ async function deleteIdHere(id: string) {
             <FM id="metaTab.selected" defaultMessage="Seleccionados: {count}" values={{ count: selected.size }} />
           </div>
           <div className="flex gap-2">
-            <button className={btnBase} onClick={() => batchMove("global")}>
+            <BUTTON className={btnBase} onClick={() => batchMove("global")}>
               <FM id="metaTab.moveToGlobal" defaultMessage="Mover a Global" />
-            </button>
-            <button className={btnBase} onClick={() => batchMove("site")}>
+            </BUTTON>
+            <BUTTON className={btnBase} onClick={() => batchMove("site")}>
               <FM id="metaTab.moveToSite" defaultMessage="Mover a Site" />
-            </button>
-            <button className={btnBase} onClick={() => batchMove("page")}>
+            </BUTTON>
+            <BUTTON className={btnBase} onClick={() => batchMove("page")}>
               <FM id="metaTab.moveToPage" defaultMessage="Mover a Página" values={{ routeKey }} />
-            </button>
+            </BUTTON>
           </div>
         </section>
       )}
@@ -809,7 +810,7 @@ async function deleteIdHere(id: string) {
             <thead className="bg-neutral-900/80">
               <tr>
                 <th className="text-left p-2 w-[30px]">
-                  <input type="checkbox" checked={allChecked} onChange={toggleSelectAll} />
+                  <INPUT type="checkbox" checked={allChecked} onChange={toggleSelectAll} />
                 </th>
                 <th className="text-left p-2 w-[360px] text-neutral-700 dark:text-neutral-200"><FM id="metaTab.id" defaultMessage="ID" /></th>
                 {activeLocales.map((loc) => (
@@ -832,7 +833,7 @@ async function deleteIdHere(id: string) {
               {filteredRows.map((r, idx) => (
                 <tr key={r.id} className="odd:bg-neutral-900/40">
                   <td className="p-2 align-top">
-                    <input type="checkbox" checked={selected.has(r.id)} onChange={() => toggleSelectOne(r.id)} />
+                    <INPUT type="checkbox" checked={selected.has(r.id)} onChange={() => toggleSelectOne(r.id)} />
                   </td>
 
                   <td className="p-2 align-top">
@@ -846,14 +847,14 @@ async function deleteIdHere(id: string) {
                       <td key={loc} className="p-2 align-top">
                         <div className="flex items-center gap-2">
                           <Badge s={st} />
-                          <input className={inputBase} value={val} onChange={(e) => setCell(r.id, loc, e.target.value)} onBlur={() => confirmCell(r.id, loc)} placeholder={r.id} />
+                          <INPUT className={inputBase} value={val} onChange={(e) => setCell(r.id, loc, e.target.value)} onBlur={() => confirmCell(r.id, loc)} placeholder={r.id} />
                         </div>
                       </td>
                     );
                   })}
 
                   <td className="p-2 align-top">
-                    <button className={btnBase + " px-2 py-1"} onClick={() => deleteIdHere(r.id)} title="Eliminar">🗑</button>
+                    <BUTTON className={btnBase + " px-2 py-1"} onClick={() => deleteIdHere(r.id)} title="Eliminar">🗑</BUTTON>
                   </td>
 
                   <td className="p-2 align-top">
@@ -867,9 +868,9 @@ async function deleteIdHere(id: string) {
           </table>
         </div>
 
-        <p className="text-xs opacity-70 mt-2">
+        <P className="text-xs opacity-70 mt-2">
           <FM id="metaTab.importTip" defaultMessage="Tip: <kbd>Ctrl/Cmd</kbd> + <kbd>Enter</kbd> en “Importar IDs” para agregar rápido." />
-        </p>
+        </P>
       </section>
     </div>
   );

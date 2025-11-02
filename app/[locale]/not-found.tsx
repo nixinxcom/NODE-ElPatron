@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import FM from '@/complements/i18n/FM';
 import styles from './NotFound.module.css';
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Locale = 'es' | 'en' | 'fr';
 
@@ -85,18 +85,18 @@ export default function NotFound() {
   return (
     <main className={styles.wrap}>
       <div className={styles.card}>
-        <h1 className={styles.title}>
+        <H1 className={styles.title}>
           404 — <FM id="404.title" defaultMessage="Page not found" />
-        </h1>
-        <p className={styles.subtitle}>
+        </H1>
+        <P className={styles.subtitle}>
           <FM
             id="404.desc"
             defaultMessage="The page you were looking for does not exist or moved."
           />
-        </p>
+        </P>
 
         <div className={styles.searchRow}>
-          <input
+          <INPUT
             className={styles.search}
             type="search"
             placeholder={t('404.searchPh', undefined, 'Search…')}
@@ -112,35 +112,35 @@ export default function NotFound() {
         <div className={styles.autoRow}>
           {autoRedirect ? (
             <>
-              <span className={styles.muted}>
+              <SPAN className={styles.muted}>
                 <FM
                   id="404.auto"
                   defaultMessage="Redirecting in {seconds}s…"
                   values={{ seconds }}
                 />
-              </span>
+              </SPAN>
               <BUTTON className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
                 <FM id="404.cancel" defaultMessage="Cancel redirect" />
               </BUTTON>
             </>
           ) : (
-            <span className={styles.muted}>
+            <SPAN className={styles.muted}>
               <FM id="404.disabled" defaultMessage="Auto-redirect disabled." />
-            </span>
+            </SPAN>
           )}
         </div>
 
-        <h2 className={styles.sectionTitle}>
+        <H2 className={styles.sectionTitle}>
           <FM id="404.popular" defaultMessage="Available pages" />
-        </h2>
+        </H2>
 
         <nav className={styles.grid}>
           {filtered.map((l) => (
             <LINK key={l.href} href={l.href} className={styles.linkItem}>
-              <span className={styles.linkLabel}>
+              <SPAN className={styles.linkLabel}>
                 <FM id={l.labelId} defaultMessage={l.defaultLabel} />
-              </span>
-              <span className={styles.linkPath}>{l.href}</span>
+              </SPAN>
+              <SPAN className={styles.linkPath}>{l.href}</SPAN>
             </LINK>
           ))}
         </nav>

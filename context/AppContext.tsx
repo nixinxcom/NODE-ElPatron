@@ -78,7 +78,7 @@ function normalizeBranding(b?: iBranding<string> | null): iBranding<string> {
 const noop = () => {};
 
 const AppContext = createContext<iAppContext>({
-  Locale: "es",
+  Locale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en",
   setLocale: noop,
   Branding: {} as iBranding<string>,
   setBranding: noop as any,

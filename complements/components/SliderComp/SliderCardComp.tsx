@@ -6,6 +6,7 @@ import Image from 'next/image'
 /*Estilos*/
 import styles from './SliderCardComp.module.css'
 import { FormattedMessage, useIntl } from "react-intl";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface IGallery{
     images: string[]
@@ -45,7 +46,7 @@ function SliderCardComp(props:ISlideGallery) {
                 }}
                     >
                 <div className={(styles.SliderCardLink)} style={{width:props.width, height:props.height}}>
-                    {props.galleries[GalCounter].title && <p className={styles.CardTitle}>{props.galleries[GalCounter].title}</p>}
+                    {props.galleries[GalCounter].title && <P className={styles.CardTitle}>{props.galleries[GalCounter].title}</P>}
                     {props.galleries[GalCounter].url && <a href={`${props.galleries[GalCounter].url}`} target="_black" rel="noreferrer noopener" className={styles.CardUrl}>&#128279;</a>}
                     {TotImgs>1 && 
                         <a className={styles.PrvImgSlideCard} 
@@ -64,7 +65,7 @@ function SliderCardComp(props:ISlideGallery) {
                         <a className={styles.NxtImgSlideCard}
                             onClick={() => setImgCounter(ImgCounter >= TotImgs - 1 ? 0 : ImgCounter + 1)}
                         >»</a>}
-                    {props.galleries[GalCounter].shortdesc && <p className={styles.CardDescription}>{props.galleries[GalCounter].shortdesc}</p>}
+                    {props.galleries[GalCounter].shortdesc && <P className={styles.CardDescription}>{props.galleries[GalCounter].shortdesc}</P>}
                 </div>
                 {props.galleries.length>1 && (props.DispGalleries.display || ShowGal) &&
                     <div className={styles.GalleriesContainer}

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./InstallPWAComp.module.css";
 import { FormattedMessage } from "react-intl";
 import FM from "@/complements/i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Outcome = "accepted" | "dismissed";
 interface BeforeInstallPromptEvent extends Event {
@@ -88,16 +89,16 @@ export default function InstallPWAComp() {
   return (
     <>
       {/* BOTÓN EXISTENTE: conserva tu estilo/i18n */}
-      <button
+      <BUTTON
         className={styles.InstallPWA}
         role="button"
         onClick={doInstall}
         aria-label="install-app"
       >
-        <span>
+        <SPAN>
           <FM id="global.installApp" defaultMessage="Install App" />
-        </span>
-      </button>
+        </SPAN>
+      </BUTTON>
 
       {/* POPUP FIJO TEMPORAL (solo cuando se habilita la instalación) */}
       {showToast && (
@@ -126,15 +127,15 @@ export default function InstallPWAComp() {
             gap: 12,
           }}
         >
-          <span style={{ fontSize: 14 }}>
+          <SPAN style={{ fontSize: 14 }}>
             <FM
               id="global.installAppHint"
               defaultMessage="Add this app to your device for faster access."
             />
-          </span>
+          </SPAN>
 
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <button
+            <BUTTON
               onClick={() => setShowToast(false)}
               aria-label="close-install-hint"
               style={{
@@ -148,9 +149,9 @@ export default function InstallPWAComp() {
               }}
             >
               <FM id="global.later" defaultMessage="Later" />
-            </button>
+            </BUTTON>
 
-            <button
+            <BUTTON
               onClick={doInstall}
               aria-label="confirm-install"
               style={{
@@ -164,7 +165,7 @@ export default function InstallPWAComp() {
               }}
             >
               <FM id="global.install" defaultMessage="Install" />
-            </button>
+            </BUTTON>
           </div>
         </div>
       )}

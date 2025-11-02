@@ -6,6 +6,7 @@ import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
 import { FormattedMessage } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import styles from "./UnsubscribedPage.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -32,22 +33,22 @@ export default function UnsubscribedPage({ locale }: Props) {
       <main className={styles.pageMain}>
         <section className={styles.card}>
           <div className={styles.iconDanger}>
-            <span aria-hidden className="text-2xl">🚫</span>
+            <SPAN aria-hidden className="text-2xl">🚫</SPAN>
           </div>
 
-          <h1 className={styles.title}>
+          <H1 className={styles.title}>
             <FM
               id="sites.unsub.h1"
               defaultMessage="Has cancelado tu suscripción"
             />
-          </h1>
+          </H1>
 
-          <p className={styles.subtitle}>
+          <P className={styles.subtitle}>
             <FM
               id="sites.unsub.p1"
               defaultMessage="Lamentamos verte partir. Si cambias de opinión, puedes volver a suscribirte cuando quieras."
             />
-          </p>
+          </P>
 
           <div className="mt-8 flex items-center justify-center gap-3">
             <a href={hrefResub} className={styles.btnPrimary}>

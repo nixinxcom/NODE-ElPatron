@@ -7,7 +7,7 @@ import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
 import { useAppContext } from '@/context/AppContext';
 import { useI18nHref } from '@/app/lib/useI18nHref';
-import { H6, IMAGE } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -23,18 +23,18 @@ export default function AboutUsPage({ locale }: Props) {
       <main className={styles.aboutMain}>
         <section className={styles.section}>
           <div className={styles.text}>
-            <h2>
+            <H2>
               <FM
                 id="aboutUs.welcome"
                 defaultMessage="Welcome to El Patrón Bar & Grill"
               />
-            </h2>
-            <p>
+            </H2>
+            <P>
               <FM
                 id="aboutUs.opening"
                 defaultMessage="El Patrón Bar & Grill opened its doors in 2022 in the heart of Leamington, Ontario, at 205 Talbot St W. Since then, it has become the go-to spot for those who love music, Latin culture, and great food."
               />
-            </p>
+            </P>
           </div>
           <div className={styles.imageContainer}>
             <IMAGE
@@ -48,18 +48,18 @@ export default function AboutUsPage({ locale }: Props) {
 
         <section className={`${styles.section} ${styles.reverse}`}>
           <div className={styles.text}>
-            <h3>
+            <H3>
               <FM
                 id="aboutUs.identityTitle"
                 defaultMessage="Our Identity"
               />
-            </h3>
-            <p>
+            </H3>
+            <P>
               <FM
                 id="aboutUs.identity"
                 defaultMessage="We are a Mexican restaurant-bar that blends tradition with entertainment. Our dance floor has hosted DJs, renowned artists like El Comander, RAP groups, and a wide variety of Mexican, Colombian, Latin, and rumba bands."
               />
-            </p>
+            </P>
           </div>
           <div className={styles.imageContainer}>
             <IMAGE
@@ -73,18 +73,18 @@ export default function AboutUsPage({ locale }: Props) {
 
         <section className={styles.section}>
           <div className={styles.text}>
-            <h3>
+            <H3>
               <FM
                 id="aboutUs.eventsTitle"
                 defaultMessage="Events & Community"
               />
-            </h3>
-            <p>
+            </H3>
+            <P>
               <FM
                 id="aboutUs.karaokeAndEvents"
                 defaultMessage="We organize live karaoke competitions and have even hosted professional wrestling events, always committed to supporting and engaging with the local community."
               />
-            </p>
+            </P>
           </div>
           <div className={styles.imageContainer}>
             <IMAGE
@@ -98,24 +98,24 @@ export default function AboutUsPage({ locale }: Props) {
 
         <section className={`${styles.section} ${styles.reverse}`}>
           <div className={styles.text}>
-            <h3>
+            <H3>
               <FM
                 id="aboutUs.renovationsTitle"
                 defaultMessage="Our Renovations"
               />
-            </h3>
-            <p>
+            </H3>
+            <P>
               <FM
                 id="aboutUs.renovations"
                 defaultMessage="Since opening, we've undergone three renovations to evolve and provide a modern, warm, and welcoming space."
               />
-            </p>
-            <p>
+            </P>
+            <P>
               <FM
                 id="aboutUs.reinvention"
                 defaultMessage="Today, we’re entering a new phase of reinvention to deliver a fresh, exciting experience in the Essex region."
               />
-            </p>
+            </P>
           </div>
           <div className={styles.imageContainer}>
             <IMAGE
@@ -128,18 +128,18 @@ export default function AboutUsPage({ locale }: Props) {
         </section>
 
         <section className={styles.finalSection}>
-          <h2 className={styles.Closure}>
+          <H2 className={styles.Closure}>
             <FM
               id="aboutUs.closing"
               defaultMessage="The flavor, music, and spirit of Latin culture at its finest."
             />
-          </h2>
-          <p className={styles.Closure}>
+          </H2>
+          <P className={styles.Closure}>
             <FM
               id="aboutUs.cta"
               defaultMessage="Come and experience El Patrón Bar & Grill."
             />
-          </p>
+          </P>
         </section>
         <H6 
           className={styles.credits}

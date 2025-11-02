@@ -110,7 +110,7 @@ NOTAS CLAVE:
   — Solo cliente. No usar en Server Components.
   — Cargar el script una sola vez (usar marca global window.__adsenseLoaded).
   — Cumplir políticas AdSense (densidad, contenido, CMP). Evitar CLS reservando altura.
-  — No dentro de <h1>/<button> ni elementos interactivos.
+  — No dentro de <H1>/<BUTTON> ni elementos interactivos.
 
 DEPENDENCIAS:
   window.adsbygoogle · (opcional) next/script

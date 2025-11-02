@@ -9,6 +9,7 @@ import styles from "./blog.module.css";
 import { FormattedMessage } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import { withPageMetadata } from "@/app/lib/seo/withPageMetadata";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 /* Utilidades de fecha */
 function todayInTZ(tz = "America/Toronto"): string {
@@ -77,29 +78,29 @@ export default function BlogPage() {
     <main>
       <div className={styles.wrap}>
         <header className={styles.header}>
-          <h1 className={styles.title}>
+          <H1 className={styles.title}>
             <FM id="sites.blog.h1" defaultMessage="Eventos" />
-          </h1>
-          <p className={styles.subtitle}>
+          </H1>
+          <P className={styles.subtitle}>
             <FM
               id="sites.blog.subtitle"
               defaultMessage="Explora nuestros próximos y pasados eventos."
             />
-          </p>
+          </P>
         </header>
 
         {loading ? (
           <div className={styles.loading}>
-            <span>
+            <SPAN>
               <FM id="sites.blog.loading" defaultMessage="Cargando..." />
-            </span>
+            </SPAN>
           </div>
         ) : (
           <>
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
+              <H2 className={styles.sectionTitle}>
                 <FM id="sites.blog.upcoming.title" defaultMessage="Próximos" />
-              </h2>
+              </H2>
               {upcoming.length ? (
                 <div className={styles.masonry}>
                   {upcoming.map((ev) => (
@@ -107,19 +108,19 @@ export default function BlogPage() {
                   ))}
                 </div>
               ) : (
-                <p className={styles.empty}>
+                <P className={styles.empty}>
                   <FM
                     id="sites.blog.upcoming.empty"
                     defaultMessage="Aún no hay próximos eventos."
                   />
-                </p>
+                </P>
               )}
             </section>
 
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>
+              <H2 className={styles.sectionTitle}>
                 <FM id="sites.blog.past.title" defaultMessage="Eventos pasados" />
-              </h2>
+              </H2>
               {past.length ? (
                 <div className={styles.masonry}>
                   {past.map((ev) => (
@@ -127,12 +128,12 @@ export default function BlogPage() {
                   ))}
                 </div>
               ) : (
-                <p className={styles.empty}>
+                <P className={styles.empty}>
                   <FM
                     id="sites.blog.past.empty"
                     defaultMessage="Aún no hay eventos pasados."
                   />
-                </p>
+                </P>
               )}
             </section>
           </>

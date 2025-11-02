@@ -1,10 +1,11 @@
 'use client';
 import PayPalButtonsComp from '@/complements/components/PayPal/PayPalButtonsComp';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default function CheckoutPage() {
   return (
     <main>
-      <h1>Checkout de prueba</h1>
+      <H1>Checkout de prueba</H1>
       <PayPalButtonsComp
         amount="12.34"
         currency="CAD"

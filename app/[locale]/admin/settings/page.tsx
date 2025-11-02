@@ -9,6 +9,7 @@ import FM from '@/complements/i18n/FM';
 import RDDInspectorTab from "@/complements/admin/RDDInspectorTab";
 import AgreementTab from '@/complements/admin/AgreementTab';
 import EnvWizard from '@/complements/admin/EnvWizard';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 const ALL_TABS = ['environments', 'agreements', 'settings', 'metadatos', 'Formatted Messages', 'RDD Inspector'] as const;
 type TabKey = typeof ALL_TABS[number];
@@ -36,8 +37,8 @@ export default function SettingsPage() {
   return (
     <div className="w-full">
       <header className="mb-4">
-        <h1 className="text-xl font-semibold text-white"><FM id="settings.title" defaultMessage="Configuración" /></h1>
-        <p className="text-sm text-neutral-600"><FM id="settings.description" defaultMessage="Administra Settings, metadatos e i18n (FMs) para el sitio." /></p>
+        <H1 className="text-xl font-semibold text-white"><FM id="settings.title" defaultMessage="Configuración" /></H1>
+        <P className="text-sm text-neutral-600"><FM id="settings.description" defaultMessage="Administra Settings, metadatos e i18n (FMs) para el sitio." /></P>
       </header>
 
       <div className="border-b border-neutral-200 mb-3">
@@ -45,7 +46,7 @@ export default function SettingsPage() {
           {ALL_TABS.map((t) => {
             const active = tab === t;
             return (
-              <button
+              <BUTTON
                 key={t}
                 onClick={() => setTab(t)}
                 className={[
@@ -56,7 +57,7 @@ export default function SettingsPage() {
                 ].join(' ')}
               >
                 {t === 'environments' ? 'Environments' : t === 'agreements' ? 'Agreements' : t === 'settings' ? 'Settings' : t === 'metadatos' ? 'Metadatos' : t === 'Formatted Messages' ? 'Formatted Messages' : 'RDD Inspector'}
-              </button>
+              </BUTTON>
             );
           })}
         </nav>
@@ -65,26 +66,26 @@ export default function SettingsPage() {
       <section className="rounded-md border border-neutral-200 bg-black  p-4">
 
         <div className={tab === 'environments' ? '' : 'hidden'}>
-          <h2 className="font-medium mb-2 text-white"><FM id="environments.section.title" defaultMessage="Sección de Variables de Entorno" /></h2>
-          <p className="text-sm text-neutral-600"><FM id="environments.section.description" defaultMessage="Aquí vá la configuración de las variables de entorno de la compañia." /></p>
+          <H2 className="font-medium mb-2 text-white"><FM id="environments.section.title" defaultMessage="Sección de Variables de Entorno" /></H2>
+          <P className="text-sm text-neutral-600"><FM id="environments.section.description" defaultMessage="Aquí vá la configuración de las variables de entorno de la compañia." /></P>
           <EnvWizard />
         </div>
 
         <div className={tab === 'agreements' ? '' : 'hidden'}>
-          <h2 className="font-medium mb-2 text-white"><FM id="agreements.section.title" defaultMessage="Sección de Contratacion" /></h2>
-          <p className="text-sm text-neutral-600"><FM id="agreements.section.description" defaultMessage="Aquí vá la configuración del arreglo contractual con compañia." /></p>
+          <H2 className="font-medium mb-2 text-white"><FM id="agreements.section.title" defaultMessage="Sección de Contratacion" /></H2>
+          <P className="text-sm text-neutral-600"><FM id="agreements.section.description" defaultMessage="Aquí vá la configuración del arreglo contractual con compañia." /></P>
           <AgreementTab />
         </div>
         
         <div className={tab === 'settings' ? '' : 'hidden'}>
-          <h2 className="font-medium mb-2 text-white"><FM id="settings.section.title" defaultMessage="Sección de Configuración" /></h2>
-          <p className="text-sm text-neutral-600"><FM id="settings.section.description" defaultMessage="Aquí vá la configuración de la compañia." /></p>
+          <H2 className="font-medium mb-2 text-white"><FM id="settings.section.title" defaultMessage="Sección de Configuración" /></H2>
+          <P className="text-sm text-neutral-600"><FM id="settings.section.description" defaultMessage="Aquí vá la configuración de la compañia." /></P>
           <SettingsTab />
         </div>
 
         <div className={tab === 'metadatos' ? '' : 'hidden'}>
-          <h2 className="font-medium mb-2 text-neutral-900"><FM id="metadatos.section.title" defaultMessage="Sección de Metadatos" /></h2>
-          <p className="text-sm text-neutral-600"><FM id="metadatos.section.description" defaultMessage="SEO por ruta (título, descripción, OG, etc.)." /></p>
+          <H2 className="font-medium mb-2 text-neutral-900"><FM id="metadatos.section.title" defaultMessage="Sección de Metadatos" /></H2>
+          <P className="text-sm text-neutral-600"><FM id="metadatos.section.description" defaultMessage="SEO por ruta (título, descripción, OG, etc.)." /></P>
           <MetaTab />
         </div>
 

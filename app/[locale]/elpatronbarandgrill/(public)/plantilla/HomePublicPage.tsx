@@ -6,6 +6,7 @@ import styles from "./page.module.css";
 import PayPalButtonsComp from "@/complements/components/PayPal/PayPalButtonsComp";
 import { useState } from "react";
 import { Points, PrepaidMemberships, PromiseMemberships } from "@/complements/components/StripeLoaderComp/PaymentModels";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default function HomePublicPage({
   ssrTime,
@@ -33,11 +34,11 @@ export default function HomePublicPage({
       {ShowStripePoint && <Points />}
       {ShowStripePrepaidMembership && <PrepaidMemberships />}
       {ShowStripePromiseMembership && <PromiseMemberships />}
-      <h1><FM id="NuevaPlantilla" defaultMessage="Esta Plantilla ya puede conectarse con Firebase" /></h1>
-      <p className={styles.note}>
+      <H1><FM id="NuevaPlantilla" defaultMessage="Esta Plantilla ya puede conectarse con Firebase" /></H1>
+      <P className={styles.note}>
         <FM id="plantilla.locale" defaultMessage="Locale:" /> {locale} ·{" "}
         <FM id="plantilla.ssrTime" defaultMessage="SSR time:" /> {ssrTime}
-      </p>
+      </P>
     </div>
   );
 }

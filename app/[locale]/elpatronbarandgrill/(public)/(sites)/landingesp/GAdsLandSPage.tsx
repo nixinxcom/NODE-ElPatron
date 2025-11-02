@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -40,37 +41,37 @@ export default function GoogleAdsLandingEspPage({ locale }: Props) {
           </div>
 
           {showWelcome ? (
-            <h2 className={styles.welcome}>¡Bienvenido a El Patrón! 🎉</h2>
+            <H2 className={styles.welcome}>¡Bienvenido a El Patrón! 🎉</H2>
           ) : isAllowed === null ? (
             <>
-              <h1>🎶 Bienvenido a El Patrón Bar & Grill</h1>
-              <p>
+              <H1>🎶 Bienvenido a El Patrón Bar & Grill</H1>
+              <P>
                 Somos un bar de música en vivo con buen ambiente.
                 Solo necesitamos confirmar algo rápido antes de continuar:
-              </p>
-              <p className={styles.joke}>
+              </P>
+              <P className={styles.joke}>
                 ¿Sabías que la edad no borra los recuerdos? Solo hace que bailen cumbia. 💃🕺
-              </p>
+              </P>
               <div className={styles.buttons}>
-                <button className={`${styles.btn} ${styles.yes}`} onClick={() => handleAccess(true)}>
+                <BUTTON className={`${styles.btn} ${styles.yes}`} onClick={() => handleAccess(true)}>
                   Sí, soy mayor de edad
-                </button>
-                <button className={`${styles.btn} ${styles.no}`} onClick={() => handleAccess(false)}>
+                </BUTTON>
+                <BUTTON className={`${styles.btn} ${styles.no}`} onClick={() => handleAccess(false)}>
                   Aún no
-                </button>
+                </BUTTON>
               </div>
             </>
           ) : (
             <>
-              <h2>🎸 ¡Gracias por visitarnos!</h2>
-              <p>
+              <H2>🎸 ¡Gracias por visitarnos!</H2>
+              <P>
                 Este sitio es solo para mayores de edad, pero nos encantará verte cuando llegue tu momento. 😉
-              </p>
-              <p className={styles.joke}>
+              </P>
+              <P className={styles.joke}>
                 ¿Sabes cuál es el colmo de un menor en un bar?  
                 ¡Que le pidan la ID y les enseñe su credencial de estudiante! 🎓😄
-              </p>
-              <p>Te mandamos a Google para que nos encuentres más adelante...</p>
+              </P>
+              <P>Te mandamos a Google para que nos encuentres más adelante...</P>
             </>
           )}
         </div>

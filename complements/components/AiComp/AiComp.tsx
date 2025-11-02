@@ -28,6 +28,7 @@ import { getI18nEffective } from '@/complements/data/i18nFS';
 import { toShortLocale, DEFAULT_LOCALE_SHORT } from '@/app/lib/i18n/locale';
 import { useAppContext } from '@/context/AppContext';
 import { Settings } from 'lucide-react';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // ===== Caché por sesión (solo pestaña abierta) =====
 const SS = typeof window !== 'undefined' ? window.sessionStorage : null;
@@ -497,9 +498,9 @@ export default function AiComp(props: AiCompProps) {
     <div className={s.container}>
       {/* FAB */}
       {!open && (
-        <button className={s.fab} onClick={() => setOpen(true)} aria-label="Open AI Agent">
+        <BUTTON className={s.fab} onClick={() => setOpen(true)} aria-label="Open AI Agent">
           <img src={avatar} alt="AI" className={s.fabImg} />
-        </button>
+        </BUTTON>
       )}
 
       {open && (
@@ -507,39 +508,39 @@ export default function AiComp(props: AiCompProps) {
           <div className={s.header}>
             <img className={s.brand} src={fabIcon} alt="brand" />
             <div className={s.title}>{titleText}</div>
-            <button
+            <BUTTON
               className={s.close}
               onClick={() => { flushTelemetry(); setOpen(false); }}
               aria-label="Close"
-            >✕</button>
+            >✕</BUTTON>
           </div>
 
           {/* Lead form opcional */}
           {cfg?.showLeadForm && !lead.sent && (
             <div className={s.lead}>
-              <input
+              <INPUT
                 className={s.input}
                 placeholder={intl.formatMessage({ id: 'aai.ui.name', defaultMessage: 'Nombre' })}
                 value={lead.name}
                 onChange={e => setLead({ ...lead, name: e.target.value })}
               />
-              <input
+              <INPUT
                 className={s.input}
                 placeholder="email@example.com"
                 value={lead.email}
                 onChange={e => setLead({ ...lead, email: e.target.value })}
               />
-              <label className={s.leadConsent}>
-                <input
+              <LABEL className={s.leadConsent}>
+                <INPUT
                   type="checkbox"
                   checked={lead.consent}
                   onChange={e => setLead({ ...lead, consent: e.target.checked })}
                 />
-                <span><FM id="aai.ui.consent" defaultMessage="Acepto" /></span>
-              </label>
-              <button className={s.btnAccent} onClick={submitLead}>
+                <SPAN><FM id="aai.ui.consent" defaultMessage="Acepto" /></SPAN>
+              </LABEL>
+              <BUTTON className={s.btnAccent} onClick={submitLead}>
                 <FM id="aai.ui.send" defaultMessage="Enviar" />
-              </button>
+              </BUTTON>
             </div>
           )}
 
@@ -549,7 +550,7 @@ export default function AiComp(props: AiCompProps) {
               <div key={i} className={m.from === 'user' ? s.msgUser : s.msgBot}>
                 {m.from === 'bot' && <img className={s.msgAvatar} src={avatar} alt="" aria-hidden />}
                 <div className={s.msgBubble}>
-                  <span className={s.messageText}>{renderWithLinks(m.text ?? '')}</span>
+                  <SPAN className={s.messageText}>{renderWithLinks(m.text ?? '')}</SPAN>
                 </div>
               </div>
             ))}
@@ -557,9 +558,9 @@ export default function AiComp(props: AiCompProps) {
               <div className={s.msgBot}>
                 <img className={s.msgAvatar} src={avatar} alt="" aria-hidden />
                 <div className={`${s.msgBubble} ${s.typing}`}>
-                  <span className={s.dot}></span>
-                  <span className={s.dot}></span>
-                  <span className={s.dot}></span>
+                  <SPAN className={s.dot}></SPAN>
+                  <SPAN className={s.dot}></SPAN>
+                  <SPAN className={s.dot}></SPAN>
                 </div>
               </div>
             )}
@@ -568,16 +569,16 @@ export default function AiComp(props: AiCompProps) {
 
           {/* Input */}
           <div className={s.inputBar}>
-            <input
+            <INPUT
               className={s.input}
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder={placeholderText}
               onKeyDown={(e) => { if (e.key === 'Enter') send(); }}
             />
-            <button className={s.btnPrimary} onClick={send}>
+            <BUTTON className={s.btnPrimary} onClick={send}>
               {sendLabel}
-            </button>
+            </BUTTON>
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import AdSenseCard from "./AdSenseCard";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default async function Page(
   { params }: { params: Promise<{ locale: string }> }
@@ -62,7 +63,7 @@ USO (patrón recomendado con AdSenseCard):
 //   const adTest = searchParams?.ad\_test !== '0'
 //   return (
 //     <div className="container mx-auto px-6 py-8">
-//       <h1>Testings ({locale})</h1>
+//       <H1>Testings ({locale})</H1>
 //       \<AdSenseCard
 //         client={adClient}                  // opcional — string
 //         slot={adSlot}                      // requerido — string

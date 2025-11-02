@@ -3,6 +3,7 @@
 import React, { memo } from 'react';
 import Image from 'next/image';
 import styles from './HoldComp.module.css';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface HoldProps {
   centralImg: string;
@@ -110,7 +111,7 @@ DOC: USO — complements/components/HoldComp/HoldComp.tsx
         text="Procesando..."           // string | opcional
         className="relative"
       >
-        <button className="btn">Guardar cambios</button>
+        <BUTTON className="btn">Guardar cambios</BUTTON>
       </HoldComp>
     );
   }

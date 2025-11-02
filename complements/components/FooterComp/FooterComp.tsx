@@ -8,7 +8,7 @@ import { useI18nHref } from '@/app/lib/useI18nHref';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FM from '@/complements/i18n/FM';
 import { useAppContext } from '@/context/AppContext';
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type LinkItem = { name?: string; title?: string; url?: string; href?: string; enabled?: boolean; icon?: string };
 
@@ -134,7 +134,7 @@ export default function FooterComp() {
                     {b.icon ? (
                       <NEXTIMAGE src={b.icon!} width={16} height={16} alt="Branch Icon" />
                     ) : null}{' '}
-                    <span>{b.name}</span>
+                    <SPAN>{b.name}</SPAN>
                   </A>
                 </li>
               ))}
@@ -210,12 +210,12 @@ export default function FooterComp() {
           )}
         </div>
 
-        <p className={styles.text}>
+        <P className={styles.text}>
           <FM
             id="footer.description"
             defaultMessage="Síguenos en nuestras redes sociales para mantenerte al día con nuestros eventos y promociones."
           />
-        </p>
+        </P>
 
         <div className={styles.socials}>
           {facebook.enabled && facebook.url && (

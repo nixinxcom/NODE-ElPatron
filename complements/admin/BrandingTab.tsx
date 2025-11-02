@@ -10,6 +10,7 @@ import { getBrandingAdminRaw as getBrandingRaw, saveBrandingGlobal } from '@/com
 
 // i18n único (leer/guardar diccionario por locale)
 import { getI18nEffective, saveI18n, type I18nDict } from '@/complements/data/i18nFS';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // Locales visibles (ajusta codes a tus seeds/FS)
 const LOCALE_COLUMNS = [
@@ -76,20 +77,20 @@ function ArrayField({
         {value.map((item, i) => (
           <div key={`${path}-${i}`} className="rounded border border-[#1f2937] p-2">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[11px] opacity-60">#{i + 1}</span>
+              <SPAN className="text-[11px] opacity-60">#{i + 1}</SPAN>
               <div className="flex gap-1">
-                <button className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, -1)} type="button">↑</button>
-                <button className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, +1)} type="button">↓</button>
-                <button className="px-2 py-1 rounded bg-[#7f1d1d] text-white" onClick={() => removeItem(i)} type="button">✕</button>
+                <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, -1)} type="button">↑</BUTTON>
+                <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => move(i, +1)} type="button">↓</BUTTON>
+                <BUTTON className="px-2 py-1 rounded bg-[#7f1d1d] text-white" onClick={() => removeItem(i)} type="button">✕</BUTTON>
               </div>
             </div>
             {renderItem(`${path}.${i}`, item)}
           </div>
         ))}
       </div>
-      <button className="mt-2 px-3 py-1 rounded bg-[#2563eb] text-white text-sm" onClick={addItem} type="button">
+      <BUTTON className="mt-2 px-3 py-1 rounded bg-[#2563eb] text-white text-sm" onClick={addItem} type="button">
         + Añadir
-      </button>
+      </BUTTON>
     </fieldset>
   );
 }
@@ -127,16 +128,16 @@ function FieldMixed({
           {LOCALE_COLUMNS.map((c) => {
             const current = (dicts[c.code] && dicts[c.code][fmId]) ?? def;
             return (
-              <label key={c.code} className="text-[11px] uppercase opacity-70">
+              <LABEL key={c.code} className="text-[11px] uppercase opacity-70">
                 {c.label}
-                <input
+                <INPUT
                   type="text"
                   className="mt-1 rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full text-sm"
                   value={current}
                   onChange={(e) => setDictValue(c.code, fmId, e.target.value)}
                   placeholder={def}
                 />
-              </label>
+              </LABEL>
             );
           })}
         </div>
@@ -147,18 +148,18 @@ function FieldMixed({
   // Primitivos
   if (typeof value === 'boolean') {
     return (
-      <label className="flex items-center gap-2 py-1">
-        <input type="checkbox" checked={!!value} onChange={(e) => onChange(path, e.target.checked)} />
-        <span className="text-sm">{label ?? path}</span>
-      </label>
+      <LABEL className="flex items-center gap-2 py-1">
+        <INPUT type="checkbox" checked={!!value} onChange={(e) => onChange(path, e.target.checked)} />
+        <SPAN className="text-sm">{label ?? path}</SPAN>
+      </LABEL>
     );
   }
 
   if (typeof value === 'number') {
     return (
       <div className="flex flex-col gap-1 py-1">
-        <label htmlFor={idHtml} className="text-sm">{label ?? path}</label>
-        <input
+        <LABEL htmlFor={idHtml} className="text-sm">{label ?? path}</LABEL>
+        <INPUT
           id={idHtml}
           type="number"
           className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full"
@@ -173,9 +174,9 @@ function FieldMixed({
     const isUrl = looksUrl(value);
     return (
       <div className="flex flex-col gap-1 py-1">
-        <label htmlFor={idHtml} className="text-sm">{label ?? path}</label>
+        <LABEL htmlFor={idHtml} className="text-sm">{label ?? path}</LABEL>
         <div className="flex items-center gap-2">
-          <input
+          <INPUT
             id={idHtml}
             type="text"
             className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full"
@@ -238,7 +239,7 @@ function FieldMixed({
   // Fallback JSON
   return (
     <div className="flex flex-col gap-1 py-1">
-      <label htmlFor={idHtml} className="text-sm">{label ?? path} (JSON)</label>
+      <LABEL htmlFor={idHtml} className="text-sm">{label ?? path} (JSON)</LABEL>
       <textarea
         id={idHtml}
         className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] min-h-20"
@@ -333,12 +334,12 @@ export default function BrandingTab() {
 
   return (
     <div className="space-y-2 pb-16">
-      <h2 className="text-base font-semibold">Branding</h2>
+      <H2 className="text-base font-semibold">Branding</H2>
 
       {/* NUEVO: selector de locale + toggle de vista previa */}
       <div className="flex items-center gap-2 mb-2">
-        <label className="text-sm opacity-80">Locale:</label>
-        <select
+        <LABEL className="text-sm opacity-80">Locale:</LABEL>
+        <SELECT
           className="rounded border border-[#1f2937] bg-[#0f172a] px-2 py-1 text-sm"
           value={activeLocale}
           onChange={(e) => setActiveLocale(e.target.value)}
@@ -346,15 +347,15 @@ export default function BrandingTab() {
           {LOCALE_COLUMNS.map(c => (
             <option key={c.code} value={c.code}>{c.label} ({c.code})</option>
           ))}
-        </select>
+        </SELECT>
 
-        <button
+        <BUTTON
           type="button"
           className="ml-auto rounded px-3 py-1 text-sm border border-[#1f2937] bg-[#0d1326]"
           onClick={() => setShowPreview(v => !v)}
         >
           {showPreview ? `Ocultar vista previa ${activeLocale}` : `Ver vista previa efectiva ${activeLocale}`}
-        </button>
+        </BUTTON>
       </div>
 
       {showPreview && (
@@ -402,14 +403,14 @@ export default function BrandingTab() {
 
       {/* Botón flotante único */}
       <div className="fixed bottom-3 right-3 z-50">
-        <button
+        <BUTTON
           className="rounded px-4 py-2 bg-[#2563eb] text-white shadow-lg text-sm disabled:opacity-60"
           onClick={onSaveAll}
           disabled={saving}
           title="Guardar diccionarios i18n + branding global (sin <FM/>)"
         >
           {saving ? 'Guardando…' : 'Guardar todo'}
-        </button>
+        </BUTTON>
       </div>
     </div>
   );

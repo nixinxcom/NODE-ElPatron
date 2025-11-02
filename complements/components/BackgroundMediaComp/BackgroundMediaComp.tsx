@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './BackgroundMediaComp.module.css';
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface BackgroundMediaProps {
     url: string;
@@ -65,12 +66,12 @@ const BackgroundMedia: React.FC<BackgroundMediaProps> = ({ url, type, MuteButton
                     />
                     <div className={styles.blocker} />
                     {MuteButton && (
-                        <button className={styles.muteButton} onClick={toggleMute}>
+                        <BUTTON className={styles.muteButton} onClick={toggleMute}>
                             {isMuted
                                 ? intl.formatMessage({ id: "bgmedia.unmute", defaultMessage: "Unmute" })
                                 : intl.formatMessage({ id: "bgmedia.mute", defaultMessage: "Mute" })
                             }
-                        </button>
+                        </BUTTON>
                     )}
                 </>
             ) : type === 'image' ? (
@@ -116,7 +117,7 @@ API / EXPORTS / RUTA:
 
 USO (ejemplo completo):
   <BackgroundMediaComp type="image" src="/hero.jpg" overlay="linear-gradient(#0006,#0006)">
-    <h1 className="text-white">Bienvenidos</h1>
+    <H1 className="text-white">Bienvenidos</H1>
   </BackgroundMediaComp>
 
 NOTAS CLAVE:
@@ -142,7 +143,7 @@ DOC: USO (ejemplo completo) — complements/components/BackgroundMediaComp/Backg
         className="h-[60vh]"
       >
         <div className="h-full flex items-center justify-center text-white">
-          <h1 className="text-4xl font-bold">El Patrón Bar & Grill</h1>
+          <H1 className="text-4xl font-bold">El Patrón Bar & Grill</H1>
         </div>
       </BackgroundMediaComp>
     );

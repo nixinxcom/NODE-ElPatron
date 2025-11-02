@@ -1,6 +1,7 @@
 'use client';
 import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api';
 import { useMemo, useCallback } from 'react';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type LatLng = { lat: number; lng: number };
 type Libraries = ('places' | 'geometry' | 'drawing' | 'visualization')[];

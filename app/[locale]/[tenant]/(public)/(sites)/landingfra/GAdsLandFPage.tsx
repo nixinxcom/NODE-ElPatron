@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -37,35 +38,35 @@ export default function GoogleAdsLandingFraPage({ locale }: Props) {
           </div>
           {isAllowed === null && (
             <>
-              <h1>🎶 Bienvenue chez El Patrón Bar & Grill !</h1>
-              <p>
+              <H1>🎶 Bienvenue chez El Patrón Bar & Grill !</H1>
+              <P>
                 Nous sommes un bar avec musique live. Nous devons juste confirmer un petit détail avant de continuer :
-              </p>
-              <p className={styles.joke}>
+              </P>
+              <P className={styles.joke}>
                 Le saviez-vous ? L’âge n’efface pas les souvenirs… il les fait danser ! 💃🕺
-              </p>
+              </P>
               <div className={styles.buttons}>
-                <button className={`${styles.btn} ${styles.yes}`} onClick={() => handleAccess(true)}>
+                <BUTTON className={`${styles.btn} ${styles.yes}`} onClick={() => handleAccess(true)}>
                   Oui, j&apos;ai plus de 18 ans
-                </button>
-                <button className={`${styles.btn} ${styles.no}`} onClick={() => handleAccess(false)}>
+                </BUTTON>
+                <BUTTON className={`${styles.btn} ${styles.no}`} onClick={() => handleAccess(false)}>
                   Pas encore
-                </button>
+                </BUTTON>
               </div>
             </>
           )}
 
           {isAllowed === false && (
             <>
-              <h2>🎸 Merci de votre visite !</h2>
-              <p>
+              <H2>🎸 Merci de votre visite !</H2>
+              <P>
                 Notre site est réservé aux adultes, mais merci de votre intérêt.
                 Revenez nous voir quand vous serez prêt(e) à danser légalement. 😉
-              </p>
-              <p className={styles.joke}>
+              </P>
+              <P className={styles.joke}>
                 Que fait un mineur dans un bar ? Il sort sa carte d’étudiant quand on lui demande une pièce d’identité ! 🎓😄
-              </p>
-              <p>Redirection vers Google pour que vous puissiez nous retrouver plus tard…</p>
+              </P>
+              <P>Redirection vers Google pour que vous puissiez nous retrouver plus tard…</P>
             </>
           )}
         </div>

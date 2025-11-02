@@ -22,6 +22,7 @@ import {
   saveI18n,
   type I18nDict,
 } from '@/complements/data/i18nFS';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // ===== Config locales visibles (ajusta a tus seeds/FS) =====================
 const LOCALES = [
@@ -85,20 +86,20 @@ function ArrayField({
         {value.map((item, i) => (
           <div key={`${path}-${i}`} className="rounded border border-[#1f2937] p-2">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[11px] opacity-60">#{i + 1}</span>
+              <SPAN className="text-[11px] opacity-60">#{i + 1}</SPAN>
               <div className="flex gap-1">
-                <button className="px-2 py-1 rounded bg-[#111827]" onClick={() => mv(i, -1)} type="button">↑</button>
-                <button className="px-2 py-1 rounded bg-[#111827]" onClick={() => mv(i, +1)} type="button">↓</button>
-                <button className="px-2 py-1 rounded bg-[#7f1d1d] text-white" onClick={() => rm(i)} type="button">✕</button>
+                <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => mv(i, -1)} type="button">↑</BUTTON>
+                <BUTTON className="px-2 py-1 rounded bg-[#111827]" onClick={() => mv(i, +1)} type="button">↓</BUTTON>
+                <BUTTON className="px-2 py-1 rounded bg-[#7f1d1d] text-white" onClick={() => rm(i)} type="button">✕</BUTTON>
               </div>
             </div>
             {renderItem(`${path}.${i}`, item)}
           </div>
         ))}
       </div>
-      <button className="mt-2 px-3 py-1 rounded bg-[#2563eb] text-white text-sm" onClick={add} type="button">
+      <BUTTON className="mt-2 px-3 py-1 rounded bg-[#2563eb] text-white text-sm" onClick={add} type="button">
         + Añadir
-      </button>
+      </BUTTON>
     </fieldset>
   );
 }
@@ -114,17 +115,17 @@ function FieldSettings({
 
   if (typeof value === 'boolean') {
     return (
-      <label className="flex items-center gap-2 py-1">
-        <input type="checkbox" checked={!!value} onChange={(e) => onChange(path, e.target.checked)} />
-        <span className="text-sm">{label ?? path}</span>
-      </label>
+      <LABEL className="flex items-center gap-2 py-1">
+        <INPUT type="checkbox" checked={!!value} onChange={(e) => onChange(path, e.target.checked)} />
+        <SPAN className="text-sm">{label ?? path}</SPAN>
+      </LABEL>
     );
   }
   if (typeof value === 'number') {
     return (
       <div className="flex flex-col gap-1 py-1">
-        <label htmlFor={id} className="text-sm">{label ?? path}</label>
-        <input id={id} type="number" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937]"
+        <LABEL htmlFor={id} className="text-sm">{label ?? path}</LABEL>
+        <INPUT id={id} type="number" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937]"
           value={value} onChange={(e) => onChange(path, Number(e.target.value))} />
       </div>
     );
@@ -133,9 +134,9 @@ function FieldSettings({
     const isUrl = looksUrl(value);
     return (
       <div className="flex flex-col gap-1 py-1">
-        <label htmlFor={id} className="text-sm">{label ?? path}</label>
+        <LABEL htmlFor={id} className="text-sm">{label ?? path}</LABEL>
         <div className="flex items-center gap-2">
-          <input id={id} type="text" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full"
+          <INPUT id={id} type="text" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full"
             value={value} onChange={(e) => onChange(path, e.target.value)} placeholder={isUrl ? 'https://...' : ''} />
           {isUrl && looksImg(value) && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -167,7 +168,7 @@ function FieldSettings({
   }
   return (
     <div className="flex flex-col gap-1 py-1">
-      <label htmlFor={id} className="text-sm">{label ?? path} (JSON)</label>
+      <LABEL htmlFor={id} className="text-sm">{label ?? path} (JSON)</LABEL>
       <textarea id={id} className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] min-h-20"
         value={JSON.stringify(value ?? null, null, 2)}
         onChange={(e) => { try { onChange(path, JSON.parse(e.target.value)); } catch {} }} />
@@ -201,16 +202,16 @@ function FieldBranding({
           {LOCALES.map((c) => {
             const current = (dicts[c.code] && dicts[c.code][fmId]) ?? def;
             return (
-              <label key={c.code} className="text-[11px] uppercase opacity-70">
+              <LABEL key={c.code} className="text-[11px] uppercase opacity-70">
                 {c.label}
-                <input
+                <INPUT
                   type="text"
                   className="mt-1 rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full text-sm"
                   value={current}
                   onChange={(e) => setDictValue(c.code, fmId, e.target.value)}
                   placeholder={def}
                 />
-              </label>
+              </LABEL>
             );
           })}
         </div>
@@ -221,17 +222,17 @@ function FieldBranding({
   // Primitivos
   if (typeof value === 'boolean') {
     return (
-      <label className="flex items-center gap-2 py-1">
-        <input type="checkbox" checked={!!value} onChange={(e) => onChange(path, e.target.checked)} />
-        <span className="text-sm">{label ?? path}</span>
-      </label>
+      <LABEL className="flex items-center gap-2 py-1">
+        <INPUT type="checkbox" checked={!!value} onChange={(e) => onChange(path, e.target.checked)} />
+        <SPAN className="text-sm">{label ?? path}</SPAN>
+      </LABEL>
     );
   }
   if (typeof value === 'number') {
     return (
       <div className="flex flex-col gap-1 py-1">
-        <label htmlFor={id} className="text-sm">{label ?? path}</label>
-        <input id={id} type="number" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937]"
+        <LABEL htmlFor={id} className="text-sm">{label ?? path}</LABEL>
+        <INPUT id={id} type="number" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937]"
           value={value} onChange={(e) => onChange(path, Number(e.target.value))} />
       </div>
     );
@@ -240,9 +241,9 @@ function FieldBranding({
     const isUrl = looksUrl(value);
     return (
       <div className="flex flex-col gap-1 py-1">
-        <label htmlFor={id} className="text-sm">{label ?? path}</label>
+        <LABEL htmlFor={id} className="text-sm">{label ?? path}</LABEL>
         <div className="flex items-center gap-2">
-          <input id={id} type="text" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full"
+          <INPUT id={id} type="text" className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] w-full"
             value={value} onChange={(e) => onChange(path, e.target.value)} placeholder={isUrl ? 'https://...' : ''} />
           {isUrl && looksImg(value) && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -292,7 +293,7 @@ function FieldBranding({
   // Fallback JSON
   return (
     <div className="flex flex-col gap-1 py-1">
-      <label htmlFor={id} className="text-sm">{label ?? path} (JSON)</label>
+      <LABEL htmlFor={id} className="text-sm">{label ?? path} (JSON)</LABEL>
       <textarea
         id={id}
         className="rounded px-2 py-1 bg-[#0f172a] border border-[#1f2937] min-h-20"
@@ -383,7 +384,7 @@ export default function AgentAITab() {
 
   return (
     <div className="space-y-2 pb-16">
-      <h2 className="text-base font-semibold">Agente de IA</h2>
+      <H2 className="text-base font-semibold">Agente de IA</H2>
 
       {/* Parámetros (Settings) */}
       <details open className="rounded-lg border border-[#1f2937] bg-[#0b1220]">
@@ -419,14 +420,14 @@ export default function AgentAITab() {
 
       {/* Guardado único flotante */}
       <div className="fixed bottom-3 right-3 z-50">
-        <button
+        <BUTTON
           className="rounded px-4 py-2 bg-[#2563eb] text-white shadow-lg text-sm disabled:opacity-60"
           onClick={onSaveAll}
           disabled={saving}
           title="Guardar settings.agentAI + i18n + branding.agentAI"
         >
           {saving ? 'Guardando…' : 'Guardar todo'}
-        </button>
+        </BUTTON>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/complements/components/AuthenticationComp/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './Authentication.module.css';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default function AuthenticationComp() {
   const {
@@ -61,28 +62,28 @@ export default function AuthenticationComp() {
 
   return (
     <div className={styles.AuthCard}>
-      <h3 className={styles.Title}>Autenticación</h3>
+      <H3 className={styles.Title}>Autenticación</H3>
 
-      {(busy || loading) && <p className={styles.Muted}>Procesando…</p>}
-      {err && <p className={styles.Error}>{err}</p>}
-      {info && <p className={styles.Info}>{info}</p>}
+      {(busy || loading) && <P className={styles.Muted}>Procesando…</P>}
+      {err && <P className={styles.Error}>{err}</P>}
+      {info && <P className={styles.Info}>{info}</P>}
 
       {!user && (
         <>
           <div className={styles.Row}>
-            <button className={styles.Btn} disabled={busy} onClick={() => run(signInAnon)}>
+            <BUTTON className={styles.Btn} disabled={busy} onClick={() => run(signInAnon)}>
               Entrar como invitado
-            </button>
-            <button className={styles.Btn} disabled={busy} onClick={() => run(signInGoogle)}>
+            </BUTTON>
+            <BUTTON className={styles.Btn} disabled={busy} onClick={() => run(signInGoogle)}>
               Entrar con Google
-            </button>
-            <button className={styles.Btn} disabled={busy} onClick={() => run(signInFacebook)}>
+            </BUTTON>
+            <BUTTON className={styles.Btn} disabled={busy} onClick={() => run(signInFacebook)}>
               Entrar con Facebook
-            </button>
+            </BUTTON>
           </div>
 
           <div className={styles.EmailBox}>
-            <input
+            <INPUT
               type="email"
               placeholder="correo@dominio.com"
               value={email}
@@ -90,7 +91,7 @@ export default function AuthenticationComp() {
               className={styles.Input}
               autoComplete="email"
             />
-            <input
+            <INPUT
               type="password"
               placeholder="••••••••"
               value={pass}
@@ -99,20 +100,20 @@ export default function AuthenticationComp() {
               autoComplete="current-password"
             />
             <div className={styles.Row}>
-              <button
+              <BUTTON
                 className={styles.Btn}
                 disabled={busy || !email || !pass}
                 onClick={() => run(() => signInEmail(email, pass))}
               >
                 Entrar
-              </button>
-              <button
+              </BUTTON>
+              <BUTTON
                 className={styles.BtnOutline}
                 disabled={busy || !email || !pass}
                 onClick={onSignupEmail}
               >
                 Crear cuenta
-              </button>
+              </BUTTON>
             </div>
           </div>
         </>
@@ -120,12 +121,12 @@ export default function AuthenticationComp() {
 
       {user && (
         <div className={styles.UserBox}>
-          <p className={styles.Small}>
+          <P className={styles.Small}>
             Sesión: <strong>{user.email ?? user.uid}</strong>
-          </p>
-          <button className={styles.BtnDanger} onClick={logout}>
+          </P>
+          <BUTTON className={styles.BtnDanger} onClick={logout}>
             Salir
-          </button>
+          </BUTTON>
         </div>
       )}
     </div>
@@ -154,7 +155,7 @@ USO (ejemplo completo):
 
 NOTAS CLAVE:
   — Validar email/password; deshabilitar submit mientras carga.
-  — Accesibilidad: <label htmlFor>, aria-live en errores.
+  — Accesibilidad: <LABEL htmlFor>, aria-live en errores.
   — No loguear contraseñas ni mostrar detalles de errores sensibles.
 
 DEPENDENCIAS:
@@ -168,7 +169,7 @@ DOC: USO (ejemplo completo) — complements/components/AuthenticationComp/Authen
   export default function LoginPage() {
     return (
       <section className="max-w-md mx-auto">
-        <h1>Acceso</h1>
+        <H1>Acceso</H1>
         <AuthenticationComp
           mode="signin"                 // "signin"|"signup" | opcional | default: "signin"
           redirectTo="/cuenta"          // string | opcional | default: "/"

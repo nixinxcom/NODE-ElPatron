@@ -16,5 +16,5 @@ export const H5 = React.forwardRef<HTMLHeadingElement, H5Props>(function H5({
   const classes = resolveComponentClasses(Styles, kind, {
     baseFallback: '', scheme: _scheme, variant, size, state, extra: className,
   });
-  return <h3 ref={ref} className={classes} {...rest} />;
+  return <h5 ref={ref} className={classes} {...rest} />;
 });

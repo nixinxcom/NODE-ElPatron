@@ -8,6 +8,7 @@ import { signInAnonymously } from "firebase/auth";
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import styles from "./publicaciones.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 // Storage (misma instancia SIEMPRE)
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -389,21 +390,21 @@ export default function NewPublicationPage() {
 
   return (
     <main className={`mx-auto max-w-5xl ${styles.pagePad}`}>
-      <h1 className={styles.title}>
+      <H1 className={styles.title}>
         <ThemeToggle />
         <FM id="pub.new.h1" defaultMessage="Nueva publicación" />
-      </h1>
+      </H1>
 
       {successMsg && (
         <div className={styles.alertOk}>
-          <p className="font-medium">{successMsg}</p>
-          <p className="text-sm">
+          <P className="font-medium">{successMsg}</P>
+          <P className="text-sm">
             <FM id="pub.save.view" defaultMessage="Ver en " />
             <a className="underline font-semibold" href={`/${locale}/blog`} target="_blank" rel="noreferrer">
               /blog
             </a>
             .
-          </p>
+          </P>
         </div>
       )}
       {errorMsg && (
@@ -416,25 +417,25 @@ export default function NewPublicationPage() {
         {/* Formulario */}
         <div className={styles.stackY}>
           <div>
-            <label className={styles.label}>
+            <LABEL className={styles.label}>
               <FM id="pub.title" defaultMessage="Título" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               className={`${fieldBase} force-readable`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder={intl.formatMessage({ id: "pub.title.ph", defaultMessage: "Noche Mexicana" })}
               required
             />
-            <p className={styles.help}><FM id="pub.slug.label" defaultMessage="Slug: " />{slug}</p>
+            <P className={styles.help}><FM id="pub.slug.label" defaultMessage="Slug: " />{slug}</P>
           </div>
 
           <div className={`grid grid-cols-2 ${styles.gapSm}`}>
             <div>
-              <label className={styles.label}>
+              <LABEL className={styles.label}>
                 <FM id="pub.date" defaultMessage="Fecha" />
-              </label>
-              <input
+              </LABEL>
+              <INPUT
                 type="date"
                 className={`${fieldBase} force-readable`}
                 value={date}
@@ -443,24 +444,24 @@ export default function NewPublicationPage() {
               />
             </div>
             <div>
-              <label className={styles.label}>
+              <LABEL className={styles.label}>
                 <FM id="pub.enddate" defaultMessage="Fecha Final" />
-              </label>
-              <input
+              </LABEL>
+              <INPUT
                 type="date"
                 className={`${fieldBase} force-readable`}
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 min={date || undefined}
               />
-              <p className={styles.help}><FM id="pub.date.help" defaultMessage="Debe ser igual o posterior a la fecha inicial." /></p>
+              <P className={styles.help}><FM id="pub.date.help" defaultMessage="Debe ser igual o posterior a la fecha inicial." /></P>
             </div>
             <div className="flex items-end gap-2">
               <div className="flex-1">
-                <label className={styles.label}>
+                <LABEL className={styles.label}>
                   <FM id="pub.time.start" defaultMessage="Hora inicio" />
-                </label>
-                <input
+                </LABEL>
+                <INPUT
                   type="time"
                   className={`${fieldBase} force-readable`}
                   value={startTime}
@@ -468,10 +469,10 @@ export default function NewPublicationPage() {
                 />
               </div>
               <div className="flex-1">
-                <label className={styles.label}>
+                <LABEL className={styles.label}>
                   <FM id="pub.time.end" defaultMessage="Hora fin" />
-                </label>
-                <input
+                </LABEL>
+                <INPUT
                   type="time"
                   className={`${fieldBase} force-readable`}
                   value={endTime}
@@ -482,10 +483,10 @@ export default function NewPublicationPage() {
           </div>
 
           <div>
-            <label className={styles.label}>
+            <LABEL className={styles.label}>
               <FM id="pub.place" defaultMessage="Lugar" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               className={`${fieldBase} force-readable`}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
@@ -494,10 +495,10 @@ export default function NewPublicationPage() {
           </div>
 
           <div>
-            <label className={styles.label}>
+            <LABEL className={styles.label}>
               <FM id="pub.artist" defaultMessage="Artista (opcional)" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               className={`${fieldBase} force-readable`}
               value={artist}
               onChange={(e) => setArtist(e.target.value)}
@@ -506,9 +507,9 @@ export default function NewPublicationPage() {
           </div>
 
           <div>
-            <label className={styles.label}>
+            <LABEL className={styles.label}>
               <FM id="pub.description" defaultMessage="Descripción" />
-            </label>
+            </LABEL>
             <textarea
               className={`${fieldBase} force-readable min-h-[120px]`}
               value={description}
@@ -521,10 +522,10 @@ export default function NewPublicationPage() {
           </div>
 
           <div>
-            <label className={styles.label}>
+            <LABEL className={styles.label}>
               <FM id="pub.extvideo" defaultMessage="URL de video externo" />
-            </label>
-            <input
+            </LABEL>
+            <INPUT
               className={`${fieldBase} force-readable`}
               value={externalVideoUrl}
               onChange={(e) => setExternalVideoUrl(e.target.value)}
@@ -537,11 +538,11 @@ export default function NewPublicationPage() {
 
           {/* CTA 1 */}
           <div className="space-y-2 border-t pt-4">
-            <h3 className="font-medium">
+            <H3 className="font-medium">
               <FM id="pub.cta1.title" defaultMessage="CTA 1" />
-            </h3>
+            </H3>
             <div className={`grid grid-cols-2 ${styles.inlineSm}`}>
-              <select
+              <SELECT
                 className={`${fieldBase} force-readable`}
                 value={cta1.type}
                 onChange={(e) => setCta1((p) => ({ ...p, type: e.target.value as CtaType }))}
@@ -561,8 +562,8 @@ export default function NewPublicationPage() {
                 <option value="mailto">
                   <FM id="pub.cta.mail" defaultMessage="Correo" />
                 </option>
-              </select>
-              <input
+              </SELECT>
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta1.label}
                 onChange={(e) => setCta1((p) => ({ ...p, label: e.target.value }))}
@@ -573,17 +574,17 @@ export default function NewPublicationPage() {
               />
             </div>
 
-            <label className={`inline-flex items-center ${styles.inlineSm}`}>
-              <input
+            <LABEL className={`inline-flex items-center ${styles.inlineSm}`}>
+              <INPUT
                 type="checkbox"
                 checked={cta1.as === "button"}
                 onChange={(e) => setCta1((p) => ({ ...p, as: e.target.checked ? "button" : "link" }))}
               />
               <FM id="pub.cta.asButton" defaultMessage="Mostrar como botón (desmarca para enlace)" />
-            </label>
+            </LABEL>
 
             {cta1.type === "url" && (
-              <input
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta1.url}
                 onChange={(e) => setCta1((p) => ({ ...p, url: e.target.value }))}
@@ -591,7 +592,7 @@ export default function NewPublicationPage() {
               />
             )}
             {cta1.type === "phone" && (
-              <input
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta1.url}
                 onChange={(e) => setCta1((p) => ({ ...p, url: e.target.value }))}
@@ -599,7 +600,7 @@ export default function NewPublicationPage() {
               />
             )}
             {cta1.type === "mailto" && (
-              <input
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta1.url}
                 onChange={(e) => setCta1((p) => ({ ...p, url: e.target.value }))}
@@ -611,17 +612,17 @@ export default function NewPublicationPage() {
             )}
             {cta1.type === "pdf" && (
               <>
-                <input
+                <INPUT
                   type="file"
                   accept="application/pdf"
                   onChange={(e) => handlePickPdf(e, setCta1)}
                   className={`${fieldBase} force-readable`}
                 />
                 {cta1.pendingFile && (
-                  <p className={styles.muted}>
+                  <P className={styles.muted}>
                     <FM id="pub.cta.pdf.pending" defaultMessage="PDF pendiente:" />{" "}
                     {cta1.pendingName}
-                  </p>
+                  </P>
                 )}
               </>
             )}
@@ -629,11 +630,11 @@ export default function NewPublicationPage() {
 
           {/* CTA 2 */}
           <div className="space-y-2 border-t pt-4">
-            <h3 className="font-medium">
+            <H3 className="font-medium">
               <FM id="pub.cta2.title" defaultMessage="CTA 2" />
-            </h3>
+            </H3>
             <div className={`grid grid-cols-2 ${styles.inlineSm}`}>
-              <select
+              <SELECT
                 className={`${fieldBase} force-readable`}
                 value={cta2.type}
                 onChange={(e) => setCta2((p) => ({ ...p, type: e.target.value as CtaType }))}
@@ -653,8 +654,8 @@ export default function NewPublicationPage() {
                 <option value="mailto">
                   <FM id="pub.cta.mail" defaultMessage="Correo" />
                 </option>
-              </select>
-              <input
+              </SELECT>
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta2.label}
                 onChange={(e) => setCta2((p) => ({ ...p, label: e.target.value }))}
@@ -662,17 +663,17 @@ export default function NewPublicationPage() {
               />
             </div>
 
-            <label className={`inline-flex items-center ${styles.inlineSm}`}>
-              <input
+            <LABEL className={`inline-flex items-center ${styles.inlineSm}`}>
+              <INPUT
                 type="checkbox"
                 checked={cta2.as === "button"}
                 onChange={(e) => setCta2((p) => ({ ...p, as: e.target.checked ? "button" : "link" }))}
               />
               <FM id="pub.cta.asButton" defaultMessage="Mostrar como botón (desmarca para enlace)" />
-            </label>
+            </LABEL>
 
             {cta2.type === "url" && (
-              <input
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta2.url}
                 onChange={(e) => setCta2((p) => ({ ...p, url: e.target.value }))}
@@ -680,7 +681,7 @@ export default function NewPublicationPage() {
               />
             )}
             {cta2.type === "phone" && (
-              <input
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta2.url}
                 onChange={(e) => setCta2((p) => ({ ...p, url: e.target.value }))}
@@ -688,7 +689,7 @@ export default function NewPublicationPage() {
               />
             )}
             {cta2.type === "mailto" && (
-              <input
+              <INPUT
                 className={`${fieldBase} force-readable`}
                 value={cta2.url}
                 onChange={(e) => setCta2((p) => ({ ...p, url: e.target.value }))}
@@ -700,24 +701,24 @@ export default function NewPublicationPage() {
             )}
             {cta2.type === "pdf" && (
               <>
-                <input
+                <INPUT
                   type="file"
                   accept="application/pdf"
                   onChange={(e) => handlePickPdf(e, setCta2)}
                   className={`${fieldBase} force-readable`}
                 />
                 {cta2.pendingFile && (
-                  <p className={styles.muted}>
+                  <P className={styles.muted}>
                     <FM id="pub.cta.pdf.pending" defaultMessage="PDF pendiente:" />{" "}
                     {cta2.pendingName}
-                  </p>
+                  </P>
                 )}
               </>
             )}
           </div>
 
           {/* BOTÓN con tu estilo */}
-          <button
+          <BUTTON
             onClick={onSave}
             disabled={saving}
             className={`mt-3 inline-flex items-center justify-center ${styles.primaryBtn}
@@ -729,15 +730,15 @@ export default function NewPublicationPage() {
             {saving
               ? intl.formatMessage({ id: "pub.save.saving", defaultMessage: "Guardando…" })
               : intl.formatMessage({ id: "pub.save.cta", defaultMessage: "Guardar publicación" })}
-          </button>
+          </BUTTON>
         </div>
 
         {/* Uploader (sube al guardar) */}
         <div>
-          <h2 className={styles.secTitle}>
+          <H2 className={styles.secTitle}>
             <FM id="pub.media.h2" defaultMessage="Medios" />
-          </h2>
-          <p className={styles.secSubtitle}>
+          </H2>
+          <P className={styles.secSubtitle}>
             <FM
               id="pub.media.help"
               defaultMessage={'Previsualiza, elimina/restaura y selecciona. Se sube todo al guardar. Las imágenes tendrán <code>*.webp</code> redimensionadas (p. ej. {sizes}).'}
@@ -746,18 +747,18 @@ export default function NewPublicationPage() {
                 code: (chunks) => <code key="msg-code">{chunks}</code>,
               }}
             />
-          </p>
+          </P>
 
-          <label className="inline-flex items-center gap-2 text-sm mb-2">
-            <input
+          <LABEL className="inline-flex items-center gap-2 text-sm mb-2">
+            <INPUT
               type="checkbox"
               checked={galleryAlsoUploadImages}
               onChange={(e) => setGalleryAlsoUploadImages(e.target.checked)}
             />
-            <span>
+            <SPAN>
               <strong><FM id="pub.gallery.upload" defaultMessage="Subir a Galería" /></strong>
-            </span>
-          </label>
+            </SPAN>
+          </LABEL>
 
           <FilesUploaderComp
             key={uploaderKey}
@@ -783,9 +784,9 @@ export default function NewPublicationPage() {
           />
 
           <div className={`mt-4 ${styles.notesBox}`}>
-            <p className={styles.noteHead}>
+            <P className={styles.noteHead}>
               <FM id="pub.cta.pdf.folder" defaultMessage="Carpeta final:" />
-            </p>
+            </P>
             <code className="break-all">{mediaBasePath}</code>
           </div>
         </div>

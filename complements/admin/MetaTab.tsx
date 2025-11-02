@@ -10,6 +10,7 @@ import {
   type MetaRecord
 } from "@/app/lib/i18n/store";
 import FM from "../i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 const RECOMMENDED_FIELDS = [
   "title","description","canonical","robots",
@@ -185,9 +186,9 @@ export default function MetaTab() {
   return (
     <div className="admin-tab meta-tab space-y-4">
       <header className="flex flex-wrap items-center gap-2">
-        <span className="text-lg font-semibold"><FM id="metaTab.title" defaultMessage="Metadatos"/></span>
+        <SPAN className="text-lg font-semibold"><FM id="metaTab.title" defaultMessage="Metadatos"/></SPAN>
 
-        <select
+        <SELECT
           className="select text-black"
           value={scope}
           onChange={(e) => setScope(e.target.value as Scope)}
@@ -195,10 +196,10 @@ export default function MetaTab() {
           <option value="global"><FM id="metaTab.scope.global" defaultMessage="Global"/></option>
           <option value="site"><FM id="metaTab.scope.site" defaultMessage="Site"/></option>
           <option value="page"><FM id="metaTab.scope.page" defaultMessage="Página"/></option>
-        </select>
+        </SELECT>
 
         {scope === "page" && (
-          <input
+          <INPUT
             className="input placeholder:text-slate-400"
             placeholder="routeKey (p.ej. home, about, blog)"
             value={routeKey}
@@ -206,18 +207,18 @@ export default function MetaTab() {
           />
         )}
 
-        <label className="btn border border-solid border-white rounded-md p-1 hover:text-black hover:bg-white">
+        <LABEL className="btn border border-solid border-white rounded-md p-1 hover:text-black hover:bg-white">
           <FM id="metaTab.importJSON" defaultMessage="Importar JSON"/>
-          <input
+          <INPUT
             ref={fileRef}
             type="file"
             accept="application/json"
             hidden
             onChange={(e) => e.target.files?.[0] && importJSON(e.target.files[0])}
           />
-        </label>
+        </LABEL>
 
-        <select
+        <SELECT
           className="select text-black border border-solid border-white rounded-md p-1 hover:text-black hover:bg-white"
           value={filter}
           onChange={(e) => setFilter(e.target.value as any)}
@@ -226,13 +227,13 @@ export default function MetaTab() {
           <option value="green"><FM id="metaTab.filter.complete" defaultMessage="✓ Completos"/></option>
           <option value="yellow"><FM id="metaTab.filter.warning" defaultMessage="! Avisos"/></option>
           <option value="red"><FM id="metaTab.filter.incomplete" defaultMessage="✗ Vacíos"/></option>
-        </select>
+        </SELECT>
 
-        <span className="ml-auto flex items-center gap-3 text-sm">
-          <span className="inline-flex items-center gap-1"><span className="badge status-green text-green-500  bg-green-500 rounded-lg">-</span> OK</span>
-          <span className="inline-flex items-center gap-1"><span className="badge status-yellow text-yellow-500  bg-yellow-500 rounded-lg">-</span> Avisos</span>
-          <span className="inline-flex items-center gap-1"><span className="badge status-red text-red-500  bg-red-500 rounded-lg">-</span> Falta</span>
-        </span>
+        <SPAN className="ml-auto flex items-center gap-3 text-sm">
+          <SPAN className="inline-flex items-center gap-1"><SPAN className="badge status-green text-green-500  bg-green-500 rounded-lg">-</SPAN> OK</SPAN>
+          <SPAN className="inline-flex items-center gap-1"><SPAN className="badge status-yellow text-yellow-500  bg-yellow-500 rounded-lg">-</SPAN> Avisos</SPAN>
+          <SPAN className="inline-flex items-center gap-1"><SPAN className="badge status-red text-red-500  bg-red-500 rounded-lg">-</SPAN> Falta</SPAN>
+        </SPAN>
       </header>
 
       <section className="flex items-start gap-4">
@@ -259,7 +260,7 @@ export default function MetaTab() {
                     <tr key={field} className={rowClass}>
                       <td className="font-mono align-top">
                         <div className="flex items-center gap-2">
-                          <span className={`badge status-${rStatus} ${rStatus === "red" ? "text-red-500 bg-red-500 rounded-lg" : rStatus === "green" ? "text-green-500  bg-green-500 rounded-lg" : "text-yellow-500  bg-yellow-500 rounded-lg"}`}>{statusIcon(rStatus)}</span>
+                          <SPAN className={`badge status-${rStatus} ${rStatus === "red" ? "text-red-500 bg-red-500 rounded-lg" : rStatus === "green" ? "text-green-500  bg-green-500 rounded-lg" : "text-yellow-500  bg-yellow-500 rounded-lg"}`}>{statusIcon(rStatus)}</SPAN>
                           {field}
                         </div>
                       </td>
@@ -271,7 +272,7 @@ export default function MetaTab() {
                         return (
                           <td key={loc} className="align-top">
                             <div className="flex items-start gap-2">
-                              <span className={`badge status-${cStatus} mt-2 ${cStatus === "red" ? "text-red-500 bg-red-500 rounded-lg" : cStatus === "green" ? "text-green-500  bg-green-500 rounded-lg" : "text-yellow-500  bg-yellow-500 rounded-lg"}`}>{statusIcon(cStatus)}</span>
+                              <SPAN className={`badge status-${cStatus} mt-2 ${cStatus === "red" ? "text-red-500 bg-red-500 rounded-lg" : cStatus === "green" ? "text-green-500  bg-green-500 rounded-lg" : "text-yellow-500  bg-yellow-500 rounded-lg"}`}>{statusIcon(cStatus)}</SPAN>
                               <textarea
                                 className={`input w-full min-h-[40px] cell-status-${cStatus} placeholder:text-slate-400 text-black`}
                                 placeholder={field}
@@ -295,23 +296,23 @@ export default function MetaTab() {
                       })}
 
                       <td className="text-center align-top">
-                        <span className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-semibold
+                        <SPAN className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-xs font-semibold
                           ${rStatus === "green" ? "text-green-500  bg-green-500 rounded-lg" :
                             rStatus === "yellow" ? "text-yellow-500  bg-yellow-500 rounded-lg" :
                             "text-red-500 bg-red-500 rounded-lg"}
                             `}>
                           {statusIcon(rStatus)}
-                        </span>
+                        </SPAN>
                       </td>
 
                       <td className="text-center align-top">
-                        <button
+                        <BUTTON
                           className="icon-btn"
                           title="Borrar campo en todos los locales"
                           onClick={() => deleteRow(field)}
                         >
                           🗑
-                        </button>
+                        </BUTTON>
                       </td>
                     </tr>
                   );
@@ -334,13 +335,13 @@ export default function MetaTab() {
 
           <div className="divider" />
           <div className="text-sm font-semibold"><FM id="metaTab.rowOrder" defaultMessage="Orden de filas"/></div>
-          <button
+          <BUTTON
             className="btn btn-light border border-solid border-white m-2 rounded-md p-2 hover:text-black hover:bg-white"
             onClick={async () => { await saveMetaOrder(fields); }}
           >
             <FM id="metaTab.saveOrder" defaultMessage="Guardar orden"/>
-          </button>
-          <button
+          </BUTTON>
+          <BUTTON
             className="btn btn-light border border-solid border-white m-2 rounded-md p-2 hover:text-black hover:bg-white"
             onClick={async () => {
               const order = await loadMetaOrder();
@@ -352,27 +353,27 @@ export default function MetaTab() {
             }}
           >
             <FM id="metaTab.loadOrder" defaultMessage="Cargar orden"/>
-          </button>
+          </BUTTON>
         </aside>
       </section>
       <div className="fixed bottom-4 right-4 z-50 flex gap-2">
-  <button
+  <BUTTON
     className="btn btn-primary border border-solid border-white rounded-md p-2 hover:text-black hover:bg-white"
     onClick={saveAll}
     disabled={loading}
     title="Guardar metadatos en Firestore"
   >
     {loading ? "Guardando..." : "Guardar"}
-  </button>
+  </BUTTON>
 
-  <button
+  <BUTTON
     className="btn btn-secondary border border-solid border-white rounded-md p-2 hover:text-black hover:bg-white"
     onClick={loadFromFirestore}
     disabled={loading}
     title="Recargar (seeds + Firestore)"
   >
     {loading ? "Cargando..." : "Cargar (seeds + Firestore)"}
-  </button>
+  </BUTTON>
 </div>
     </div>
   );

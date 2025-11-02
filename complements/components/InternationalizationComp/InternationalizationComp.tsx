@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 // import Link from "next/link";
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import styles from "./InternationalizationComp.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -129,7 +129,7 @@ export default function InterComp(props: iInternational) {
             </LINK>
           )}
           {!minimized && props.Langs[nextIdx]?.language && (
-            <p className={styles.LngLgnd}>{props.Langs[nextIdx].language}</p>
+            <P className={styles.LngLgnd}>{props.Langs[nextIdx].language}</P>
           )}
         </div>
       ) : (
@@ -153,7 +153,7 @@ export default function InterComp(props: iInternational) {
               </LINK>
             )}
             {!minimized && lang.language && (
-              <p className={styles.LngLgnd}>{lang.language}</p>
+              <P className={styles.LngLgnd}>{lang.language}</P>
             )}
           </div>
         ))

@@ -62,7 +62,7 @@ USO (patrón recomendado con AdSenseCard):
 //   const adTest = searchParams?.ad\_test !== '0'
 //   return (
 //     <div className="container mx-auto px-6 py-8">
-//       <h1>Testings ({locale})</h1>
+//       <H1>Testings ({locale})</H1>
 //       \<AdSenseCard
 //         client={adClient}                  // opcional — string
 //         slot={adSlot}                      // requerido — string

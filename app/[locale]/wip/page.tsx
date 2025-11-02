@@ -1,5 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default function Wip() {
   const sp = useSearchParams();
@@ -11,11 +12,11 @@ export default function Wip() {
   return (
     <main className="min-h-dvh grid place-items-center p-8">
       <div className="max-w-md text-center space-y-4">
-        <h1 className="text-2xl font-semibold">Sitio en construcción</h1>
-        <p className="opacity-80 text-sm">
+        <H1 className="text-2xl font-semibold">Sitio en construcción</H1>
+        <P className="opacity-80 text-sm">
           Estamos trabajando. Vuelve pronto.
-        </p>
-        <p className="opacity-60 text-xs">Intentaste visitar: <code>{from}</code></p>
+        </P>
+        <P className="opacity-60 text-xs">Intentaste visitar: <code>{from}</code></P>
       </div>
     </main>
   );

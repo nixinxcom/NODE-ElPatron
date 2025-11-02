@@ -4,6 +4,7 @@ import GalleryPage from "./GalleryPage";
 
 import { buildMetadata } from "@/app/lib/seo/meta";
 import { pageMeta } from "@/app/lib/seo/pages";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 import {
   getEffectiveMetaServer,

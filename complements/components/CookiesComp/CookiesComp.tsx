@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import FM from "../../../complements/i18n/FM";
 //Styles
 import styles from './CookiesComp.module.css';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface ICookie{
     contract: any,
@@ -26,13 +27,13 @@ export default function CookiesComp({contract, setState, coockieTitle, coockieIc
     return (
         <>
             <div className={styles.CookiePoint} style={style}>
-                <p className={styles.CookieLegend}>{coockieTitle}</p>
+                <P className={styles.CookieLegend}>{coockieTitle}</P>
                     <div className={styles.Btns}>
                         <div className={styles.cookieBtn} onClick={() => {UpdateUserState({UserState: userState, keyPath: 'Digital.Cookies', updatedValue: false, replace: false}), setViewCookiesContract(false), setState(false)}}>
-                            <p className={styles.BtnLegend}><FM id="global.Reject" defaultMessage="Reject"/></p>
+                            <P className={styles.BtnLegend}><FM id="global.Reject" defaultMessage="Reject"/></P>
                         </div>
                         <div className={styles.cookieBtn} onClick={() => {UpdateUserState({UserState: userState, keyPath: 'Digital.Cookies', updatedValue: true, replace: false}), setViewCookiesContract(false), setState(true)}}>
-                            <p className={styles.BtnLegend}><FM id="global.Accept" defaultMessage="Accept"/></p>
+                            <P className={styles.BtnLegend}><FM id="global.Accept" defaultMessage="Accept"/></P>
                         </div>
                     </div>
                     <div>
@@ -44,12 +45,12 @@ export default function CookiesComp({contract, setState, coockieTitle, coockieIc
                             height={35}
                         />
                     </div>
-                <span id={styles.cookiesnotification} className={classNames} onClick={()=>setViewCookiesContract(!ViewCookiesContract)}><FM id="global.Read" defaultMessage="Read"/></span>
+                <SPAN id={styles.cookiesnotification} className={classNames} onClick={()=>setViewCookiesContract(!ViewCookiesContract)}><FM id="global.Read" defaultMessage="Read"/></SPAN>
             </div>
             {ViewCookiesContract && 
                 <div className={styles.coockieWindow} style={styles}>
                     <div className={styles.contract}>{contract}</div>
-                    <button className={styles.cookieBtn} onClick={()=>setViewCookiesContract(!ViewCookiesContract)}><FM id="global.ClosePopUp" defaultMessage="Close"/></button>
+                    <BUTTON className={styles.cookieBtn} onClick={()=>setViewCookiesContract(!ViewCookiesContract)}><FM id="global.ClosePopUp" defaultMessage="Close"/></BUTTON>
                 </div>
             }
         </>

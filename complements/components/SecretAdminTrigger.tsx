@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = {
   /** Ruta admin; si no se pasa, infiere /{locale}/admin/agent del pathname */
@@ -91,22 +92,22 @@ export default function SecretAdminTrigger({
   // --- Wrapper vs Hotspot fijo
   if (children) {
     return (
-      <span
+      <SPAN
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUpOrCancel}
         onPointerCancel={onPointerUpOrCancel}
-        onContextMenu={(e) => e.preventDefault()}
+        onContextMenu={(e:any) => e.preventDefault()}
         className="relative inline-block select-none"
         aria-hidden
       >
         {children}
-      </span>
+      </SPAN>
     );
   }
 
   // Hotspot: esquina inferior derecha (invisible)
   return (
-    <button
+    <BUTTON
       aria-hidden
       title=""
       onPointerDown={onPointerDown}

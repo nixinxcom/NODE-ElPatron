@@ -3,7 +3,7 @@ import { useAppContext } from '@/context/AppContext';
 import {IntlProvider, FormattedMessage, FormattedNumber} from 'react-intl';
 import FM from "@/complements/i18n/FM";
 import SliderCardComp from '@/complements/components/SliderComp/SliderCardComp';
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import Image from 'next/image';
 import ReactPlayer from 'react-player/lazy'
 import styles from './CardElem.module.css';
@@ -194,40 +194,40 @@ export default function CardElem(
                                         }
                                     </>
                                 }
-                                {title && <h1 className={styles.Title}><FM id="global.title" defaultMessage="Title"/></h1>}
-                                {description && <p className={styles.Details} onClick={()=>setFronView(!FronView)} style={{color: backgroundColor, background:textColor}}><FM id="global.detail" defaultMessage="Detail"/></p>}
-                                {price && <span className={styles.Price}><FormattedNumber value={price} style="currency" currency="CAD" /></span>}
+                                {title && <H1 className={styles.Title}><FM id="global.title" defaultMessage="Title"/></H1>}
+                                {description && <P className={styles.Details} onClick={()=>setFronView(!FronView)} style={{color: backgroundColor, background:textColor}}><FM id="global.detail" defaultMessage="Detail"/></P>}
+                                {price && <SPAN className={styles.Price}><FormattedNumber value={price} style="currency" currency="CAD" /></SPAN>}
                                 {<div className={styles.Contact}>
-                                    <h1 onClick={()=>setShowContact(!ShowContact)}>
+                                    <H1 onClick={()=>setShowContact(!ShowContact)}>
                                         <FM
                                             id="global.contact"
                                             defaultMessage="Contact"
                                         />
-                                    </h1>
+                                    </H1>
                                     {ShowContact &&
                                         <div className={styles.ContactInfoContainer} style={{backgroundColor: backgroundColor, color: textColor}}>
                                             {(BusSettings.paymentModel !== 'PPE') && 
                                                 <div>
                                                     <div className={styles.Ranking} style={{backgroundColor:`hsl(${(BusSettings.usersRanking*10) * 1.4}, 70%, 35%)`, borderRadius: '100%'}} >
-                                                        {<span className={styles.Rank}>{BusSettings.usersRanking}</span>}
+                                                        {<SPAN className={styles.Rank}>{BusSettings.usersRanking}</SPAN>}
                                                         <Image src="/icons/LoadingIcon.png" fill alt="" />
                                                     </div>
-                                                    {ContactInfo.email && <p><FM id="global.email" defaultMessage="Email"/>: {ContactInfo.email}</p>}
+                                                    {ContactInfo.email && <P><FM id="global.email" defaultMessage="Email"/>: {ContactInfo.email}</P>}
                                                     {ContactInfo.phones && ContactInfo.phones.map((phone, i) => (
-                                                        <p key={i}>Tel_{i+1} : {phone}</p>
+                                                        <P key={i}>Tel_{i+1} : {phone}</P>
                                                     ))}
                                                     {ContactInfo.address && (
-                                                        <h4 className={styles.Address}>
+                                                        <H4 className={styles.Address}>
                                                             {ContactInfo.address.ExtNumber + (ContactInfo.address.Int && ' (int.' + ContactInfo.address.Int + ')') + ' ' + ContactInfo.address.street + ', ' + ContactInfo.address.County + ', ' + ContactInfo.address.ProvState + ', ' + ContactInfo.address.country + (ContactInfo.address.ZipCode && ', ' + ContactInfo.address.ZipCode)}
-                                                        </h4>
+                                                        </H4>
                                                     )}
                                                 </div>
                                             }
                                             <hr />
-                                            <div className={styles.Flex} ><FM id="global.name" defaultMessage="Name"/><input type='text' required/></div>
-                                            <div className={styles.Flex} ><FM id="global.phone" defaultMessage="Phone"/><input type='number' required/></div>
-                                            <div className={styles.Flex} ><FM id="global.email" defaultMessage="Email"/><input type='email' required/></div>
-                                            <button><FM id="global.submit" defaultMessage="Submit"/></button>
+                                            <div className={styles.Flex} ><FM id="global.name" defaultMessage="Name"/><INPUT type='text' required/></div>
+                                            <div className={styles.Flex} ><FM id="global.phone" defaultMessage="Phone"/><INPUT type='number' required/></div>
+                                            <div className={styles.Flex} ><FM id="global.email" defaultMessage="Email"/><INPUT type='email' required/></div>
+                                            <BUTTON><FM id="global.submit" defaultMessage="Submit"/></BUTTON>
                                         </div>
                                     }
                                 </div>}
@@ -277,47 +277,47 @@ export default function CardElem(
                         :
                             <div className={styles.BackContainer} style={{backgroundColor: backgroundColor && backgroundColor, color: textColor && textColor, width: `${frontViewSize.width}px`, height: `${frontViewSize.height}px`}}>
                                 {<div className={styles.Contact}>
-                                    <h1 onClick={()=>setShowContact(!ShowContact)}>
+                                    <H1 onClick={()=>setShowContact(!ShowContact)}>
                                         <FM
                                             id="global.contact"
                                             defaultMessage="Contact"
                                         />
-                                    </h1>
+                                    </H1>
                                     {ShowContact &&
                                         <div className={styles.ContactInfoContainer} style={{backgroundColor: backgroundColor, color: textColor}}>
                                             {(BusSettings.paymentModel !== 'PPE') && 
                                                 <div>
                                                     <div className={styles.Ranking} style={{backgroundColor:`hsl(${(BusSettings.usersRanking*10) * 1.4}, 70%, 35%)`, borderRadius: '100%'}} >
-                                                        {<span className={styles.Rank}>{BusSettings.usersRanking}</span>}
+                                                        {<SPAN className={styles.Rank}>{BusSettings.usersRanking}</SPAN>}
                                                         <Image src="/icons/LoadingIcon.png" fill alt="" />
                                                     </div>
                                                     {ContactInfo.email && (
-                                                        <p>
+                                                        <P>
                                                             <FM id="global.email" defaultMessage="Email" />: {ContactInfo.email}
-                                                        </p>
+                                                        </P>
                                                     )}
 
                                                     {Array.isArray(ContactInfo.phones) &&
                                                         ContactInfo.phones.map((phone, i) => (
-                                                            <p key={i}>Tel_{i + 1} : {phone}</p>
+                                                            <P key={i}>Tel_{i + 1} : {phone}</P>
                                                     ))}
 
                                                     {ContactInfo.address && (
-                                                        <h4 className={styles.Address}>
+                                                        <H4 className={styles.Address}>
                                                             {ContactInfo.address.ExtNumber}
                                                             {ContactInfo.address.Int ? ` (int. ${ContactInfo.address.Int})` : ""}{" "}
                                                             {ContactInfo.address.street}, {ContactInfo.address.County},{" "}
                                                             {ContactInfo.address.ProvState}, {ContactInfo.address.country}
                                                             {ContactInfo.address.ZipCode ? `, ${ContactInfo.address.ZipCode}` : ""}
-                                                        </h4>
+                                                        </H4>
                                                     )}
                                                 </div>
                                             }
                                             <hr />
-                                            <div className={styles.Flex} ><FM id="global.name" defaultMessage="Name"/><input type='text' required/></div>
-                                            <div className={styles.Flex} ><FM id="global.phone" defaultMessage="Phone"/><input type='number' required/></div>
-                                            <div className={styles.Flex} ><FM id="global.email" defaultMessage="Email"/><input type='email' required/></div>
-                                            <button><FM id="global.submit" defaultMessage="Submit"/></button>
+                                            <div className={styles.Flex} ><FM id="global.name" defaultMessage="Name"/><INPUT type='text' required/></div>
+                                            <div className={styles.Flex} ><FM id="global.phone" defaultMessage="Phone"/><INPUT type='number' required/></div>
+                                            <div className={styles.Flex} ><FM id="global.email" defaultMessage="Email"/><INPUT type='email' required/></div>
+                                            <BUTTON><FM id="global.submit" defaultMessage="Submit"/></BUTTON>
                                         </div>
                                     }
                                 </div>}
@@ -325,7 +325,7 @@ export default function CardElem(
                                     <FM id="global.return" defaultMessage="Return"/>
                                 </div>
                                 {description && 
-                                    <p className={styles.Description} style={{width: `${frontViewSize.width}px`}}>{description + description + description + description}</p>
+                                    <P className={styles.Description} style={{width: `${frontViewSize.width}px`}}>{description + description + description + description}</P>
                                 }
                                 {linkURL &&
                                     <a className={styles.Link} href={linkURL}  target="_blank" rel="noopener noreferrer">

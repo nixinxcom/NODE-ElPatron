@@ -188,7 +188,7 @@
 "blogcard.ph.email": "tu@email.com",
 "blogcard.ph.phone": "+52 55…",
 "blogcard.ph.comment": "¿Qué te pareció el evento?",
-"blogcard.form.consent": "Acepto los <link>términos</link> para ser contactado con fines de marketing.",
+"blogcard.form.consent": "Acepto los </LINK>términos</link> para ser contactado con fines de marketing.",
 "blogcard.submit.sending": "Enviando…",
 "blogcard.submit": "Enviar reseña",
 "blogcard.err.noname": "Por favor, indica tu nombre.",

@@ -477,7 +477,7 @@
   "metaTab.mode.site": "Site (1 document per language)",
   "404.cancel": "Cancel redirect",
   "offline.menu": "View menu in PDF",
-  "blogcard.form.consent": "I accept the <link>terms</link> to be contacted for marketing purposes.",
+  "blogcard.form.consent": "I accept the </LINK>terms</link> to be contacted for marketing purposes.",
   "metaTab.importIds": "Import IDs (paste many)",
   "gallery.empty": "No images available right now.",
   "pub.artist.ph": "Guest DJ",

@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { P } from '../components/ui/wrappers/P';
 
 export default function SuperAdminOnly({ children }: { children: React.ReactNode }) {
   const [role, setRole] = React.useState<'anon'|'user'|'admin'|'superadmin'|null>(null);
@@ -22,7 +23,7 @@ export default function SuperAdminOnly({ children }: { children: React.ReactNode
   if (loading) return null;
   if (role !== 'superadmin') {
     return <div className="p-6 text-sm opacity-80">
-      <p>Acceso restringido: solo Superadmin.</p>
+      <P>Acceso restringido: solo Superadmin.</P>
     </div>;
   }
   return <>{children}</>;

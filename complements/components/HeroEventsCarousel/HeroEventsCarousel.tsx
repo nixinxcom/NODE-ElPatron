@@ -7,6 +7,8 @@ import style from "./HeroEventsCarousel.module.css";
 import { useIntl, FormattedMessage } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import BackgroundMedia from "@/complements/components/BackgroundMediaComp/BackgroundMediaComp";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+
 
 /* ===== Tipos ===== */
 type CtaType = "none" | "url" | "pdf" | "phone" | "mailto";
@@ -325,7 +327,7 @@ export default function HeroEventsCarousel({
         <div className={`${style.frame} ${heightClass || ""}`}>
           <div className={style.skeleton}>
             {loading ? (
-              <p className={style.muted}><FM id="hero.loading" defaultMessage="Cargando eventos…" /></p>
+              <P className={style.muted}><FM id="hero.loading" defaultMessage="Cargando eventos…" /></P>
             ) : (
               <>
                 {Background &&
@@ -340,8 +342,8 @@ export default function HeroEventsCarousel({
                     />
                 }
                 <div className={style.empty}>
-                  <h3><FM id="hero.comingSoon" defaultMessage="Próximamente" /></h3>
-                  <p className={style.muted}><FM id="hero.noMedia" defaultMessage="No hay eventos multimedia programados." /></p>
+                  <H3><FM id="hero.comingSoon" defaultMessage="Próximamente" /></H3>
+                  <P className={style.muted}><FM id="hero.noMedia" defaultMessage="No hay eventos multimedia programados." /></P>
                 </div>
               </>
             )}
@@ -444,7 +446,7 @@ export default function HeroEventsCarousel({
         {slideItems.length > 1 && (
           <div className={`${dotsWrapPos} ${style.dotsWrap}`}>
             {slideItems.map((_, i) => (
-              <button
+              <BUTTON
                 key={`dot-${i}`}
                 aria-label={intl.formatMessage({ id: "hero.nav.gotoSlide", defaultMessage: "Ir al slide {n}" }, { n: i + 1 })}
                 className={`${style.dot} ${i === slideIdx ? style.dotActive : ""}`}
@@ -458,14 +460,14 @@ export default function HeroEventsCarousel({
         {slideItems.length > 1 && (
           <>
             <div className={`${style.arrowWrap} ${style.left}`}>
-              <button aria-label="Slide anterior" onClick={goPrevSlide} className={style.arrow}>
+              <BUTTON aria-label="Slide anterior" onClick={goPrevSlide} className={style.arrow}>
                 ‹
-              </button>
+              </BUTTON>
             </div>
             <div className={`${style.arrowWrap} ${style.right}`}>
-              <button aria-label="Slide siguiente" onClick={goNextSlide} className={style.arrow}>
+              <BUTTON aria-label="Slide siguiente" onClick={goNextSlide} className={style.arrow}>
                 ›
-              </button>
+              </BUTTON>
             </div>
           </>
         )}
@@ -499,40 +501,40 @@ export default function HeroEventsCarousel({
           <div className={style.infoInner}>
             <div className={style.infoTop}>
               <div className={style.titleBox}>
-                <h2 className={style.title}>{activeEvent?.title}</h2>
-                <p className={style.meta}>
+                <H2 className={style.title}>{activeEvent?.title}</H2>
+                <P className={style.meta}>
                   {toHumanDate(
                     activeEvent.date,
                     activeEvent.startTime ?? undefined,
                     activeEvent.endTime ?? undefined
                   )}
                   {activeEvent.location ? ` • ${activeEvent.location}` : ""}
-                </p>
+                </P>
               </div>
 
               {/* (opcional) navegación por botones en desktop */}
               <div className={style.eventNav}>
-                <button onClick={goPrevEvent} className={style.evBtn}
+                <BUTTON onClick={goPrevEvent} className={style.evBtn}
                   aria-label={intl.formatMessage({ id: "hero.nav.prev", defaultMessage: "Evento anterior" })}>
                   ←
-                </button>
-                <button onClick={goNextEvent} className={style.evBtn}
+                </BUTTON>
+                <BUTTON onClick={goNextEvent} className={style.evBtn}
                   aria-label={intl.formatMessage({ id: "hero.nav.next", defaultMessage: "Siguiente evento" })}>
                   →
-                </button>
+                </BUTTON>
               </div>
             </div>
 
             {activeEvent?.description ? (
               <div className={style.descBlock}>
-                <button className={style.descToggle} onClick={() => setDescOpen((v) => !v)}>
+                <BUTTON className={style.descToggle} onClick={() => setDescOpen((v) => !v)}>
                   {descOpen
                     ? intl.formatMessage({ id: "hero.desc.hide", defaultMessage: "Ocultar descripción" })
                     : intl.formatMessage({ id: "hero.desc.show", defaultMessage: "Mostrar descripción" })
                   }
-                </button>
+                </BUTTON>
                 <div className={`${style.descPanel} ${descOpen ? style.open : ""}`}>
-                  <p className={style.descText}>{activeEvent.description}</p>
+                  <P className={style.descText}>{activeEvent.description}</P>
                 </div>
               </div>
             ) : null}
@@ -544,7 +546,7 @@ export default function HeroEventsCarousel({
       {events.length > 1 && (
         <div className={style.eventChips}>
           {events.map((_, i) => (
-            <button
+            <BUTTON
               key={`ev-${i}`}
               aria-label={`Ir al evento ${i + 1}`}
               className={`${style.evDot} ${i === eventIdx ? style.evDotActive : ""}`}

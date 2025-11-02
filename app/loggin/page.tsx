@@ -3,13 +3,14 @@
 import AuthenticationComp from '@/complements/components/AuthenticationComp/AuthenticationComp';
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default function LoginPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="text-2xl font-semibold mb-6">
+      <H1 className="text-2xl font-semibold mb-6">
         <FM id="login.title" defaultMessage="Iniciar sesión" />
-      </h1>
+      </H1>
       <AuthenticationComp />
     </main>
   );
@@ -87,7 +88,7 @@ SEGURIDAD:
   - Considera 2FA/OTP (email/app) si otp=1 u otra señal.
 
 ACCESIBILIDAD:
-  - Un único <h1>, labels asociadas a inputs, descripciones de error con aria-live="polite".
+  - Un único <H1>, labels asociadas a inputs, descripciones de error con aria-live="polite".
   - Soporte de teclado y foco claro para botones sociales.
 
 REDIRECCIONES:

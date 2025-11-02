@@ -10,6 +10,7 @@ import { JsonLd } from "@/complements/components/Seo/JsonLd";
 import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 
 type Props = { locale: string };
@@ -66,26 +67,26 @@ export default function LandingPage({ locale }: Props) {
       <section className={styles.pageMain}>
         <div className={styles.mainGrid}>
           <header className={styles.head}>
-            <h1 className={styles.h1}>
+            <H1 className={styles.h1}>
               <FM id="sites.land.h1" defaultMessage="¡Bienvenido a El Patrón!" />
-            </h1>
-            <p className={styles.subtle}>
+            </H1>
+            <P className={styles.subtle}>
               <FM
                 id="sites.land.subtitle"
                 defaultMessage="Descubre la mejor experiencia en entretenimiento, sabor y ambiente."
               />
-            </p>
+            </P>
           </header>
 
           <div className="grid gap-6 md:grid-cols-2">
             {/* Columna: formulario */}
             <form onSubmit={onSubmit} className={styles.card}>
               <div className={styles.cardGrid}>
-                <label className={styles.fieldStack}>
-                  <span className={styles.label}>
+                <LABEL className={styles.fieldStack}>
+                  <SPAN className={styles.label}>
                     <FM id="sites.land.form.name" defaultMessage="Nombre" />
-                  </span>
-                  <input
+                  </SPAN>
+                  <INPUT
                     type="text"
                     className={styles.input}
                     value={form.name}
@@ -94,13 +95,13 @@ export default function LandingPage({ locale }: Props) {
                     aria-label={intl.formatMessage({ id: "sites.land.form.name", defaultMessage: "Nombre" })}
                     required
                   />
-                </label>
+                </LABEL>
 
-                <label className={styles.fieldStack}>
-                  <span className={styles.label}>
+                <LABEL className={styles.fieldStack}>
+                  <SPAN className={styles.label}>
                     <FM id="sites.land.form.email" defaultMessage="Correo" />
-                  </span>
-                  <input
+                  </SPAN>
+                  <INPUT
                     type="email"
                     className={styles.input}
                     value={form.email}
@@ -109,13 +110,13 @@ export default function LandingPage({ locale }: Props) {
                     aria-label={intl.formatMessage({ id: "sites.land.form.email", defaultMessage: "Correo" })}
                     required
                   />
-                </label>
+                </LABEL>
 
-                <label className={styles.fieldStack}>
-                  <span className={styles.label}>
+                <LABEL className={styles.fieldStack}>
+                  <SPAN className={styles.label}>
                     <FM id="sites.land.form.phone" defaultMessage="Teléfono (opcional)" />
-                  </span>
-                  <input
+                  </SPAN>
+                  <INPUT
                     type="tel"
                     className={styles.input}
                     value={form.phone}
@@ -123,13 +124,13 @@ export default function LandingPage({ locale }: Props) {
                     placeholder={intl.formatMessage({ id: "sites.land.form.phone.ph", defaultMessage: "Tu teléfono" })}
                     aria-label={intl.formatMessage({ id: "sites.land.form.phone", defaultMessage: "Teléfono (opcional)" })}
                   />
-                </label>
+                </LABEL>
 
                 {err && (
-                  <p className={styles.hint} role="alert">{err}</p>
+                  <P className={styles.hint} role="alert">{err}</P>
                 )}
 
-                <button
+                <BUTTON
                   type="submit"
                   disabled={loading}
                   className={styles.btnPrimary}
@@ -139,29 +140,29 @@ export default function LandingPage({ locale }: Props) {
                     ? intl.formatMessage({ id: "sites.land.btn.loading", defaultMessage: "Enviando…" })
                     : intl.formatMessage({ id: "sites.land.btn.subscribe", defaultMessage: "Quiero enterarme de eventos y promos" })
                   }
-                </button>
+                </BUTTON>
 
-                <p className={styles.note}>
+                <P className={styles.note}>
                   <FM
                     id="sites.land.disclaimer"
                     defaultMessage="Al registrarte aceptas recibir información ocasional sobre eventos y promociones."
                   />
-                </p>
+                </P>
               </div>
             </form>
 
             {/* Columna: CTA a reservas */}
             <div className={`${styles.card} grid place-items-center`}>
               <div className="max-w-md text-center space-y-4">
-                <h2 className="text-xl font-semibold">
+                <H2 className="text-xl font-semibold">
                   <FM id="sites.land.cta.title" defaultMessage="¿Listo para vivir la experiencia?" />
-                </h2>
-                <p className={styles.subtle}>
+                </H2>
+                <P className={styles.subtle}>
                   <FM
                     id="sites.land.cta.copy"
                     defaultMessage="Reserva tu mesa y disfruta de nuestra cocina y mixología."
                   />
-                </p>
+                </P>
 
                 <div className="mt-2 flex items-center justify-center">
                   <a

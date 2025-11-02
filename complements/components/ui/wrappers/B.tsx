@@ -12,7 +12,7 @@ export type BProps = React.HTMLAttributes<HTMLElement> & {
   scheme?: 'light' | 'dark';
 };
 
-/** <b> wrapper con RDD */
+/** <B> wrapper con RDD */
 export const B = React.forwardRef<HTMLElement, BProps>(function B(
   {
     kind = 'b',

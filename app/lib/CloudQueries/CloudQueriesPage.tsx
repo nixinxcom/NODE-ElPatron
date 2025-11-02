@@ -10,6 +10,7 @@ import styles from './StylesQueries.module.css';
 import { JsonLdClient as JsonLd } from '@/complements/components/Seo/JsonLdClient';
 import { buildVenueSchema, buildWebSiteSchema } from '@/app/lib/seo/schema';
 import FM from '@/complements/i18n/FM';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type FieldKind = 'timestamp' | 'number' | 'unknown';
 
@@ -190,46 +191,46 @@ export default function CloudQueriesPage() {
       <div className={styles.Contenedor}>
         <div className={styles.cqForm}>
           <div className={styles.cqGroup}>
-            <label className={styles.Label}>
+            <LABEL className={styles.Label}>
               <FM id="cloudq.collection" defaultMessage="Colección Firestore" />
-              <input
+              <INPUT
                 type="text"
                 value={coleccion}
                 onChange={(e) => setColeccion(e.target.value)}
                 placeholder="events / surveys / encuesta / leads / ..."
               />
-            </label>
+            </LABEL>
           </div>
 
           <div className={styles.cqGroupRow}>
-            <label className={styles.Label}>
+            <LABEL className={styles.Label}>
               <FM id="cloudq.from" defaultMessage="Desde (opcional)" />
-              <input
+              <INPUT
                 type="text"
                 value={start}
                 onChange={(e) => setStart(e.target.value)}
                 placeholder="20250101 o 2025-01-01"
               />
-            </label>
-            <label className={styles.Label}>
+            </LABEL>
+            <LABEL className={styles.Label}>
               <FM id="cloudq.to" defaultMessage="Hasta (opcional)" />
-              <input
+              <INPUT
                 type="text"
                 value={end}
                 onChange={(e) => setEnd(e.target.value)}
                 placeholder="20251231 o 2025-12-31"
               />
-            </label>
+            </LABEL>
           </div>
 
           <div className={styles.cqActions}>
-            <button className={styles.Consultar} onClick={consultar} disabled={loading || !coleccion.trim()}>
+            <BUTTON className={styles.Consultar} onClick={consultar} disabled={loading || !coleccion.trim()}>
               <FM id="cloudq.query" defaultMessage="Consultar" />
-            </button>
+            </BUTTON>
             {data.length > 0 && (
               <>
-                <button className={styles.Consultar} onClick={exportCSV}>CSV</button>
-                <button className={styles.Consultar} onClick={exportJSON}>JSON</button>
+                <BUTTON className={styles.Consultar} onClick={exportCSV}>CSV</BUTTON>
+                <BUTTON className={styles.Consultar} onClick={exportJSON}>JSON</BUTTON>
               </>
             )}
           </div>
@@ -238,7 +239,7 @@ export default function CloudQueriesPage() {
           {err && <div className={styles.cqError}>{err}</div>}
           {meta.field && (
             <div className={styles.cqInfo}>
-              <FM id="cloudq.usingField" defaultMessage="Usando campo de fecha:" /> <b>{meta.field}</b> ({meta.kind})
+              <FM id="cloudq.usingField" defaultMessage="Usando campo de fecha:" /> <B>{meta.field}</B> ({meta.kind})
             </div>
           )}
         </div>

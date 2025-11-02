@@ -277,11 +277,11 @@ DOC: USO (ejemplo completo) — complements/components/AuthenticationComp/AuthCo
 
   function ProfileMenu() {
     const { state:{ user, loading }, actions:{ signOut } } = useAuth();
-    if (loading) return <span>Cargando…</span>;
+    if (loading) return <SPAN>Cargando…</SPAN>;
     return (
       <div>
-        <span>{user?.displayName ?? "Invitado"}</span>
-        {user ? <button onClick={signOut}>Salir</button> : <a href="/loggin">Ingresar</a>}
+        <SPAN>{user?.displayName ?? "Invitado"}</SPAN>
+        {user ? <BUTTON onClick={signOut}>Salir</BUTTON> : <a href="/loggin">Ingresar</a>}
       </div>
     );
   }

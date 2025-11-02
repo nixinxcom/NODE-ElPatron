@@ -6,7 +6,7 @@ import { FbAuth, GoogleProvider } from '@/app/lib/services/firebase'
 import UserBadge from '@/complements/components/Auth/UserBadge'
 import FM from '../i18n/FM'
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle'
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 /* ------------------------- Context para exponer user+token (ADITIVO: allowed/checking) ------------------------- */
 interface AuthContextType {
   user: User | null
@@ -152,19 +152,19 @@ function AdminGate({
   )
   const TitleBlock = () => (
     <div className="mb-4">
-      <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
-      <p className="text-sm text-white/60">{subtitle}</p>
+      <H1 className="text-xl font-semibold tracking-tight">{title}</H1>
+      <P className="text-sm text-white/60">{subtitle}</P>
     </div>
   )
 
   const Divider = () => <div className="my-4 h-px w-full bg-white/10" />
   const Chip = ({ text, showIcon = true }: { text: string; showIcon?: boolean }) => (
-    <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs">
+    <SPAN className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs">
       {showIcon && (
-        <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20">A</span>
+        <SPAN className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20">A</SPAN>
       )}
-      <span className="truncate max-w-[220px]">{text}</span>
-    </span>
+      <SPAN className="truncate max-w-[220px]">{text}</SPAN>
+    </SPAN>
   )
 
   if (loading) {
@@ -172,7 +172,7 @@ function AdminGate({
       <Wrapper>
         <Card>
           <TitleBlock />
-          <p className="text-sm text-white/70"><FM id="loadingSession" defaultMessage="Cargando sesión…" /></p>
+          <P className="text-sm text-white/70"><FM id="loadingSession" defaultMessage="Cargando sesión…" /></P>
         </Card>
       </Wrapper>
     )
@@ -191,7 +191,7 @@ function AdminGate({
             <FM id="backtohome" defaultMessage="Pagina de Inicio" />
           </LINK>
           <Divider />
-          <p className="text-xs text-white/50"><FM id="restrictedPanel" defaultMessage="Panel restringido a cuentas autorizadas." /></p>
+          <P className="text-xs text-white/50"><FM id="restrictedPanel" defaultMessage="Panel restringido a cuentas autorizadas." /></P>
         </Card>
       </Wrapper>
     )
@@ -203,7 +203,7 @@ function AdminGate({
         <Card>
           <TitleBlock />
           {showUserChip && <div className="mb-3"><Chip text={user.email ?? '—'} /></div>}
-          <p className="text-sm text-white/70"><FM id="checkingPermissions" defaultMessage="Verificando permisos…" /></p>
+          <P className="text-sm text-white/70"><FM id="checkingPermissions" defaultMessage="Verificando permisos…" /></P>
           <Divider />
           <BUTTON variant="ghost" onClick={handleLogout}><FM id="logout" defaultMessage="Cerrar sesión" /></BUTTON>
         </Card>
@@ -217,8 +217,8 @@ function AdminGate({
         <Card>
           <TitleBlock />
           {showUserChip && <div className="mb-3"><Chip text={user.email ?? '—'} /></div>}
-          <p className="text-sm text-red-300/90">No tienes permisos para ver este panel.</p>
-          {error && <p className="mt-1 text-xs text-red-300/70">{error}</p>}
+          <P className="text-sm text-red-300/90">No tienes permisos para ver este panel.</P>
+          {error && <P className="mt-1 text-xs text-red-300/70">{error}</P>}
           <Divider />
           <BUTTON variant="ghost" onClick={handleLogout}>Cerrar sesión</BUTTON>
         </Card>

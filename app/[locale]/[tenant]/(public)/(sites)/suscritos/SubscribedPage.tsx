@@ -6,6 +6,7 @@ import { buildVenueSchema, buildWebSiteSchema } from "@/app/lib/seo/schema";
 import { FormattedMessage, useIntl } from "react-intl";
 import FM from "@/complements/i18n/FM";
 import styles from "./SubscribedPage.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Props = { locale: string };
 
@@ -33,19 +34,19 @@ export default function SubscribedPage({ locale }: Props) {
       <main className={styles.pageMain}>
         <section className={styles.card}>
           <div className={styles.iconOk}>
-            <span aria-hidden className="text-2xl">✅</span>
+            <SPAN aria-hidden className="text-2xl">✅</SPAN>
           </div>
 
-          <h1 className={styles.title}>
+          <H1 className={styles.title}>
             <FM id="sites.sub.h1" defaultMessage="¡Suscripción confirmada!" />
-          </h1>
+          </H1>
 
-          <p className={styles.subtitle}>
+          <P className={styles.subtitle}>
             <FM
               id="sites.sub.p1"
               defaultMessage="Gracias por unirte. Te enviaremos novedades sobre eventos, música y promociones."
             />
-          </p>
+          </P>
 
           <div className={styles.actions}>
             <a

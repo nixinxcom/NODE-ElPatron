@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { UploadStorage } from "@/functionalities/CommonFunctions/UseCloudStorageFunc";
 import styles from "./FilesUploaderComp.module.css";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 interface IDoctos {
   cloud: {
@@ -219,12 +220,12 @@ export default function FilesUploaderComp(props: IDoctos) {
                 className={styles.DocumentSelector}
                 style={{ width: props.blockWidth, height: props.blockHeight }}
               >
-                <label htmlFor="DctoSel" className={styles.SelLabel}>
+                <LABEL htmlFor="DctoSel" className={styles.SelLabel}>
                   {props.compTitles.select}
                   <br />
                   {props.selection.DocumentCap - DctoPreviews.length}
-                </label>
-                <input
+                </LABEL>
+                <INPUT
                   id="DctoSel"
                   type="file"
                   multiple={props.selection.multiple}
@@ -257,7 +258,7 @@ export default function FilesUploaderComp(props: IDoctos) {
                     minHeight: "clamp(min-content,min-content,auto)",
                   }}
                 >
-                  <span
+                  <SPAN
                     key={Dcto.orig_url}
                     className={styles.SpanDelete}
                     onClick={() =>
@@ -356,7 +357,7 @@ export default function FilesUploaderComp(props: IDoctos) {
 
       {/* Submit interno (sólo si NO se difiere) */}
       {!props.deferUpload && DctoPreviews[0] && (
-        <button
+        <BUTTON
           id={styles.SubmitImages}
           onClick={(e) =>
             handleSubmit({
@@ -370,7 +371,7 @@ export default function FilesUploaderComp(props: IDoctos) {
           }
         >
           {props.compTitles.submit}
-        </button>
+        </BUTTON>
       )}
     </>
   );

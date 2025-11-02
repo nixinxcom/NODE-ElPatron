@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import styles from './NotFound.module.css';
 import SecretAdminTrigger from '@/complements/components/SecretAdminTrigger';
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type Locale = 'es' | 'en' | 'fr';
 
@@ -122,12 +122,12 @@ export default function NotFound() {
   return (
     <main className={styles.wrap}>
       <div className={styles.card}>
-        <h1 className={styles.title}>404 — {t.title}</h1>
-        <p className={styles.subtitle}>{t.desc}</p>
+        <H1 className={styles.title}>404 — {t.title}</H1>
+        <P className={styles.subtitle}>{t.desc}</P>
 
         {/* Buscador */}
         <div className={styles.searchRow}>
-          <input
+          <INPUT
             className={styles.search}
             type="search"
             placeholder={t.searchPh}
@@ -144,23 +144,23 @@ export default function NotFound() {
         <div className={styles.autoRow}>
           {autoRedirect ? (
             <>
-              <span className={styles.muted}>{t.auto(seconds)}</span>
+              <SPAN className={styles.muted}>{t.auto(seconds)}</SPAN>
               <BUTTON className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
                 {t.cancel}
               </BUTTON>
             </>
           ) : (
-            <span className={styles.muted}>{t.deactivated}</span>
+            <SPAN className={styles.muted}>{t.deactivated}</SPAN>
           )}
         </div>
 
         {/* Links disponibles */}
-        <h2 className={styles.sectionTitle}>{t.popular}</h2>
+        <H2 className={styles.sectionTitle}>{t.popular}</H2>
         <nav className={styles.grid}>
           {filtered.map((l) => (
             <LINK key={l.href} href={l.href} className={styles.linkItem}>
-              <span className={styles.linkLabel}>{l.label}</span>
-              <span className={styles.linkPath}>{l.href}</span>
+              <SPAN className={styles.linkLabel}>{l.label}</SPAN>
+              <SPAN className={styles.linkPath}>{l.href}</SPAN>
             </LINK>
           ))}
         </nav>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 type ShortLocale = "es" | "en" | "fr";
 
@@ -40,8 +41,8 @@ export default function RDDInspectorTab() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <h2 className="text-xl font-semibold">RDD Inspector</h2>
-        <select
+        <H2 className="text-xl font-semibold">RDD Inspector</H2>
+        <SELECT
           className="border rounded px-2 py-1"
           value={locale}
           onChange={(e) => setLocale(e.target.value as ShortLocale)}
@@ -49,14 +50,14 @@ export default function RDDInspectorTab() {
           {LOCALES.map((l) => (
             <option key={l} value={l}>{l}</option>
           ))}
-        </select>
-        <button
+        </SELECT>
+        <BUTTON
           className="ml-auto border rounded px-3 py-1"
           onClick={() => fetchAll(locale)}
           title="Refrescar"
         >
           Refresh
-        </button>
+        </BUTTON>
       </div>
 
       {/* Branding */}
@@ -76,13 +77,13 @@ export default function RDDInspectorTab() {
         <summary className="cursor-pointer text-base font-medium">i18n ({locale})</summary>
 
         <div className="mt-3 flex items-center gap-2">
-          <input
+          <INPUT
             className="w-full border rounded px-2 py-1"
             placeholder="Filtrar por id o valor (contiene)…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
-          <span className="text-xs opacity-70">{filteredEntries.length} / {Object.keys(dict || {}).length}</span>
+          <SPAN className="text-xs opacity-70">{filteredEntries.length} / {Object.keys(dict || {}).length}</SPAN>
         </div>
 
         <div className="mt-3 max-h-[60vh] overflow-auto border rounded">

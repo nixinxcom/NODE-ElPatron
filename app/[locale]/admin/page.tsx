@@ -1,6 +1,6 @@
 'use client';
 
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, A, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 import { useParams } from 'next/navigation';
 import AdminGuard from '@/complements/admin/AdminGuard'; 
 import styles from './admin-home.module.css';
@@ -61,7 +61,7 @@ export default function AdminHome() {
   return (
     <AdminGuard agentId="default" showUserChip>
       <div className={styles.wrap}>
-        <h1 className={styles.title}><FM id="nav.panel" defaultMessage="Panel de Control" /></h1>
+        <H1 className={styles.title}><FM id="nav.panel" defaultMessage="Panel de Control" /></H1>
         <div className={styles.grid}>
           {cards.map((c) => (
             c.enabled && (

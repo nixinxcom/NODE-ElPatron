@@ -4,6 +4,7 @@ import { getSettingsEffective } from '@/complements/data/settingsFS';
 import { getStylesEffective } from '@/complements/data/stylesFS';
 import { normalizeToSupported } from '@/context/AppContext';
 import { toShortLocale, DEFAULT_LOCALE_SHORT } from '@/app/lib/i18n/locale';
+import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
 
 export default async function RDDInspector({ searchParams }: { searchParams: { locale?: string } }) {
   const locale = normalizeToSupported(toShortLocale(searchParams?.locale || DEFAULT_LOCALE_SHORT));
@@ -21,34 +22,34 @@ export default async function RDDInspector({ searchParams }: { searchParams: { l
 
   return (
     <main style={{ padding: 24, maxWidth: 1280, margin: '0 auto', fontFamily: 'ui-sans-serif, system-ui' }}>
-      <h1 style={{ fontSize: 24, fontWeight: 700 }}>RDD Inspector (Branding · Settings · Styles)</h1>
-      <p style={{ opacity: .75 }}>Locale: <code>{locale}</code></p>
+      <H1 style={{ fontSize: 24, fontWeight: 700 }}>RDD Inspector (Branding · Settings · Styles)</H1>
+      <P style={{ opacity: .75 }}>Locale: <code>{locale}</code></P>
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
         <div style={{ background: '#0b1220', color: '#e5e7eb', padding: 12, borderRadius: 8 }}>
-          <h2 style={{ fontSize: 16, marginBottom: 8 }}>Branding (effective, strings)</h2>
+          <H2 style={{ fontSize: 16, marginBottom: 8 }}>Branding (effective, strings)</H2>
           <pre style={{ maxHeight: 360, overflow: 'auto' }}>{JSON.stringify(branding, null, 2)}</pre>
         </div>
         <div style={{ background: '#0b1220', color: '#e5e7eb', padding: 12, borderRadius: 8 }}>
-          <h2 style={{ fontSize: 16, marginBottom: 8 }}>Settings (effective)</h2>
+          <H2 style={{ fontSize: 16, marginBottom: 8 }}>Settings (effective)</H2>
           <pre style={{ maxHeight: 360, overflow: 'auto' }}>{JSON.stringify(settings, null, 2)}</pre>
         </div>
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
         <div style={{ background: '#0b1220', color: '#e5e7eb', padding: 12, borderRadius: 8 }}>
-          <h2 style={{ fontSize: 16, marginBottom: 8 }}>Styles (effective schema)</h2>
+          <H2 style={{ fontSize: 16, marginBottom: 8 }}>Styles (effective schema)</H2>
           <pre style={{ maxHeight: 360, overflow: 'auto' }}>{JSON.stringify(styles, null, 2)}</pre>
         </div>
         <div style={{ background: '#0b1220', color: '#e5e7eb', padding: 12, borderRadius: 8 }}>
-          <h2 style={{ fontSize: 16, marginBottom: 8 }}>Theme wiring</h2>
+          <H2 style={{ fontSize: 16, marginBottom: 8 }}>Theme wiring</H2>
           <pre style={{ maxHeight: 360, overflow: 'auto' }}>{JSON.stringify({ aliases, initialSlot }, null, 2)}</pre>
-          <p style={{opacity:.8, marginTop:8}}>Slots: <code>light</code> / <code>dark</code> → temas físicos por aliases.</p>
+          <P style={{opacity:.8, marginTop:8}}>Slots: <code>light</code> / <code>dark</code> → temas físicos por aliases.</P>
         </div>
       </section>
 
-      <p style={{opacity:.65, marginTop: 16}}>
+      <P style={{opacity:.65, marginTop: 16}}>
         * RDD: Branding (FS &gt; TSX(FM) &gt; JSON) · Settings (FS &gt; JSON &gt; TSX) · Styles (FS &gt; TSX).
-      </p>
+      </P>
     </main>
   );
 }
