@@ -6,6 +6,7 @@ import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1,
 import styles from "./InternationalizationComp.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { IntlProvider } from "react-intl";
 
 interface iLanguages {
   language?: string;
@@ -28,13 +29,14 @@ interface iInternational {
   Left?: string;
   Right?: string;
   ShowLangs?: "all" | "oneBYone";
+  messages?: Record<string, string>;
+  children?: React.ReactNode;
 }
 
-const SHORTS = ["es","en","fr"] as const;
-type Short = typeof SHORTS[number];
+type Short = "es" | "en" | "fr";
 
 function shortOf(input?: string): Short {
-  if (!input) return "es";
+  if (!input) return "en";
   const v = String(input).toLowerCase();
   if (v.startsWith("es")) return "es";
   if (v.startsWith("fr")) return "fr";
@@ -61,7 +63,14 @@ export default function InterComp(props: iInternational) {
 
   const toggleMinimized = () => setMinimized(prev => !prev);
 
-  if (!props.Langs?.length) return null;
+  if (!props.Langs?.length) {
+    // Aún así provee contexto Intl para children
+    return (
+      <IntlProvider locale={`${process.env.NEXT_PUBLIC_DEFAULT_LOCALE}`} messages={props.messages ?? {}}>
+        {props.children ?? null}
+      </IntlProvider>
+    );
+  }
 
   // Orden normalizado (corto) exactamente según tu array
   const order = useMemo(() => {
@@ -97,67 +106,70 @@ export default function InterComp(props: iInternational) {
   }, [order, currentIdx]);
 
   return (
-    <div
-      className={`${styles.LangsContainer} ${minimized ? styles.minimized : styles.expanded}`}
-      style={{
-        position: props.Position,
-        backgroundColor: props.BackgroundColor,
-        top: props.Top,
-        bottom: props.Bottom,
-        left: props.Left,
-        right: props.Right,
-      }}
-      onClick={toggleMinimized}
-    >
-      {props.ShowLangs === "oneBYone" ? (
-        // Muestra SIEMPRE el “siguiente” respecto al actual → primer clic siempre cambia
-        <div className={styles.Lngdiv} key={`one-${nextIdx}`}>
-          {props.Langs[nextIdx]?.icon && (
-            <LINK
-              href={buildHref(order[nextIdx].short)}
-              replace
-              scroll={false}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <IMAGE
-                src={props.Langs[nextIdx].icon!}
-                width={props.Langs[nextIdx].width}
-                height={props.Langs[nextIdx].height}
-                priority={props.Langs[nextIdx].prioritario}
-                alt={props.Langs[nextIdx].alt || ""}
-              />
-            </LINK>
-          )}
-          {!minimized && props.Langs[nextIdx]?.language && (
-            <P className={styles.LngLgnd}>{props.Langs[nextIdx].language}</P>
-          )}
-        </div>
-      ) : (
-        // "all": respeta el orden exactamente como lo envías
-        props.Langs.map((lang, index) => (
-          <div className={styles.Lngdiv} key={`all-${index}`}>
-            {lang.icon && (
+    <IntlProvider locale={currentShort} messages={props.messages ?? {}}>
+      <div
+        className={`${styles.LangsContainer} ${minimized ? styles.minimized : styles.expanded}`}
+        style={{
+          position: props.Position,
+          backgroundColor: props.BackgroundColor,
+          top: props.Top,
+          bottom: props.Bottom,
+          left: props.Left,
+          right: props.Right,
+        }}
+        onClick={toggleMinimized}
+      >
+        {props.ShowLangs === "oneBYone" ? (
+          // Muestra SIEMPRE el “siguiente” respecto al actual → primer clic siempre cambia
+          <div className={styles.Lngdiv} key={`one-${nextIdx}`}>
+            {props.Langs[nextIdx]?.icon && (
               <LINK
-                href={buildHref(shortOf(lang.locale))}
+                href={buildHref(order[nextIdx].short)}
                 replace
                 scroll={false}
                 onClick={(e) => e.stopPropagation()}
               >
                 <IMAGE
-                  src={lang.icon}
-                  width={lang.width}
-                  height={lang.height}
-                  priority={lang.prioritario}
-                  alt={lang.alt || ""}
+                  src={props.Langs[nextIdx].icon!}
+                  width={props.Langs[nextIdx].width}
+                  height={props.Langs[nextIdx].height}
+                  priority={props.Langs[nextIdx].prioritario}
+                  alt={props.Langs[nextIdx].alt || ""}
                 />
               </LINK>
             )}
-            {!minimized && lang.language && (
-              <P className={styles.LngLgnd}>{lang.language}</P>
+            {!minimized && props.Langs[nextIdx]?.language && (
+              <P className={styles.LngLgnd}>{props.Langs[nextIdx].language}</P>
             )}
           </div>
-        ))
-      )}
-    </div>
+        ) : (
+          // "all": respeta el orden exactamente como lo envías
+          props.Langs.map((lang, index) => (
+            <div className={styles.Lngdiv} key={`all-${index}`}>
+              {lang.icon && (
+                <LINK
+                  href={buildHref(shortOf(lang.locale))}
+                  replace
+                  scroll={false}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <IMAGE
+                    src={lang.icon}
+                    width={lang.width}
+                    height={lang.height}
+                    priority={lang.prioritario}
+                    alt={lang.alt || ""}
+                  />
+                </LINK>
+              )}
+              {!minimized && lang.language && (
+                <P className={styles.LngLgnd}>{lang.language}</P>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+      {props.children ?? null}
+    </IntlProvider>
   );
 }

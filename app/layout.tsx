@@ -5,7 +5,7 @@ import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ContextProvider } from "@/context/AppContext";
-import InterComp from "@/complements/components/InternationalizationComp/InternationalizationComp";
+import InterComp from "@/complements/components/InterComp/InterComp";
 import { Suspense } from "react";
 import { AuthProvider } from "@/complements/components/AuthenticationComp/AuthContext";
 import AppHydrators from "@/app/providers/AppHydrators";

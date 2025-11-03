@@ -1,5 +1,6 @@
 // NO "use client"
 
+// ---------- Firestore wire types ----------
 type FirestoreValue =
   | { stringValue: string }
   | { integerValue: string }
@@ -9,6 +10,7 @@ type FirestoreValue =
   | { arrayValue: { values?: FirestoreValue[] } }
   | { mapValue: { fields?: Record<string, FirestoreValue> } };
 
+// ---------- Firestore wire -> plain ----------
 function fromValue(v: any): any {
   if (!v || typeof v !== "object") return undefined;
   if ("stringValue" in v)  return v.stringValue;
@@ -27,6 +29,7 @@ function fromFields(fields: Record<string, FirestoreValue> | undefined): any {
   return out;
 }
 
+// ---------- Firestore REST helper ----------
 async function fetchDocREST(projectId: string, apiKey: string, coll: string, id: string) {
   const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${coll}/${encodeURIComponent(id)}?key=${apiKey}`;
   try {
@@ -35,7 +38,6 @@ async function fetchDocREST(projectId: string, apiKey: string, coll: string, id:
     const json = await res.json();
     const flat = fromFields(json?.fields || {});
     if (flat && typeof flat === "object") {
-      // Acepta { dict: {...} } o plano
       const maybeDict = (flat.dict && typeof flat.dict === "object") ? flat.dict : flat;
       return maybeDict as Record<string, any>;
     }
@@ -45,48 +47,56 @@ async function fetchDocREST(projectId: string, apiKey: string, coll: string, id:
   }
 }
 
-// --- ADD: loader de seeds por cliente (app/[locale]/<cliente>/i18n) ---
-import { toShortLocale } from "@/app/lib/i18n/locale"; // si ya existía, reutilízalo
-
-async function loadTenantSeed(locale: string, tenant?: string): Promise<Record<string,string>> {
-  const short = toShortLocale(locale);
-  const t = (tenant || "").toLowerCase();
-  if (!t) return {};
-  try {
-    // Incluye todos los i18n locales de clientes en el bundle:
-    const mod = await import(
-      /* webpackInclude: /app\/\[locale\]\/[^/]+\/i18n\/index\.(ts|js)$/ */
-      `@/app/[locale]/${t}/i18n`
-    );
-    const dicts = (mod.default ?? mod) as Record<string, Record<string,string>>;
-    return dicts[short] ?? {};
-  } catch {
-    return {};
-  }
+// ---------- Utils ----------
+function shortOf(locale?: string): "es"|"en"|"fr" {
+  const v = String(locale || "en").toLowerCase();
+  if (v.startsWith("es")) return "es";
+  if (v.startsWith("fr")) return "fr";
+  return "en";
 }
 
-// --- REPLACE: función efectiva (FS > seeds del cliente) ---
-export async function getI18nEffectiveServer(locale: string, tenant?: string) {
-  // 1) Seeds locales del cliente (carpeta bajo [locale])
-  const seeds = await loadTenantSeed(locale, tenant);
+// ---------- NUEVO: inyección opcional de seeds por tenant ----------
+export type TenantSeedResolver = (args: { locale: string; tenant?: string }) =>
+  | Promise<Record<string,string>>
+  | Record<string,string>;
 
-  // 2) Firestore (tu código existente para traer el diccionario desde FS)
-  //    Mantén tu lógica actual (colección, projectId/apiKey, shortId/longId, fetchDocREST, etc.)
+// Resolver por defecto → vacío (no acopla a la app)
+let _tenantSeedResolver: TenantSeedResolver | null = null;
+
+/** Permite que la APP (NX) inyecte cómo cargar los seeds de i18n por tenant. */
+export function setTenantSeedResolver(fn: TenantSeedResolver) {
+  _tenantSeedResolver = fn;
+}
+/** (opcional) limpiar el resolver */
+export function clearTenantSeedResolver() {
+  _tenantSeedResolver = null;
+}
+
+// ---------- API estable: FS > seeds ----------
+export async function getI18nEffectiveServer(locale: string, tenant?: string) {
+  const short = shortOf(locale);
+
+  // 1) Seeds del cliente (inyectados por la app si desea)
+  let seeds: Record<string,string> = {};
+  if (_tenantSeedResolver) {
+    try {
+      const maybe = await _tenantSeedResolver({ locale: short, tenant });
+      if (maybe && typeof maybe === "object") seeds = maybe;
+    } catch { /* ignore */ }
+  }
+
+  // 2) Firestore pisa seeds (RDD: FS > seeds)
   const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
   const apiKey    = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
   const I18N_COLL = process.env.NEXT_PUBLIC_I18N_COLL || "i18n_global";
-  if (!projectId || !apiKey || !locale) return seeds;
 
-  const shortId = (locale.split("-")[0] || "").trim();
-  const longId  = locale;
-
-  // NOTE: asume que ya tienes una función fetchDocREST(projectId, apiKey, coll, docId)
-  let fsDoc: Record<string,string> = {};
-  if (shortId) fsDoc = (await fetchDocREST(projectId, apiKey, I18N_COLL, shortId)) || {};
-  if (!Object.keys(fsDoc).length) {
-    fsDoc = (await fetchDocREST(projectId, apiKey, I18N_COLL, longId)) || {};
+  if (projectId && apiKey) {
+    let fsDoc: Record<string,string> = (await fetchDocREST(projectId, apiKey, I18N_COLL, short)) || {};
+    if (!Object.keys(fsDoc).length) {
+      fsDoc = (await fetchDocREST(projectId, apiKey, I18N_COLL, locale)) || {};
+    }
+    return { ...seeds, ...fsDoc }; // FS override
   }
 
-  // 3) Prioridad RDD: FS pisa seeds del cliente
-  return { ...seeds, ...fsDoc };
+  return seeds;
 }

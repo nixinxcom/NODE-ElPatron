@@ -64,7 +64,7 @@ export { default as GalleryComponent } from "./complements/components/GalleryCom
 export { default as HeroEventsCarousel } from "./complements/components/HeroEventsCarousel/HeroEventsCarousel";
 export { HoldComp, Success, Failed } from "./complements/components/HoldComp/HoldComp";
 export { default as InstallPWAComp } from "./complements/components/InstallPWAComp/InstallPWAComp";
-export { default as InternationalizationComp } from "./complements/components/InternationalizationComp/InternationalizationComp";
+export { default as InterComp } from "./complements/components/InterComp/InterComp";
 export { default as MapEmbed } from "./complements/components/Maps/MapEmbed/MapEmbed";
 export { default as MapGoogle } from "./complements/components/Maps/MapGoogle/MapGoogle";
 export { default as NavBar } from "./complements/components/NavBar/NavBar";
