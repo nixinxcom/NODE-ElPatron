@@ -19,6 +19,9 @@ export { default as EnvWizard } from "./complements/admin/EnvWizard";
 export { default as MetaTab } from "./complements/admin/MetaTab";
 export { default as FMsTab } from "./complements/admin/FMsTab";
 export { default as BrandingTab } from "./complements/admin/BrandingTab";
+export { default as RDDInspectorTab } from "./complements/admin/RDDInspectorTab";
+export { default as AgentCatalogTab } from "./complements/admin/AgentCatalogTab";
+export { default as AgentConfigForm } from "./complements/admin/AgentConfigForm";
 // ────────────────────
 // Seeds TS
 // ────────────────────
@@ -75,6 +78,10 @@ export { default as SliderComp } from "./complements/components/SliderComp/Slide
 export { default as StripeLoaderComp } from "./complements/components/StripeLoaderComp/StripeLoaderComp";
 export { default as TableComp } from "./complements/components/TableComp/TableComp";
 export { default as ThemeToggle } from "./complements/components/ThemeToggle/ThemeToggle";
+
+// Fuinctionalities
+export { default as AdminGuard } from "./complements/admin/AdminGuard";
+export { default as SuperAdminOnly } from "./complements/admin/SuperAdminOnly";
 
 // Final obligatorio
 export {};

@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import styles from './NotFound.module.css';
 import SecretAdminTrigger from '@/complements/components/SecretAdminTrigger';
 import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
@@ -120,52 +120,54 @@ export default function NotFound() {
   const t = TEXTS[locale];
 
   return (
-    <main className={styles.wrap}>
-      <div className={styles.card}>
-        <H1 className={styles.title}>404 — {t.title}</H1>
-        <P className={styles.subtitle}>{t.desc}</P>
+    <Suspense fallback={null}>
+      <main className={styles.wrap}>
+        <div className={styles.card}>
+          <H1 className={styles.title}>404 — {t.title}</H1>
+          <P className={styles.subtitle}>{t.desc}</P>
 
-        {/* Buscador */}
-        <div className={styles.searchRow}>
-          <INPUT
-            className={styles.search}
-            type="search"
-            placeholder={t.searchPh}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            autoFocus
-          />
-          <LINK className={styles.homeBtn} href={`/${locale}`}>
-            {t.backHome}
-          </LINK>
-        </div>
-
-        {/* Auto redirect */}
-        <div className={styles.autoRow}>
-          {autoRedirect ? (
-            <>
-              <SPAN className={styles.muted}>{t.auto(seconds)}</SPAN>
-              <BUTTON className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
-                {t.cancel}
-              </BUTTON>
-            </>
-          ) : (
-            <SPAN className={styles.muted}>{t.deactivated}</SPAN>
-          )}
-        </div>
-
-        {/* Links disponibles */}
-        <H2 className={styles.sectionTitle}>{t.popular}</H2>
-        <nav className={styles.grid}>
-          {filtered.map((l) => (
-            <LINK key={l.href} href={l.href} className={styles.linkItem}>
-              <SPAN className={styles.linkLabel}>{l.label}</SPAN>
-              <SPAN className={styles.linkPath}>{l.href}</SPAN>
+          {/* Buscador */}
+          <div className={styles.searchRow}>
+            <INPUT
+              className={styles.search}
+              type="search"
+              placeholder={t.searchPh}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              autoFocus
+            />
+            <LINK className={styles.homeBtn} href={`/${locale}`}>
+              {t.backHome}
             </LINK>
-          ))}
-        </nav>
-      </div>
-      <SecretAdminTrigger/>
-    </main>
+          </div>
+
+          {/* Auto redirect */}
+          <div className={styles.autoRow}>
+            {autoRedirect ? (
+              <>
+                <SPAN className={styles.muted}>{t.auto(seconds)}</SPAN>
+                <BUTTON className={styles.cancelBtn} onClick={() => setAutoRedirect(false)}>
+                  {t.cancel}
+                </BUTTON>
+              </>
+            ) : (
+              <SPAN className={styles.muted}>{t.deactivated}</SPAN>
+            )}
+          </div>
+
+          {/* Links disponibles */}
+          <H2 className={styles.sectionTitle}>{t.popular}</H2>
+          <nav className={styles.grid}>
+            {filtered.map((l) => (
+              <LINK key={l.href} href={l.href} className={styles.linkItem}>
+                <SPAN className={styles.linkLabel}>{l.label}</SPAN>
+                <SPAN className={styles.linkPath}>{l.href}</SPAN>
+              </LINK>
+            ))}
+          </nav>
+        </div>
+        <SecretAdminTrigger/>
+      </main>
+    </Suspense>
   );
 }
