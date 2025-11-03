@@ -39,7 +39,7 @@ export async function saveBrandingGlobal(partial: Partial<BrandingFS>) {
 // ---------- Effective (PWA): TSX+JSON (pres FM) → FS → resolver FM ----------
 export async function getBrandingEffectivePWA(
   locale: string
-): Promise<iBranding<UIString>> {
+): Promise<iBranding<string | JSX.Element>> {
   const isServer = typeof window === 'undefined';
 
   let g: Partial<BrandingFS> | undefined;
