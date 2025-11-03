@@ -19,7 +19,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["google.maps"],
+    "types": ["google.maps","node"],
     "typeRoots": ["./node_modules/@types"],
     "forceConsistentCasingInFileNames": true
   },
@@ -32,7 +32,7 @@
     "types/**/*.d.ts",
     ".next/types/**/*.ts",
     "app/pageFunctions.tsx",
-    "complements/components/MapEmbedtsx",
+    "complements/components/MapEmbed.tsx",
     "complements/components/StyleDesigner/StyleDesigner.tsx"
 , "scripts/copy-css.js"  ],
   "exclude": ["node_modules"]

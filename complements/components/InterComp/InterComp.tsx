@@ -3,7 +3,7 @@
 import Image from "next/image";
 // import Link from "next/link";
 import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
-import styles from "./InternationalizationComp.module.css";
+import styles from "./InterComp.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { IntlProvider } from "react-intl";
