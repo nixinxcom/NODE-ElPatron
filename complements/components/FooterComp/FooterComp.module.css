@@ -31,7 +31,7 @@
 }
 
 .icon {
-  color: theme('colors.primary.DEFAULT'); /* ahora sí es una string concreta */
+  color: var(--body-backgroundColor); /* ahora sí es una string concreta */
   font-weight: 600;
   text-decoration: none;
 }
