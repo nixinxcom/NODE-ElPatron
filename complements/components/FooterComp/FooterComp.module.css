@@ -3,7 +3,7 @@
   padding: 2rem 1rem;
   text-align: center;
   color: var(--tw-text-opacity);
-  font-family: theme('fontFamily.brand');
+  font-family: var(--body-fontFamily);
 }
 
 .container {
