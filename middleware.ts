@@ -21,30 +21,31 @@ const IGNORED_PREFIXES = [
   '/manifest.webmanifest',
 ]
 
-// === NUEVO (no invasivo): tenant por host ===
+// === tenant por host ===
 const DEFAULT_TENANT = process.env.NEXT_PUBLIC_DEFAULT_TENANT || 'nixinx'
 const TENANT_BY_HOST: Record<string, string> = {
   'nixinx.com': 'NIXINX',
   'localhost:3000': 'NIXINX',
   'www.nixinx.com': 'NIXINX',
+
   'patronbarandgrill.com': 'ElPatron',
   'localhost:3001': 'ElPatron',
   'www.patronbarandgrill.com': 'ElPatron',
+
   'hottacosrestaurant.ca': 'HTWindsor',
   'localhost:3002': 'HTWindsor',
   'www.hottacosrestaurant.ca': 'HTWindsor',
+
   'hottacosrestaurant.com': 'HTLeamington',
   'localhost:3003': 'HTLeamington',
   'www.hottacosrestaurant.com': 'HTLeamington',
-  // agrega aquí más dominios/puertos → tenant
 }
 function getTenantForHost(req: NextRequest) {
   const host = (req.headers.get('host') || '').toLowerCase()
   return TENANT_BY_HOST[host] || DEFAULT_TENANT
 }
 
-// 🔒 Slugs de primer nivel que ya son "sitios" del cliente y
-//     NO deben recibir el prefijo {tenant} en la reescritura.
+// Slugs de tenants conocidos (en minúsculas)
 const STATIC_TOP_LEVEL_SLUGS = new Set<string>([
   'nixinx',
   'elpatron',
@@ -52,7 +53,7 @@ const STATIC_TOP_LEVEL_SLUGS = new Set<string>([
   'htleamington',
 ])
 
-// 🏠 Home por tenant (/{locale} → /{locale}/{homeDelTenant})
+// Home por tenant (segmento interno)
 const HOME_BY_TENANT: Record<string, string> = {
   NIXINX: 'NIXINX',
   ElPatron: 'ElPatron',
@@ -64,7 +65,6 @@ const HOME_BY_TENANT: Record<string, string> = {
 const FIREBASE_PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
 const SETTINGS_DOC = process.env.NEXT_PUBLIC_SETTINGS_DOC_PATH || 'settings/default'
 
-// elige locale por Accept-Language solo para la raíz
 function pickLocale(req: NextRequest): typeof LOCALES[number] {
   const header = (req.headers.get('accept-language') || '').toLowerCase()
   const langs = header.split(',').map(l => l.trim().split(';')[0].split('-')[0])
@@ -72,17 +72,15 @@ function pickLocale(req: NextRequest): typeof LOCALES[number] {
   return DEFAULT_LOCALE
 }
 
-// paths helpers
 function isI18nPath(pathname: string) {
   const first = pathname.split('/').filter(Boolean)[0]
   return (LOCALES as readonly string[]).includes(first ?? '')
 }
 
-// ⚠️ Ajustado para soportar opcionalmente el segmento {tenant}
+// admin / wip
 function isAdminOrWip(pathname: string) {
   const segs = pathname.split('/').filter(Boolean)
   if (!segs.length) return false
-  // segs[0] = locale; segs[1] puede ser admin|wip o tenant
   const s1 = segs[1]?.toLowerCase()
   const s2 = segs[2]?.toLowerCase()
   return (s1 === 'admin' || s1 === 'wip' || s2 === 'admin' || s2 === 'wip')
@@ -139,7 +137,7 @@ async function agentEnabled(): Promise<boolean> {
 export async function middleware(req: NextRequest) {
   const { pathname, search, hash } = req.nextUrl
 
-  // normalización /en-US → /en (tu lógica)
+  // normalización /en-US → /en
   const segs = pathname.split('/').filter(Boolean)
   const first = (segs[0] || '').toLowerCase()
   const LONG_TO_SHORT: Record<string, typeof LOCALES[number]> = {
@@ -176,13 +174,18 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  // === Rutas con locale visible: kill-switch + multi-tenant rewrite ===
+  // === Rutas con locale visible: control multi-tenant + kill-switch ===
   if (isI18nPath(pathname)) {
+    const parts = pathname.split('/').filter(Boolean)
+    const locale = parts[0]
+    const afterLocale = parts.slice(1)
+    const firstAfter = (afterLocale[0] || '').toLowerCase()
+
+    // kill-switch (salvo admin/wip)
     if (!isAdminOrWip(pathname)) {
       const enabled = await websiteEnabled()
       if (!enabled) {
         const url = req.nextUrl.clone()
-        const locale = pathname.split('/').filter(Boolean)[0] || DEFAULT_LOCALE
         url.pathname = `/${locale}/wip`
         url.searchParams.set('from', pathname)
         const res = NextResponse.redirect(url, 307)
@@ -192,54 +195,71 @@ export async function middleware(req: NextRequest) {
       }
     }
 
-    // ⬇️ NUEVO: ocultar /{tenant} en la URL pública con reglas mínimas
     const tenant = getTenantForHost(req)
-    const parts = pathname.split('/').filter(Boolean)
-    const locale = parts[0]
-    const afterLocale = parts.slice(1) // puede estar vacío
-    const firstAfter = (afterLocale[0] || '').toLowerCase()
+    const tenantLower = tenant.toLowerCase()
 
-    // 1) Home por tenant: /{locale} → /{locale}/{HOME_BY_TENANT[tenant]}
-    if (afterLocale.length === 0) {
-      const home = HOME_BY_TENANT[tenant]
-      if (home) {
-        const url = req.nextUrl.clone()
-        url.pathname = `/${locale}/${home}`
-        const reqHeaders = new Headers(req.headers)
-        reqHeaders.set('x-tenant', tenant)
-        reqHeaders.set('x-locale', locale)
-        return NextResponse.rewrite(url, { request: { headers: reqHeaders } })
-      }
+    // admin/wip: permitidos tal cual (no forzamos tenant)
+    if (isAdminOrWip(pathname)) {
+      const reqHeaders = new Headers(req.headers)
+      reqHeaders.set('x-tenant', tenant)
+      reqHeaders.set('x-locale', locale)
+      return NextResponse.next({ request: { headers: reqHeaders } })
     }
 
-    // 2) Insertar {tenant} salvo que:
-    //    - ya esté presente
-    //    - sea admin/wip
-    //    - sea un slug estático de cliente (p.ej. elpatronbarandgrill)
-    const alreadyHasTenant = firstAfter === tenant.toLowerCase()
-    const isAdminWip = firstAfter === 'admin' || firstAfter === 'wip'
-    const isStaticClient = STATIC_TOP_LEVEL_SLUGS.has(firstAfter)
-
-    if (!alreadyHasTenant && !isAdminWip && !isStaticClient) {
+    // 1) /{locale} -> rewrite interno a /{locale}/{tenant}
+    if (afterLocale.length === 0) {
+      const home = HOME_BY_TENANT[tenant as keyof typeof HOME_BY_TENANT] || tenant
       const url = req.nextUrl.clone()
-      const rest = afterLocale.join('/')
-      url.pathname = `/${locale}/${tenant}${rest ? `/${rest}` : ''}`
+      url.pathname = `/${locale}/${home}`
       const reqHeaders = new Headers(req.headers)
       reqHeaders.set('x-tenant', tenant)
       reqHeaders.set('x-locale', locale)
       return NextResponse.rewrite(url, { request: { headers: reqHeaders } })
     }
 
+    // 2) Si el usuario pone explícitamente el slug del tenant en la URL pública,
+    //    lo limpiamos:
+    //    /{locale}/ElPatron/...  -> /{locale}/...
+    if (firstAfter === tenantLower) {
+      const rest = afterLocale.slice(1)
+      const url = req.nextUrl.clone()
+      url.pathname = rest.length
+        ? `/${locale}/${rest.join('/')}`
+        : `/${locale}/`
+      url.search = search
+      url.hash = hash
+      return NextResponse.redirect(url, 307)
+    }
+
+    // 3) Si intenta usar el slug de OTRO tenant → 404
+    const isKnownTenantSlug = STATIC_TOP_LEVEL_SLUGS.has(firstAfter)
+    if (isKnownTenantSlug && firstAfter !== tenantLower) {
+      const url = req.nextUrl.clone()
+      url.pathname = '/404'
+      const res = NextResponse.rewrite(url)
+      res.headers.set('Cache-Control', 'no-store')
+      res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+      return res
+    }
+
+    // 4) Cualquier otra ruta /{locale}/algo...
+    //    Se interpreta como página del tenant actual:
+    //    patronbarandgrill.com/es/encuestas
+    //      -> internamente /es/ElPatron/encuestas
+    //    Si esa página no existe, Next devolverá 404 (lo que quieres).
+    const url = req.nextUrl.clone()
+    const rest = afterLocale.join('/')
+    url.pathname = `/${locale}/${tenant}/${rest}`
     const reqHeaders = new Headers(req.headers)
     reqHeaders.set('x-tenant', tenant)
     reqHeaders.set('x-locale', locale)
-    return NextResponse.next({ request: { headers: reqHeaders } })
+    return NextResponse.rewrite(url, { request: { headers: reqHeaders } })
   }
 
-  // === Sin locale visible: decide locale y redirige a /{locale}/… (URL limpia, sin tenant) ===
+  // === Sin locale visible: decide locale y redirige a /{locale}/… ===
   const locale = pathname === '/' ? pickLocale(req) : DEFAULT_LOCALE
 
-  // kill-switch en destino
+  // kill-switch en destino (para la ruta con locale)
   const candidatePath = `/${locale}${pathname}`
   if (!isAdminOrWip(candidatePath)) {
     const enabled = await websiteEnabled()
@@ -254,7 +274,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // redirección i18n (la inserción de {tenant} se hace luego vía rewrite en el bloque de arriba)
   const url = req.nextUrl.clone()
   url.pathname = `/${locale}${pathname}`
   url.search = search
