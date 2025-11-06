@@ -48,21 +48,34 @@
     "all:patch": "npm run clean:deep && npm install && npm audit fix && npm run lint && npm run build:app && npm run postbuild && npm run release:patch && npm run dev",
     "all:minor": "npm run clean:deep && npm install && npm audit fix && npm run lint && npm run build:app && npm run postbuild && npm run release:minor && npm run dev",
     "all:major": "npm run clean:deep && npm install && npm audit fix && npm run lint && npm run build:app && npm run postbuild && npm run release:major && npm run dev",
-
-    "git:push:tags": "powershell -NoProfile -Command \"$b=(git rev-parse --abbrev-ref HEAD); git push -u origin $b; git push --tags\"",
-
+    
+    "all:ElPatron": "npm run clean:deep && npm audit fix && npm run env:use:ElPatron && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push:ElPatron --msg=%npm_config_msg% && npm run dev:ElPatron",
     "all:ElPatron:patch": "npm run clean:deep && npm audit fix && npm run env:use:ElPatron && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version patch && npm publish --access=restricted && npm run git:push:tags && npm run dev:ElPatron",
     "all:ElPatron:minor": "npm run clean:deep && npm audit fix && npm run env:use:ElPatron && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version minor && npm publish --access=restricted && npm run git:push:tags && npm run dev:ElPatron",
     "all:ElPatron:major": "npm run clean:deep && npm audit fix && npm run env:use:ElPatron && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version major && npm publish --access=restricted && npm run git:push:tags && npm run dev:ElPatron",
-
+    
+    "all:HTWindsor": "npm run clean:deep && npm audit fix && npm run env:use:HTWindsor && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push:HTWindsor --msg=%npm_config_msg% && npm run dev:HTWindsor",
     "all:HTWindsor:patch": "npm run clean:deep && npm audit fix && npm run env:use:HTWindsor && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version patch && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTWindsor",
     "all:HTWindsor:minor": "npm run clean:deep && npm audit fix && npm run env:use:HTWindsor && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version minor && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTWindsor",
     "all:HTWindsor:major": "npm run clean:deep && npm audit fix && npm run env:use:HTWindsor && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version major && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTWindsor",
 
+    "all:HTLeamington": "npm run clean:deep && npm audit fix && npm run env:use:HTLeamington && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push:HTLeamington --msg=%npm_config_msg% && npm run dev:HTLeamington",
     "all:HTLeamington:patch": "npm run clean:deep && npm audit fix && npm run env:use:HTLeamington && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version patch && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTLeamington",
     "all:HTLeamington:minor": "npm run clean:deep && npm audit fix && npm run env:use:HTLeamington && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version minor && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTLeamington",
-    "all:HTLeamington:major": "npm run clean:deep && npm audit fix && npm run env:use:HTLeamington && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version major && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTLeamington"
-},
+    "all:HTLeamington:major": "npm run clean:deep && npm audit fix && npm run env:use:HTLeamington && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version major && npm publish --access=restricted && npm run git:push:tags && npm run dev:HTLeamington",
+    
+    "all:nixinx": "npm run clean:deep && npm audit fix && npm run env:use:nixinx && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push:NIXINX --msg=%npm_config_msg% && npm run dev:nixinx",
+    "all:nixinx:patch": "npm run clean:deep && npm audit fix && npm run env:use:nixinx && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version patch && npm publish --access=restricted && npm run git:push:tags && npm run dev:nixinx",
+    "all:nixinx:minor": "npm run clean:deep && npm audit fix && npm run env:use:nixinx && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version minor && npm publish --access=restricted && npm run git:push:tags && npm run dev:nixinx",
+    "all:nixinx:major": "npm run clean:deep && npm audit fix && npm run env:use:nixinx && npm run typecheck && npm run lint && npm run build:app && npm run postbuild && npm run build:pkg && npm run git:push --msg=%npm_config_msg% && npm version major && npm publish --access=restricted && npm run git:push:tags && npm run dev:nixinx",
+
+    "git:push:tags": "powershell -NoProfile -Command \"$b=(git rev-parse --abbrev-ref HEAD); git push -u origin $b; git push --tags\"",
+    "git:push:NIXINX": "powershell -NoProfile -Command \"$msg=$env:npm_config_msg; if ([string]::IsNullOrWhiteSpace($msg)){$msg='General Adjustments'}; git status; git add -A; git commit -m \\\"$msg\\\" 2>$null; git push -u origin HEAD:NIXINX\"",
+    "git:push:ElPatron": "powershell -NoProfile -Command \"$msg=$env:npm_config_msg; if ([string]::IsNullOrWhiteSpace($msg)){$msg='General Adjustments'}; git status; git add -A; git commit -m \\\"$msg\\\" 2>$null; git push -u origin HEAD:ElPatron\"",
+    "git:push:HTWindsor": "powershell -NoProfile -Command \"$msg=$env:npm_config_msg; if ([string]::IsNullOrWhiteSpace($msg)){$msg='General Adjustments'}; git status; git add -A; git commit -m \\\"$msg\\\" 2>$null; git push -u origin HEAD:HTWindsor\"",
+    "git:push:HTLeamington": "powershell -NoProfile -Command \"$msg=$env:npm_config_msg; if ([string]::IsNullOrWhiteSpace($msg)){$msg='General Adjustments'}; git status; git add -A; git commit -m \\\"$msg\\\" 2>$null; git push -u origin HEAD:HTLeamington\""
+    
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [

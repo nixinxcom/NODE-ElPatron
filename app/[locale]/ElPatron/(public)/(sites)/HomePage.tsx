@@ -97,7 +97,7 @@ export default function HomePage() {
 
         <section>
           <div className={`relative z-10 ${styles.padXSm}`}>
-            <H1 className={` ${styles.heroTitle} drop-shadow-lg`}>
+            <H1 className={` ${styles.heroTitle} drop-shadow-lg`}>jahsdlkfjhaklfghlkjdsfhg
               <FM id="home.hero.title" defaultMessage="Auténtica experiencia mexicana, sabor que conecta." />
             </H1>
             <P className={styles.heroSubtitle}>
