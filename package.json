@@ -32,7 +32,6 @@
     "trigger:all": "npm run trigger:nixinx && npm run trigger:elpatron && npm run trigger:htwindsor && npm run trigger:htleamington",
     "deploy:all": "npm run github && npm run trigger:all",
 
-
     "env": "node -e \"const fs=require('fs');const e=process.env.npm_config_env; if(!e){console.error('Falta parametro --env=<Name> (ej: --env=NIXINX)');process.exit(1);} const s='.env.'+e+'.local'; const d='.env.local'; if(!fs.existsSync(s)){console.error('No existe '+s);process.exit(1);} fs.copyFileSync(s,d); console.log('Using '+s+' -> '+d);\"",
     "env:NIXINX": "npm run env -- --env=NIXINX",
     "env:ElPatron": "npm run env -- --env=ElPatron",
