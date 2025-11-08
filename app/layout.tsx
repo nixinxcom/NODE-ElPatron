@@ -16,6 +16,7 @@ import ThemeProviders from "./providers/ThemeProviders";
 import BrandingCacheHydrator from "@/app/providers/BrandingCacheHydrator";
 import { getBssEffectiveCached } from '@/app/lib/bss/server';
 import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // 1) Metadata global para toda la app (usa tus defaults y, si tienes, FS/meta_*).
 export const generateMetadata = withSitesLayoutMetadata();
@@ -184,6 +185,7 @@ export default async function RootLayout({
         <Suspense fallback={null}>
           {/* Disparo de page_view SPA y Providers (se mantienen tal cual) */}
           <GTMProvider>
+            <SpeedInsights/>
             <ContextProvider
               initialLocale={locale}
               initialBranding={branding}
