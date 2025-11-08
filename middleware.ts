@@ -25,48 +25,46 @@ const IGNORED_PREFIXES = [
 const DEFAULT_TENANT = process.env.NEXT_PUBLIC_FIREBASE_DEFAULT_TENANT || 'nixinx'
 
 const TENANT_BY_HOST: Record<string, string> = {
-  // Producción
+  // NIXINX.COM (zona comercial fija)
   'nixinx.com': 'NIXINX',
   'www.nixinx.com': 'NIXINX',
-
-  'patronbarandgrill.com': 'ElPatron',
-  'www.patronbarandgrill.com': 'ElPatron',
-
-  'hottacosrestaurant.ca': 'HTWindsor',
-  'www.hottacosrestaurant.ca': 'HTWindsor',
-
-  'hottacosrestaurant.com': 'HTLeamington',
-  'www.hottacosrestaurant.com': 'HTLeamington',
-
-  // Desarrollo: puertos dedicados
   'localhost:3001': 'NIXINX',
   '127.0.0.1:3001': 'NIXINX',
 
+  // Clientes
+  'patronbarandgrill.com': 'ElPatron',
+  'www.patronbarandgrill.com': 'ElPatron',
   'localhost:3002': 'ElPatron',
   '127.0.0.1:3002': 'ElPatron',
 
+  'hottacosrestaurant.ca': 'HTWindsor',
+  'www.hottacosrestaurant.ca': 'HTWindsor',
   'localhost:3003': 'HTWindsor',
   '127.0.0.1:3003': 'HTWindsor',
 
+  'hottacosrestaurant.com': 'HTLeamington',
+  'www.hottacosrestaurant.com': 'HTLeamington',
   'localhost:3004': 'HTLeamington',
   '127.0.0.1:3004': 'HTLeamington',
-}
+};
 
 function getTenantForHost(req: NextRequest): string | null {
-  const host = (req.headers.get('host') || '').toLowerCase()
+  const host = (req.headers.get('host') || '').toLowerCase();
 
-  // Core / multi-tenant
+  // Zona organización (.org / 3000): aquí el tenant viene del path [tenant], no del host
   if (
-    host === 'localhost:3000' ||
-    host === '127.0.0.1:3000' ||
     host === 'nixinx.org' ||
-    host === 'www.nixinx.org'
+    host === 'www.nixinx.org' ||
+    host === 'localhost:3000' ||
+    host === '127.0.0.1:3000'
   ) {
-    return null
+    return null;
   }
 
-  return TENANT_BY_HOST[host] || DEFAULT_TENANT
+  // Zona comercial + clientes: host fija el tenant
+  return TENANT_BY_HOST[host] ?? null;
 }
+
 
 // slugs de tenants conocidos (minúsculas)
 const STATIC_TOP_LEVEL_SLUGS = new Set<string>([
@@ -263,12 +261,12 @@ export async function middleware(req: NextRequest) {
 
     // 3) /{locale}/{OtroTenant}/... -> 404
     if (isKnownTenantSlug && firstAfter !== tenantLower) {
-      const url = req.nextUrl.clone()
-      url.pathname = `/${locale}/not-found`
-      const res = NextResponse.rewrite(url)
-      res.headers.set('Cache-Control', 'no-store')
-      res.headers.set('X-Robots-Tag', 'noindex, nofollow')
-      return res
+      const url = req.nextUrl.clone();
+      url.pathname = `/${locale}/not-found`;
+      const res = NextResponse.rewrite(url, { status: 404 });
+      res.headers.set('Cache-Control', 'no-store');
+      res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+      return res;
     }
 
     // 4) Resto: /{locale}/algo -> interno /{locale}/{tenant}/algo
