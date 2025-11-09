@@ -26,7 +26,7 @@ jobs:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
           git remote remove NODE-HTLeamington 2>/dev/null || true
-          git remote add NODE-HTLeamington https://x-access-token:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
+          git remote add NODE-HTLeamington https://${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
           git push NODE-HTLeamington HEAD:main --force
 
       - name: Sync NODE-HTWindsor
@@ -34,7 +34,7 @@ jobs:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
           git remote remove NODE-HTWindsor 2>/dev/null || true
-          git remote add NODE-HTWindsor https://x-access-token:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
+          git remote add NODE-HTWindsor https://${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
           git push NODE-HTWindsor HEAD:main --force
 
       - name: Sync NODE-ElPatron
@@ -42,5 +42,5 @@ jobs:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
           git remote remove NODE-ElPatron 2>/dev/null || true
-          git remote add NODE-ElPatron https://x-access-token:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
+          git remote add NODE-ElPatron https://${PAT}@github.com/nixinxcom/NODE-ElPatron.git
           git push NODE-ElPatron HEAD:main --force
