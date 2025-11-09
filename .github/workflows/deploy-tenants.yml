@@ -24,3 +24,14 @@ jobs:
       - name: Trigger Patron Bar & Grill
         run: curl -X POST "${{ secrets.VERCEL_HOOK_PATRON }}"
 
+  deploy-htwindsor-com:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger HT Windsor
+        run: curl -X POST "${{ secrets.VERCEL_HOOK_HTWINDSOR }}"
+
+  deploy-htleamington-com:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Hot Tacos CA
+        run: curl -X POST "${{ secrets.VERCEL_HOOK_HOTLEAMINGTON }}"
