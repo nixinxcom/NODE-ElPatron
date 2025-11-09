@@ -1,0 +1,115 @@
+.page {
+  min-height: 100vh;
+  padding: 3rem 1.5rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #f6fff6;
+  background: radial-gradient(circle at top, #122416 0, #050806 70%);
+}
+
+.hero {
+  margin-bottom: 3rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: rgba(143, 239, 98, 0.12);
+  color: #8fef62;
+}
+
+.hero h1 {
+  font-size: 2.7rem;
+  margin: 0.6rem 0;
+  color: #8fef62; /* verde Leamington */
+}
+
+.hero p {
+  max-width: 32rem;
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.primary,
+.secondary {
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+}
+
+.primary {
+  background: #8fef62;
+  color: #061108;
+}
+
+.primary:hover {
+  background: #a4ff79;
+}
+
+.secondary {
+  background: transparent;
+  color: #8fef62;
+  border-color: rgba(143, 239, 98, 0.4);
+}
+
+.secondary:hover {
+  background: rgba(143, 239, 98, 0.08);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.grid h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.grid li {
+  margin-bottom: 0.3rem;
+}
+
+.grid li::before {
+  content: '• ';
+  color: #8fef62;
+}
+
+.visit {
+  border-top: 1px solid rgba(143, 239, 98, 0.18);
+  padding-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.map {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #8fef62;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  font-size: 0.85rem;
+}
