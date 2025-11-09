@@ -2,34 +2,63 @@ name: Sync NODE repos
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  sync-nodes:
+  sync-node-htleamington:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_USER: nixinxcom
-      PAT: ${{ secrets.NODES_SYNC_TOKEN }}
-
     steps:
       - name: Checkout NIXINX core
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Sync NODE-HTLeamington
+      - name: Test PAT access (HTLeamington)
+        env:
+          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote remove NODE-HTLeamington || true
-          git remote add NODE-HTLeamington https://${GITHUB_USER}:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
-          git push NODE-HTLeamington main:main --force
+          if [ -z "$PAT" ]; then
+            echo "ERROR: NODES_SYNC_TOKEN vacío."
+            exit 1
+          fi
+          echo "Probando acceso al repo privado..."
+          curl -s -o /dev/null -w "%{http_code}\n" \
+            -H "Authorization: Bearer $PAT" \
+            https://api.github.com/repos/nixinxcom/NODE-HTLeamington
 
-      - name: Sync NODE-HTWindsor
+      - name: Push to NODE-HTLeamington
+        env:
+          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote remove NODE-HTWindsor || true
-          git remote add NODE-HTWindsor https://${GITHUB_USER}:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
-          git push NODE-HTWindsor main:main --force
+          git remote remove node-htleamington >/dev/null 2>&1 || true
+          git remote add node-htleamington https://x-access-token:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
+          git push node-htleamington main:main --force
 
-      - name: Sync NODE-ElPatron
+  sync-node-htwindsor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to NODE-HTWindsor
+        env:
+          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote remove NODE-ElPatron || true
-          git remote add NODE-ElPatron https://${GITHUB_USER}:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
-          git push NODE-ElPatron main:main --force
+          git remote remove node-htwindsor >/dev/null 2>&1 || true
+          git remote add node-htwindsor https://x-access-token:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
+          git push node-htwindsor main:main --force
+
+  sync-node-elpatron:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to NODE-ElPatron
+        env:
+          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
+        run: |
+          git remote remove node-elpatron >/dev/null 2>&1 || true
+          git remote add node-elpatron https://x-access-token:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
+          git push node-elpatron main:main --force
