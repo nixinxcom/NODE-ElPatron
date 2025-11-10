@@ -1,0 +1,22 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/nixinxcom/NIXINX.git
+	fetch = +refs/*:refs/*
+	mirror = true
+[remote "NODE-ElPatron"]
+	url = https://x-access-token:<TU_TOKEN_AQUI>@github.com/nixinxcom/NODE-ElPatron.git
+	fetch = +refs/heads/*:refs/remotes/NODE-ElPatron/*
+[remote "NODE-HTLeamington"]
+	url = https://x-access-token:<TU_TOKEN_AQUI>@github.com/nixinxcom/NODE-HTLeamington.git
+	fetch = +refs/heads/*:refs/remotes/NODE-HTLeamington/*
+[remote "NODE-HTWindsor"]
+	url = https://x-access-token:<TU_TOKEN_AQUI>@github.com/nixinxcom/NODE-HTWindsor.git
+	fetch = +refs/heads/*:refs/remotes/NODE-HTWindsor/*
+[remote "node-htleamington"]
+	url = https://github.com/nixinxcom/NODE-HTLeamington.git
+	fetch = +refs/heads/*:refs/remotes/node-htleamington/*

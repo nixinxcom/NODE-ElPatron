@@ -8,7 +8,11 @@ on:
 jobs:
   mirror-sync:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout dummy
+        run: echo "No checkout needed for mirror push"
+
       - name: Clone bare mirror
         run: |
           git clone --mirror https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NIXINX.git repo-mirror
