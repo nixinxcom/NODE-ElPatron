@@ -24,31 +24,31 @@ jobs:
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote remove htl || true
-          git remote add htl https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
+          git remote add htl https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git || true
           git push htl main:main --force
 
       - name: Trigger deploy - HTLeamington
-        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_NODE_HTLeamington }}"
+        run: |
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_NODE_HTLEAMINGTON }}
 
       - name: Push to NODE-HTWindsor
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote remove htw || true
-          git remote add htw https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
+          git remote add htw https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git || true
           git push htw main:main --force
 
       - name: Trigger deploy - HTWindsor
-        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_NODE_HTWindsor }}"
+        run: |
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_NODE_HTWINDSOR }}
 
       - name: Push to NODE-ElPatron
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote remove ep || true
-          git remote add ep https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
+          git remote add ep https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git || true
           git push ep main:main --force
 
       - name: Trigger deploy - ElPatron
-        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_NODE_ElPatron }}"
+        run: |
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_NODE_ELPATRON }}
