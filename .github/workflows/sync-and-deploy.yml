@@ -1,4 +1,4 @@
-name: Sync and Deploy NODE Clients
+name: Sync NODE Clients
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-and-deploy:
+  sync-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout NIXINX
+      - name: Checkout main repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -20,35 +20,23 @@ jobs:
           git config user.name "nixinx-sync-bot"
           git config user.email "sync-bot@noreply.github.com"
 
-      - name: Push to NODE-HTWindsor
-        env:
-          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
-        run: |
-          git remote add htw https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
-          git push htw main:main --force
-
-      - name: Trigger deploy - HTWindsor
-        run: |
-          curl -X POST ${{ secrets.VERCEL_DEPLOY_NODE_HTWINDSOR }}
-
       - name: Push to NODE-HTLeamington
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add htl https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
-          git push htl main:main --force
+          git remote add node-htleamington https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
+          git push node-htleamington main --force
 
-      - name: Trigger deploy - HTLeamington
+      - name: Push to NODE-HTWindsor
+        env:
+          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          curl -X POST ${{ secrets.VERCEL_DEPLOY_NODE_HTLEAMINGTON }}
+          git remote add node-htwindsor https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
+          git push node-htwindsor main --force
 
       - name: Push to NODE-ElPatron
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add ep https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
-          git push ep main:main --force
-
-      - name: Trigger deploy - ElPatron
-        run: |
-          curl -X POST ${{ secrets.VERCEL_DEPLOY_NODE_ELPATRON }}
+          git remote add node-elpatron https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
+          git push node-elpatron main --force
