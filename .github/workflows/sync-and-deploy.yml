@@ -1,4 +1,4 @@
-name: Sync NODE repos
+name: Sync NODE repos and deploy
 
 on:
   push:
@@ -6,34 +6,31 @@ on:
       - main
 
 jobs:
-  sync:
+  sync-nodes:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout main repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Git
+      - name: Mirror push to NODE-HTLeamington
         run: |
-          git config --global user.email "sync@nixinx.com"
-          git config --global user.name "NIXINX Sync Bot"
+          git clone --mirror https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NIXINX.git
+          cd NIXINX.git
+          git remote add target https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NODE-HTLeamington.git
+          git push --mirror target
 
-      - name: Sync to NODE-ElPatron
+      - name: Mirror push to NODE-HTWindsor
         run: |
-          echo "🔁 Syncing NODE-ElPatron..."
-          git remote add node-elpatron https://nixinxcom:${{ secrets.PAT }}@github.com/nixinxcom/NODE-ElPatron.git
-          git push node-elpatron HEAD:main --force
+          git clone --mirror https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NIXINX.git
+          cd NIXINX.git
+          git remote add target https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NODE-HTWindsor.git
+          git push --mirror target
 
-      - name: Sync to NODE-HTWindsor
+      - name: Mirror push to NODE-ElPatron
         run: |
-          echo "🔁 Syncing NODE-HTWindsor..."
-          git remote add node-htwindsor https://nixinxcom:${{ secrets.PAT }}@github.com/nixinxcom/NODE-HTWindsor.git
-          git push node-htwindsor HEAD:main --force
-
-      - name: Sync to NODE-HTLeamington
-        run: |
-          echo "🔁 Syncing NODE-HTLeamington..."
-          git remote add node-htleamington https://nixinxcom:${{ secrets.PAT }}@github.com/nixinxcom/NODE-HTLeamington.git
-          git push node-htleamington HEAD:main --force
+          git clone --mirror https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NIXINX.git
+          cd NIXINX.git
+          git remote add target https://x-access-token:${{ secrets.PAT }}@github.com/nixinxcom/NODE-ElPatron.git
+          git push --mirror target
