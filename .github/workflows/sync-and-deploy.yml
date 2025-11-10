@@ -2,41 +2,32 @@ name: Sync NODE Clients
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
+
+permissions:
+  contents: write
 
 jobs:
-  sync-and-push:
+  sync-repos:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout main repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Git identity
-        run: |
-          git config user.name "nixinx-sync-bot"
-          git config user.email "sync-bot@noreply.github.com"
+      - name: Checkout source repo
+        uses: actions/checkout@v3
 
       - name: Push to NODE-HTLeamington
-        env:
-          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add node-htleamington https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
+          git config --global user.email "nixinxcom@users.noreply.github.com"
+          git config --global user.name "nixinxcom"
+          git remote add node-htleamington https://nixinxcom:${{ secrets.NODES_SYNC_TOKEN }}@github.com/nixinxcom/NODE-HTLeamington.git
           git push node-htleamington main --force
 
       - name: Push to NODE-HTWindsor
-        env:
-          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add node-htwindsor https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
+          git remote add node-htwindsor https://nixinxcom:${{ secrets.NODES_SYNC_TOKEN }}@github.com/nixinxcom/NODE-HTWindsor.git
           git push node-htwindsor main --force
 
       - name: Push to NODE-ElPatron
-        env:
-          PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add node-elpatron https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
+          git remote add node-elpatron https://nixinxcom:${{ secrets.NODES_SYNC_TOKEN }}@github.com/nixinxcom/NODE-ElPatron.git
           git push node-elpatron main --force
