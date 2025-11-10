@@ -24,7 +24,7 @@ jobs:
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add htl https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git || true
+          git remote add htl https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git
           git push htl main:main --force
 
       - name: Trigger deploy - HTLeamington
@@ -35,7 +35,7 @@ jobs:
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add htw https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git || true
+          git remote add htw https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git
           git push htw main:main --force
 
       - name: Trigger deploy - HTWindsor
@@ -46,7 +46,7 @@ jobs:
         env:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
-          git remote add ep https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git || true
+          git remote add ep https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git
           git push ep main:main --force
 
       - name: Trigger deploy - ElPatron
