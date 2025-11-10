@@ -25,6 +25,7 @@ jobs:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
           set -e
+          git remote add node-htleamington "https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTLeamington.git"
           git push node-htleamington main:main --force
 
       - name: Sync NODE-HTWindsor
@@ -32,6 +33,7 @@ jobs:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
           set -e
+          git remote add node-htwindsor "https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-HTWindsor.git"
           git push node-htwindsor main:main --force
 
       - name: Sync NODE-ElPatron
@@ -39,4 +41,5 @@ jobs:
           PAT: ${{ secrets.NODES_SYNC_TOKEN }}
         run: |
           set -e
+          git remote add node-elpatron "https://nixinxcom:${PAT}@github.com/nixinxcom/NODE-ElPatron.git"
           git push node-elpatron main:main --force
