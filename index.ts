@@ -67,6 +67,8 @@ export { default as GalleryComponent } from "./complements/components/GalleryCom
 export { default as HeroEventsCarousel } from "./complements/components/HeroEventsCarousel/HeroEventsCarousel";
 export { HoldComp, Success, Failed } from "./complements/components/HoldComp/HoldComp";
 export { default as InstallPWAComp } from "./complements/components/InstallPWAComp/InstallPWAComp";
+export { NewNotification } from "@/complements/components/Notifications/NewNotification";
+
 
 // i18n switcher (alias doble para evitar rupturas)
 export { default as InterComp } from "./complements/components/InterComp/InterComp";
@@ -91,6 +93,7 @@ export { default as ThemeToggle } from "./complements/components/ThemeToggle/The
 export { default as AdminGuard } from "./complements/admin/AdminGuard";
 export { default as SuperAdminOnly } from "./complements/admin/SuperAdminOnly";
 export { hasNotificationsFaculty } from "./app/lib/notifications/config";
+export { sendNotification } from "@/app/lib/notifications/client";
 
 // FM (wrapper de react-intl)
 export { default as CoreShell } from "./complements/shell/CoreShell";

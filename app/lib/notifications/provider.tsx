@@ -1,3 +1,4 @@
+// app/lib/notifications/provider.tsx
 "use client";
 
 import {
@@ -81,9 +82,9 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     console.log("[NIXINX][Notifications] enabled =", enabled);
   }
 
-  const [permission, setPermission] = useState<NotificationPermission>(
-    typeof window !== "undefined" ? Notification.permission : "default"
-  );
+  // 🔴 Antes: dependía de window en el estado inicial -> mismatch SSR/CSR
+  // 🟢 Ahora: mismo valor inicial en server y client; se sincroniza en useEffect.
+  const [permission, setPermission] = useState<NotificationPermission>("default");
   const [token, setToken] = useState<string>();
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [unread, setUnread] = useState(0);
@@ -93,6 +94,11 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return;
 
     let cancelled = false;
+
+    // Sincronizar permiso real del navegador al montar
+    if ("Notification" in window) {
+      setPermission(Notification.permission);
+    }
 
     (async () => {
       try {
@@ -130,9 +136,9 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
 
     async function obtainAndSendToken(swReg: ServiceWorkerRegistration) {
       try {
-        const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
+        const vapidKey = process.env.NEXT_PUBLIC_FBCLOUD_MESSAGES_VAPID_KEY;
         if (!vapidKey) {
-          console.warn("[nixinx:push] Falta NEXT_PUBLIC_FIREBASE_VAPID_KEY");
+          console.warn("[nixinx:push] Falta NEXT_PUBLIC_FBCLOUD_MESSAGES_VAPID_KEY");
           return;
         }
         const messaging = getMessaging(Firebase);
@@ -142,6 +148,7 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
         });
         if (!t || cancelled) return;
         setToken(t);
+        console.log("[nixinx:push] token FCM obtenido", t);
 
         await fetch("/api/push/subscribe", {
           method: "POST",

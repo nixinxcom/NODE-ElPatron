@@ -1,34 +1,23 @@
-// app/[locale]/notificaciones/page.tsx  (o donde la tengas)
 "use client";
 
-import { useNotifications } from "@/app/lib/notifications/provider";
+import { NewNotification } from "@/complements/components/Notifications/NewNotification";
 
-export default function NotificacionesDemo() {
-  const ctx = useNotifications();
-
+export default function NotificacionesPage() {
   return (
-    <div className="p-6 text-zinc-100 space-y-4">
-      <h1 className="text-xl font-semibold">Debug Notificaciones</h1>
-      <pre className="text-xs bg-black/60 border border-white/10 rounded p-3">
-        {JSON.stringify(ctx, null, 2)}
-      </pre>
+    <main className="p-6 text-zinc-100 space-y-4">
+      <h1 className="text-xl font-semibold">Demo de Notificaciones</h1>
+      <p className="text-sm text-zinc-300">
+        Presiona el botón para enviar una notificación de prueba a todos los dispositivos suscritos de este sitio.
+      </p>
 
-      {ctx.enabled ? (
-        <>
-          <p>Permiso del navegador: {ctx.permission}</p>
-          <p>No leídas: {ctx.unread}</p>
-          <button
-            onClick={ctx.requestPermission}
-            className="px-4 py-2 rounded border border-white/40 hover:bg-white/10"
-          >
-            Activar notificaciones
-          </button>
-        </>
-      ) : (
-        <p className="text-red-400">
-          Notificaciones desactivadas según facultad efectiva.
-        </p>
-      )}
-    </div>
+      <NewNotification
+        label="Enviar notificación de prueba"
+        title="Test NIXINX"
+        body="Esto es una prueba de notificaciones desde NIXINX Core."
+        target={{ type: "broadcast" }}
+        clickAction="/es/notificaciones"
+        data={{ source: "demo-notificaciones" }}
+      />
+    </main>
   );
 }
