@@ -42,6 +42,7 @@ export const SeedMetaSite   = metaSite;
 // Providers
 // ────────────────────
 export { default as Providers } from "./app/ui/providers";
+export { NotificationsProvider, useNotifications } from "./app/lib/notifications/provider";
 
 // ────────────────────
 // Interfaces
@@ -89,6 +90,7 @@ export { default as ThemeToggle } from "./complements/components/ThemeToggle/The
 // ────────────────────
 export { default as AdminGuard } from "./complements/admin/AdminGuard";
 export { default as SuperAdminOnly } from "./complements/admin/SuperAdminOnly";
+export { hasNotificationsFaculty } from "./app/lib/notifications/config";
 
 // FM (wrapper de react-intl)
 export { default as CoreShell } from "./complements/shell/CoreShell";

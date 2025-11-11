@@ -16,7 +16,8 @@ import ThemeProviders from "./providers/ThemeProviders";
 import BrandingCacheHydrator from "@/app/providers/BrandingCacheHydrator";
 import { getBssEffectiveCached } from '@/app/lib/bss/server';
 import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { NotificationsProvider } from "@/app/lib/notifications/provider";
 
 // 1) Metadata global para toda la app (usa tus defaults y, si tienes, FS/meta_*).
 export const generateMetadata = withSitesLayoutMetadata();
@@ -194,51 +195,53 @@ export default async function RootLayout({
               <ThemeProviders>
                 <BrandingCacheHydrator/> 
                 <AuthProvider>
-                  <InterComp
-                    Langs={[
-                      {
-                        language: "Español",
-                        locale: "es",
-                        icon: "/Icons/MXNIcon.png",
-                        country: "MXN",
-                        alt: "Español",
-                        prioritario: true,
-                        width: 40,
-                        height: 40,
-                        fill: false,
-                      },
-                      {
-                        language: "English",
-                        locale: "en",
-                        icon: "/Icons/USAIcon.png",
-                        country: "USA",
-                        alt: "English",
-                        prioritario: true,
-                        width: 40,
-                        height: 40,
-                        fill: false,
-                      },
-                      {
-                        language: "French",
-                        locale: "fr",
-                        icon: "/Icons/CADIcon.png",
-                        country: "FR",
-                        alt: "French",
-                        prioritario: true,
-                        width: 40,
-                        height: 40,
-                        fill: false,
-                      },
-                    ]}
-                    Position="fixed"
-                    BackgroundColor="black"
-                    Bottom="1rem"
-                    Left="7px"
-                    ShowLangs="oneBYone"
-                  />
-                  <AppHydrators />
-                  {children}
-                  <Analytics />
+                  <NotificationsProvider>
+                    <InterComp
+                      Langs={[
+                        {
+                          language: "Español",
+                          locale: "es",
+                          icon: "/Icons/MXNIcon.png",
+                          country: "MXN",
+                          alt: "Español",
+                          prioritario: true,
+                          width: 40,
+                          height: 40,
+                          fill: false,
+                        },
+                        {
+                          language: "English",
+                          locale: "en",
+                          icon: "/Icons/USAIcon.png",
+                          country: "USA",
+                          alt: "English",
+                          prioritario: true,
+                          width: 40,
+                          height: 40,
+                          fill: false,
+                        },
+                        {
+                          language: "French",
+                          locale: "fr",
+                          icon: "/Icons/CADIcon.png",
+                          country: "FR",
+                          alt: "French",
+                          prioritario: true,
+                          width: 40,
+                          height: 40,
+                          fill: false,
+                        },
+                      ]}
+                      Position="fixed"
+                      BackgroundColor="black"
+                      Bottom="1rem"
+                      Left="7px"
+                      ShowLangs="oneBYone"
+                    />
+                    <AppHydrators />
+                    {children}
+                    <Analytics />
+                  </NotificationsProvider>
                 </AuthProvider>
               </ThemeProviders>
             </ContextProvider>

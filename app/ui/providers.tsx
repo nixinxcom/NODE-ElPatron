@@ -7,6 +7,7 @@ import { ContextProvider } from '@/context/AppContext';
 import ThemeProviders from '@/app/providers/ThemeProviders';
 import BrandingCacheHydrator from '@/app/providers/BrandingCacheHydrator';
 import { AuthProvider } from '@/complements/components/AuthenticationComp/AuthContext';
+import { NotificationsProvider } from '@/app/lib/notifications/provider';
 
 // Tipamos por inferencia desde tu propio ContextProvider
 type AppProviderProps = React.ComponentProps<typeof ContextProvider>;
@@ -29,7 +30,11 @@ export function CoreProviders({
       >
         <ThemeProviders>
           <BrandingCacheHydrator />
-          <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <NotificationsProvider>
+                {children}
+              </NotificationsProvider>
+            </AuthProvider>
         </ThemeProviders>
       </ContextProvider>
     </GTMProvider>
