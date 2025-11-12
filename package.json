@@ -1,6 +1,6 @@
 {
   "name": "@nixinx/core",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "private": false,
   "publishConfig": {
     "access": "restricted",
@@ -51,7 +51,7 @@
     "release:major:dev": "powershell -NoProfile -Command \"$branch=(git rev-parse --abbrev-ref HEAD); if ($branch -ne 'main') { git switch main }; git pull --rebase origin main; npm run build:pkg; npm version major; git push origin main; git push --tags; npm publish --access=restricted\" && npm run start",
     "all:main:dev": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run github && npm run dev",
     "all:main:start": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run github && npm run start",
-    "all:main:patch": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:patch",
+    "all:main:patch": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:patch:dev",
     "all:main:minor": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:minor",
     "all:main:major": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:major"
   },
