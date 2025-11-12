@@ -49,13 +49,13 @@ export default function AdminHome() {
       href: L('/admin/CloudQueries'),
       enabled: true,
     },
-    // {
-    //   key: 'posts',
-    //   title: <FM id="posts.title" defaultMessage="Publicaciones" />,
-    //   desc: <FM id="posts.description" defaultMessage="Gestionar posts / noticias" />,
-    //   href: L('/admin/Publicaciones'),
-    //   enabled: true,
-    // },
+    {
+      key: 'posts',
+      title: <FM id="posts.title" defaultMessage="Publicaciones" />,
+      desc: <FM id="posts.description" defaultMessage="Gestionar posts / noticias" />,
+      href: L('/admin/Publicaciones'),
+      enabled: true,
+    },
   ];
 
   return (

@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, setDoc, serverTimestamp, Timestamp, collection, addDoc, getDocs, updateDoc, deleteDoc,  } from 'firebase/firestore';
 import { FbDB } from '@/app/lib/services/firebase';
-import type { Agreement, Faculties } from '@/app/lib/agreements/types';
+import type { Agreement, Contracted } from '@/app/lib/agreements/types';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import FM from '../i18n/FM';
 import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
@@ -37,7 +37,7 @@ function dateInputFromTs(t: Timestamp | null | undefined) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-const defaultFaculties: Faculties = {
+const defaultContracted: Contracted = {
   adminPanel: false,
   adminzone: true,
   adsense: true,
@@ -66,7 +66,7 @@ const emptyAgreement: Agreement = {
   LegalName: '',
   admins: [],
   domain: '',
-  faculties: { ...defaultFaculties },
+  contracted: { ...defaultContracted },
   license: {
     active: true,
     clientid: '',
@@ -105,7 +105,7 @@ export default function AgreementTab() {
         setForm({
           ...emptyAgreement,
           ...data,
-          faculties: { ...defaultFaculties, ...(data.faculties || {}) },
+          contracted: { ...defaultContracted, ...(data.contracted || {}) },
         });
         setAdminsText((data.admins || []).join(', '));
         setLoaded('existing');
@@ -119,8 +119,8 @@ export default function AgreementTab() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docId]);
 
-  const onToggle = (key: keyof Faculties) =>
-    setForm(prev => ({ ...prev, faculties: { ...prev.faculties, [key]: !prev.faculties[key] } }));
+  const onToggle = (key: keyof Contracted) =>
+    setForm(prev => ({ ...prev, Contracted: { ...prev.contracted, [key]: !prev.contracted[key] } }));
 
   async function onSave() {
     setStatus('');
@@ -219,15 +219,15 @@ export default function AgreementTab() {
         </LABEL>
       </section>
 
-      {/* Facultades */}
+      {/* Contracted */}
       <section className="space-y-2">
-        <H2 className="font-medium">Faculties</H2>
+        <H2 className="font-medium">Contracted</H2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-          {(Object.keys(form.faculties) as (keyof Faculties)[]).map(k => (
+          {(Object.keys(form.contracted) as (keyof Contracted)[]).map(k => (
             <LABEL key={String(k)} className="inline-flex items-center gap-2">
               <INPUT
                 type="checkbox"
-                checked={!!form.faculties[k]}
+                checked={!!form.contracted[k]}
                 onChange={() => onToggle(k)}
               />
               <SPAN className="text-sm">{String(k)}</SPAN>

@@ -1,7 +1,7 @@
 // app/lib/agreements/types.ts
 import type { Timestamp } from "firebase/firestore";
 
-export type Faculties = {
+export type Contracted = {
   adminPanel: boolean;
   adminzone: boolean;
   adsense: boolean;
@@ -38,7 +38,7 @@ export interface Agreement {
   LegalName: string;
   admins: string[];
   domain: string;
-  faculties: Faculties;
+  contracted: Contracted;
   license: LicenseInfo;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;

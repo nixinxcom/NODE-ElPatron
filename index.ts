@@ -95,6 +95,12 @@ export { default as SuperAdminOnly } from "./complements/admin/SuperAdminOnly";
 export { hasNotificationsFaculty } from "./app/lib/notifications/config";
 export { sendNotification } from "@/app/lib/notifications/client";
 
+// ────────────────────
+// EndPoints
+// ────────────────────
+export { fetchFaculties, canUseFaculty, type FacultyKey, } from "./lib/sdk/facultiesClient";
+
+
 // FM (wrapper de react-intl)
 export { default as CoreShell } from "./complements/shell/CoreShell";
 export { default as FM } from "./complements/i18n/FM";

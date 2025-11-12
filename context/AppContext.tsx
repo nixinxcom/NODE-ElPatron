@@ -24,22 +24,17 @@ export interface AppThemeAPI {
 type UIString = string | JSX.Element; // acepta <FM /> o string por defecto
 
 export interface iAppContext {
-  // Locale global
   Locale: string;
   setLocale: (locale: string) => void;
-  // Datos efectivos (única fuente de verdad: loaders FS > JSON > TSX)
   Branding: iBranding<UIString>;
   setBranding: React.Dispatch<React.SetStateAction<iBranding<UIString>>>;
   Settings: iSettings | undefined;
   setSettings: React.Dispatch<React.SetStateAction<iSettings | undefined>>;
   Styles: StylesDoc | undefined;
   setStyles: React.Dispatch<React.SetStateAction<StylesDoc | undefined>>;
-  // Tema (derivado de Settings + atributo SSR data-theme)
   Theme: AppThemeAPI;
-  // Estado de autenticación “funcional”
   Authenticated: boolean;
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  // UI flags (nombres preservados)
   HideHeaderFooter: boolean;
   setHideHeaderFooter: React.Dispatch<React.SetStateAction<boolean>>;
   ShowFloatingWidget: boolean;
@@ -50,11 +45,9 @@ export interface iAppContext {
   setAiExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   AiInput: string;
   setAiInput: React.Dispatch<React.SetStateAction<string>>;
-  // SignAuth + compat formal (no “parche”, API estable)
   User: User | null;
   setUserState: (u: User | null) => void;
   userState: { User: User | null; setUserState: (u: User | null) => void };
-  // Helpers de auth integrados
   SignAuth: {
     user: User | null;
     signIn: () => Promise<void>;
