@@ -27,8 +27,7 @@ import { resolveFMToStrings } from '@/complements/utils/resolveFM';
 import { getI18nEffective } from '@/complements/data/i18nFS';
 import { toShortLocale, DEFAULT_LOCALE_SHORT } from '@/app/lib/i18n/locale';
 import { useAppContext } from '@/context/AppContext';
-import { Settings } from 'lucide-react';
-import { BUTTON, LINK, NEXTIMAGE, IMAGE, DIV, INPUT, SELECT, LABEL, SPAN, SPAN1, SPAN2, A, B, P, H1, H2, H3, H4, H5, H6 } from "@/complements/components/ui/wrappers";
+import { BUTTON, INPUT, LABEL, SPAN } from "@/complements/components/ui/wrappers";
 
 // ===== Caché por sesión (solo pestaña abierta) =====
 const SS = typeof window !== 'undefined' ? window.sessionStorage : null;
@@ -50,17 +49,14 @@ function pushTelemetry(e: Record<string, any>) {
 function flushTelemetry() {
   const arr = ssGet<any[]>(TELEMETRY_KEY) || [];
   if (!arr.length) return;
-
   let sent = false;
   try {
     if (typeof navigator !== 'undefined' && 'sendBeacon' in navigator) {
       sent = (navigator as any).sendBeacon('/api/log-aai', JSON.stringify(arr));
     }
   } catch {}
-
   if (!sent) {
     try {
-      // Fallback con keepalive (por si Beacon no está disponible o falla)
       fetch('/api/log-aai', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
@@ -69,7 +65,6 @@ function flushTelemetry() {
       }).catch(() => {});
     } catch {}
   }
-
   ssDel(TELEMETRY_KEY);
 }
 
@@ -101,17 +96,24 @@ function shortFromLocale(l: string): 'es' | 'en' | 'fr' {
 function fullFromShort(s: 'es' | 'en' | 'fr'): 'es' | 'en' | 'fr' {
   return s === 'en' ? 'en' : s === 'fr' ? 'fr' : 'es';
 }
+
+// Heurística ligera de idioma en cliente (no cambia el UI, solo el backend)
 function detectLangClient(text: string): 'es' | 'en' | 'fr' {
   const t = (text || '').toLowerCase();
-  const score = { es: 0, en: 0, fr: 0 } as Record<'es'|'en'|'fr', number>;
-  ' el la los las un una de y que para en con hola gracias ¿ ¡ á é í ó ú ñ '
-    .trim().split(/\s+/).forEach(w => { if (t.includes(w)) score.es++; });
-  ' the and of to for in hello hi thanks you your is are '
-    .trim().split(/\s+/).forEach(w => { if (t.includes(w)) score.en++; });
-  ' le la les des et pour bonjour merci vous votre êtes '
-    .trim().split(/\s+/).forEach(w => { if (t.includes(w)) score.fr++; });
-  const max = (Object.entries(score).sort((a, b) => b[1] - a[1])[0]?.[0] || 'es') as 'es'|'en'|'fr';
-  return max;
+  let es = 0, en = 0, fr = 0;
+  if (/[¿¡ñáéíóú]/.test(t)) es += 2;
+  if (/[àâçéèêëîïôùûüÿœ]/.test(t)) fr += 2;
+  ['hola','gracias','horario','horarios','dirección','direccion','teléfono','telefono','sitio','web','menú','menu','reservar']
+    .forEach(k => { if (t.includes(k)) es += 2; });
+  ['bonjour','merci','horaire','horaires','adresse','téléphone','telephone','site','web','réserver','reserver']
+    .forEach(k => { if (t.includes(k)) fr += 2; });
+  ['hi','hello','thanks','hours','address','phone','website','menu','reserve','open','close']
+    .forEach(k => { if (t.includes(k)) en += 2; });
+  const max = Math.max(es,en,fr);
+  if (max === 0) return 'en';
+  if (es === max && es >= en + 1 && es >= fr + 1) return 'es';
+  if (fr === max && fr >= en + 1 && fr >= es + 1) return 'fr';
+  return 'en';
 }
 
 // ===== helpers para cortar branding por paths "a.b.c" =====
@@ -131,7 +133,7 @@ const buildContextSlice = (doc: any, paths: string | string[]) => {
 
 export default function AiComp(props: AiCompProps) {
   const intl = useIntl();
-  const { Branding, Settings } = useAppContext();
+  const { Branding } = useAppContext();
 
   // ===== Locale activo (prop → URL → navegador) =====
   const pathname = usePathname();
@@ -149,17 +151,16 @@ export default function AiComp(props: AiCompProps) {
     (typeof navigator !== 'undefined' ? navigator.language : fallback);
 
   const initialShort = shortFromLocale(initialLocale);
-  const [lang, setLang] = useState<'es' | 'en' | 'fr'>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(LS_LANG) as 'es' | 'en' | 'fr' | null;
-      if (saved === 'es' || saved === 'en' || saved === 'fr') return saved;
-    }
-    return initialShort;
-  });
+  const [lang, setLang] =
+    useState<'es' | 'en' | 'fr'>(() => (typeof window !== 'undefined'
+      ? (localStorage.getItem(LS_LANG) as any) || initialShort
+      : initialShort));
+
   useEffect(() => {
     const next = shortFromLocale(initialLocale);
     if (next !== lang) setLang(next);
   }, [initialLocale]);
+
   const activeLocale = toShortLocale(lang);
   const [dict, setDict] = useState<Record<string, string>>({});
   useEffect(() => {
@@ -167,9 +168,7 @@ export default function AiComp(props: AiCompProps) {
     getI18nEffective(activeLocale).then(d => { if (alive) setDict(d || {}); });
     return () => { alive = false; };
   }, [activeLocale]);
-  useEffect(() => {
-    if (typeof window !== 'undefined') localStorage.setItem(LS_LANG, lang);
-  }, [lang]);
+  useEffect(() => { if (typeof window !== 'undefined') localStorage.setItem(LS_LANG, lang); }, [lang]);
 
   const [open, setOpen] = useState(false);
 
@@ -186,7 +185,6 @@ export default function AiComp(props: AiCompProps) {
     () => (brandingFS ? resolveFMToStrings(brandingFS, dict) : null),
     [brandingFS, dict]
   );
-  // Settings con FMs resueltos al locale vigente
   const settingsStr = useMemo(
     () => (settingsFS ? resolveFMToStrings(settingsFS, dict) : null),
     [settingsFS, dict]
@@ -198,58 +196,48 @@ export default function AiComp(props: AiCompProps) {
   const [input, setInput] = useState('');
   const [lead, setLead] = useState({ name: '', email: '', consent: false, sent: false });
 
-  // ===== RDD: settings efectivos (FS → sesión; se invalida al cerrar pestaña) =====
+  // ===== RDD: settings efectivos (caché sesión) =====
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
         const short = lang; // 'es' | 'en' | 'fr'
         const SKEY = `aai:settings:${short}`;
-        // 1) pinta rápido si hay caché de esta sesión
         const cached = ssGet(SKEY);
         if (cached && alive) setSettingsFS(cached);
-        // 2) lectura FRESCA de FS al abrir / cambiar de locale
         const eff = await getSettingsEffective(undefined, short);
         if (!alive) return;
         setSettingsFS(eff);
         ssSet(SKEY, eff);
-      } catch (e) {
-        console.error('getSettingsEffective() failed', e);
-      }
+      } catch (e) { /* opcional */ }
     })();
     return () => { alive = false; };
   }, [lang]);
 
-
-  // ===== RDD: branding efectivo (FS → sesión; se invalida al cerrar pestaña) =====
+  // ===== RDD: branding efectivo (caché sesión) =====
   useEffect(() => {
     let alive = true;
     (async () => {
       const short = lang;
       const BKEY = `aai:branding:${short}`;
       try {
-        // 1) pinta rápido si hay caché de esta sesión
         const cached = ssGet(BKEY);
         if (cached && alive) setBrandingFS(cached);
-
-        // 2) lectura FRESCA de FS al abrir / cambiar de locale
-        let doc: any | null = null;
+        let docAny: any | null = null;
         try {
-          doc = await getBrandingEffectivePWA(short);
+          docAny = await getBrandingEffectivePWA(short);
         } catch {
-          doc = await getBrandingEffectivePWA(fullFromShort(short));
+          docAny = await getBrandingEffectivePWA(short);
         }
-        if (!alive || !doc) return;
-        setBrandingFS(doc);
-        ssSet(BKEY, doc);
-      } catch (e) {
-        console.error('getBrandingEffectivePWA() failed', e);
-      }
+        if (!alive || !docAny) return;
+        setBrandingFS(docAny);
+        ssSet(BKEY, docAny);
+      } catch (e) { /* opcional */ }
     })();
     return () => { alive = false; };
   }, [lang]);
 
-  const indiceAI = useMemo(() => settingsFS?.agentAI?.indiceAI || {}, [settingsFS]);
+  const indiceAI = useMemo(() => settingsStr?.agentAI?.indiceAI || {}, [settingsStr]);
 
   // ===== autoscroll =====
   const listRef = useRef<HTMLDivElement>(null);
@@ -278,6 +266,7 @@ export default function AiComp(props: AiCompProps) {
     return () => el.removeEventListener('scroll', updateAtBottom as any);
   }, [updateAtBottom]);
   useLayoutEffect(() => { if (isAtBottomRef.current) scrollToBottom(true); }, [msgs, typing, scrollToBottom]);
+
   // Enviar telemetría al cerrar pestaña / ocultar
   useEffect(() => {
     const onHide = () => { if (document.visibilityState === 'hidden') flushTelemetry(); };
@@ -289,7 +278,7 @@ export default function AiComp(props: AiCompProps) {
       window.removeEventListener('visibilitychange', onHide);
       window.removeEventListener('pagehide', onHide);
       window.removeEventListener('beforeunload', onBeforeUnload);
-      flushTelemetry(); // por si desmonta el componente
+      flushTelemetry();
     };
   }, []);
 
@@ -351,17 +340,17 @@ export default function AiComp(props: AiCompProps) {
         setFabIcon(url2);
       } catch { /* usa default */ }
 
-      // bienvenida (FM si RDD no trae)
+      // bienvenida (i18n si el agente no trae)
       const welcomeText =
         typeof merged.welcome === 'string' && merged.welcome.trim()
           ? merged.welcome
           : intl.formatMessage({ id: 'aai.welcome', defaultMessage: '¡Hola! ¿En qué puedo ayudarte hoy?' });
-      setMsgs([{ from: 'bot', text: welcomeText }]);
+      setMsgs(prev => prev.length ? prev : [{ from: 'bot', text: welcomeText }]);
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [AGENT_ID, intl, lang]);
 
-  // ===== envío libre =====
+  // ===== envío =====
   async function send() {
     const text = input.trim();
     if (!text) return;
@@ -371,40 +360,45 @@ export default function AiComp(props: AiCompProps) {
     setTyping(true);
 
     try {
-      const msgLang = detectLangClient(text);
-      if (msgLang !== lang) setLang(msgLang);
-      const sendLocale = fullFromShort(msgLang);
-      const t0 = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+      // NO cambiamos el idioma del UI; se usa el actual
+      const detected = detectLangClient(text);           // 'es' | 'en' | 'fr'
+      const sendLocale = fullFromShort(detected || lang); // no cambia el UI
 
+      const t0 = (typeof performance !== 'undefined' ? performance.now() : Date.now());
       const res = await fetch('/api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-locale': sendLocale },
         body: JSON.stringify({
           userMessage: text,
-          message: text,       // compat
+          message: text,
           locale: sendLocale,
-          indiceAI,            // catálogo para decisión en backend
+          indiceAI,
         }),
       });
 
       const json = await res.json().catch(() => ({} as any));
       const latency = Math.round((typeof performance !== 'undefined' ? performance.now() : Date.now()) - t0);
+
+      const botText =
+        typeof json?.reply === 'string'
+          ? json.reply
+          : (json?.reply?.text ?? json?.message ?? '');
+
       pushTelemetry({
         kind: 'free',
         topic: json?.topic || null,
         ok: !!json?.ok,
         latency,
         status: res.status,
-        // Si en el futuro devuelves usage desde backend, se rellenan:
-        tokensIn: json?.usage?.prompt_tokens ?? null,
-        tokensOut: json?.usage?.completion_tokens ?? null,
+        tokensIn: json?.usage?.prompt ?? null,
+        tokensOut: json?.usage?.completion ?? null,
       });
 
       if (!res.ok || json?.ok === false) {
         const msg = json?.error ? String(json.error) : `HTTP ${res.status}`;
         throw new Error(msg);
       }
-      setMsgs(prev => [...prev, { from: 'bot', text: String(json?.reply ?? json?.message ?? '') }]);
+      setMsgs(prev => [...prev, { from: 'bot', text: String(botText) }]);
     } catch (e: any) {
       setMsgs(prev => [...prev, { from: 'bot', text: `⚠️ ${String(e?.message || e)}` }]);
     } finally {
@@ -418,7 +412,7 @@ export default function AiComp(props: AiCompProps) {
     return Array.isArray(sc) ? sc : (Array.isArray(sc?.items) ? sc.items : sc) || [];
   }, [settingsStr]);
 
-  // ===== click en shortcut: enviar SOLO el slice del branding =====
+  // ===== click en shortcut =====
   const handleShortcut = async (payload: { text?: string; context?: any; meta?: any; paths?: string[] }) => {
     const t0 = (typeof performance !== 'undefined' ? performance.now() : Date.now());
     if (payload?.meta?.label) {
@@ -433,7 +427,12 @@ export default function AiComp(props: AiCompProps) {
         payload.context ??
         (brandDoc && paths.length ? buildContextSlice(brandDoc, paths as string[]) : undefined);
 
-      const sendLocale = fullFromShort(lang);
+      const baseText =
+        payload.text ||
+        intl.formatMessage({ id: 'aai.query.useContext', defaultMessage: 'Responde basado SOLO en el contexto adjunto.' });
+      const detected = detectLangClient(String(baseText));
+      const sendLocale = fullFromShort(detected || lang);
+
       const res = await fetch('/api/ai-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-locale': sendLocale },
@@ -453,22 +452,28 @@ export default function AiComp(props: AiCompProps) {
 
       const json = await res.json().catch(() => ({} as any));
       const latency = Math.round((typeof performance !== 'undefined' ? performance.now() : Date.now()) - t0);
+
+      const botText =
+        typeof json?.reply === 'string'
+          ? json.reply
+          : (json?.reply?.text ?? json?.message ?? '');
+
       pushTelemetry({
         kind: 'shortcut',
         topic: json?.topic || null,
         ok: !!json?.ok,
         latency,
         status: res.status,
-        // opcional: qué rutas slice usamos
         paths,
-        tokensIn: json?.usage?.prompt_tokens ?? null,
-        tokensOut: json?.usage?.completion_tokens ?? null,
+        tokensIn: json?.usage?.prompt ?? null,
+        tokensOut: json?.usage?.completion ?? null,
       });
+
       if (!res.ok || json?.ok === false) {
         const msg = json?.error ? String(json.error) : `HTTP ${res.status}`;
         throw new Error(msg);
       }
-      setMsgs(prev => [...prev, { from: 'bot', text: String(json?.reply ?? json?.message ?? '') }]);
+      setMsgs(prev => [...prev, { from: 'bot', text: String(botText) }]);
     } catch (e: any) {
       setMsgs(prev => [...prev, { from: 'bot', text: `⚠️ ${String(e?.message || e)}` }]);
     } finally {
