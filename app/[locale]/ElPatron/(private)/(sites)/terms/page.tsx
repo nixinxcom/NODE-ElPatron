@@ -1,5 +1,4 @@
 // app/[locale]/terms/page.tsx
-
 type Locale = "en" | "fr" | "es";
 
 const TITLES: Record<Locale, string> = {
@@ -361,20 +360,22 @@ Si tiene preguntas sobre estos Términos, puede comunicarse con nosotros utiliza
 `,
 };
 
-interface TermsPageProps {
-  params: { locale: string };
-}
+export default async function TermsPage({ params }: any) {
+  const resolved = (await params) as { locale?: string };
 
-export default function TermsPage({ params }: TermsPageProps) {
-  const locale = (["en", "fr", "es"].includes(params.locale)
-    ? params.locale
-    : "en") as Locale;
+  const rawLocale = (resolved.locale || "en").toLowerCase();
+  const locale: Locale = (["en", "fr", "es"] as const).includes(
+    rawLocale as Locale
+  )
+    ? (rawLocale as Locale)
+    : "en";
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="mb-4 text-2xl font-semibold">
         {TITLES[locale]}
       </h1>
+
       <div
         className="
           min-h-[60vh]

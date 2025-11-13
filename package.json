@@ -53,7 +53,8 @@
     "all:main:start": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run github && npm run start",
     "all:main:patch": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:patch:dev",
     "all:main:minor": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:minor",
-    "all:main:major": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:major"
+    "all:main:major": "cls && npm run toscratch && npm run reinstall && npm run rebuild && npm run release:major",
+    "ToProduction": "npm run toscratch && npm run reinstall && npm run rebuild && npm run github && npm run mirrors"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

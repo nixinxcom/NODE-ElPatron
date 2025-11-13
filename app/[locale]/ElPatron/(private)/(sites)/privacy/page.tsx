@@ -1,5 +1,4 @@
-// app/[locale]/privacy/page.tsx
-
+// app/[locale]/ElPatron/(private)/(sites)/privacy/page.tsx
 type Locale = "en" | "fr" | "es";
 
 const PRIVACY_TITLES: Record<Locale, string> = {
@@ -316,20 +315,24 @@ Si tiene preguntas acerca de esta Política de Privacidad o sobre cómo tratamos
 `,
 };
 
-interface PrivacyPageProps {
-  params: { locale: string };
-}
 
-export default function PrivacyPage({ params }: PrivacyPageProps) {
-  const locale = (["en", "fr", "es"].includes(params.locale)
-    ? params.locale
-    : "en") as Locale;
+export default async function PrivacyPage({ params }: any) {
+  // params está tipado como Promise<any>, por eso lo resolvemos
+  const resolved = (await params) as { locale?: string };
+
+  const rawLocale = (resolved.locale || "en").toLowerCase();
+  const locale: Locale = (["en", "fr", "es"] as const).includes(
+    rawLocale as Locale
+  )
+    ? (rawLocale as Locale)
+    : "en";
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="mb-4 text-2xl font-semibold">
         {PRIVACY_TITLES[locale]}
       </h1>
+
       <div
         className="
           min-h-[60vh]
